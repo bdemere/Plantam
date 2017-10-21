@@ -1,9 +1,13 @@
-# CPSC310-F17-Group1
+# CPSC310-F17-Group4
 
 This repository is CPSC310 Group Project. 
 
 The only authorized users are Professor Ewa Syta and members of Group 4.
-	Cieplicki,Brian N., brian.cieplicki@trincoll.edu	Dahilig,Isabella T., isabella.dahilig@trincoll.edu	Demere,Bemnet A., bemnet.demere@trincoll.edu	Nguyen,Anh T., anh.nguyen.2@trincoll.edu	Vo,Binh, binh.vo@trincoll.edu
+	Cieplicki,Brian N., brian.cieplicki@trincoll.edu
+	Dahilig,Isabella T., isabella.dahilig@trincoll.edu
+	Demere,Bemnet A., bemnet.demere@trincoll.edu
+	Nguyen,Anh T., anh.nguyen.2@trincoll.edu
+	Vo,Binh, binh.vo@trincoll.edu
 
 If you are not one of these people, you are not permitted to view, copy,
 or change any of the files in this repository. 
