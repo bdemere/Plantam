@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">CalendarView</string>
+    <string name="current_date">June, 2016</string>
+    <string name="add_event">ADD CALENDAR EVENT</string>
+    <string name="time">Time</string>
+    <string name="sun"><b>S</b></string>
+    <string name="mon"><b>M</b></string>
+    <string name="tue"><b>T</b></string>
+    <string name="wed"><b>W</b></string>
+    <string name="thu"><b>T</b></string>
+    <string name="fri"><b>F</b></string>
+    <string name="sat"><b>S</b></string>
+    <string name="last_date">30</string>
 </resources>
