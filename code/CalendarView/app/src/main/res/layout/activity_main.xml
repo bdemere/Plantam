@@ -9,7 +9,7 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:paddingTop="16dp"
-    tools:context="com.example.mynameisyou.calendarview.MainActivity">
+    tools:context="com.cpsc310proj.babib.plantam.MainActivity">
 
     <Button
         android:id="@+id/btnGoCalendar"
@@ -19,15 +19,5 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:text="Go To Calendar"/>
-    <TextView
-        android:layout_centerHorizontal="true"
-        android:textSize="20sp"
-        android:layout_marginTop="30dp"
-        android:layout_below="@+id/btnGoCalendar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="Select date"
-        android:id="@+id/date"
-        />
 
 </RelativeLayout>

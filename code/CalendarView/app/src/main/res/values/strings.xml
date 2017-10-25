@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">CalendarView</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string-array name="test_array">
+        <item>event 1</item>
+        <item>event 2</item>
+        <item>event 3</item>
+        <item>event 4</item>
+        <item>event 5</item>
+        <item>event 6</item>
+        <item>event 7</item>
+    </string-array>
 </resources>

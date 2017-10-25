@@ -1,0 +1,42 @@
+[
+    {
+        "merged": "/home/bemnet/Desktop/CPSC310/project/CPSC310-F17-Group4/code/TriniPlanApp/app/build/intermediates/res/merged/debug/anim/abc_popup_enter.xml",
+        "source": "/home/bemnet/.android/build-cache/d5a637c02ed3c89cfc97909ad61ae9ce31548b17/output/res/anim/abc_popup_enter.xml"
+    },
+    {
+        "merged": "/home/bemnet/Desktop/CPSC310/project/CPSC310-F17-Group4/code/TriniPlanApp/app/build/intermediates/res/merged/debug/anim/abc_grow_fade_in_from_bottom.xml",
+        "source": "/home/bemnet/.android/build-cache/d5a637c02ed3c89cfc97909ad61ae9ce31548b17/output/res/anim/abc_grow_fade_in_from_bottom.xml"
+    },
+    {
+        "merged": "/home/bemnet/Desktop/CPSC310/project/CPSC310-F17-Group4/code/TriniPlanApp/app/build/intermediates/res/merged/debug/anim/abc_popup_exit.xml",
+        "source": "/home/bemnet/.android/build-cache/d5a637c02ed3c89cfc97909ad61ae9ce31548b17/output/res/anim/abc_popup_exit.xml"
+    },
+    {
+        "merged": "/home/bemnet/Desktop/CPSC310/project/CPSC310-F17-Group4/code/TriniPlanApp/app/build/intermediates/res/merged/debug/anim/abc_slide_out_bottom.xml",
+        "source": "/home/bemnet/.android/build-cache/d5a637c02ed3c89cfc97909ad61ae9ce31548b17/output/res/anim/abc_slide_out_bottom.xml"
+    },
+    {
+        "merged": "/home/bemnet/Desktop/CPSC310/project/CPSC310-F17-Group4/code/TriniPlanApp/app/build/intermediates/res/merged/debug/anim/abc_fade_out.xml",
+        "source": "/home/bemnet/.android/build-cache/d5a637c02ed3c89cfc97909ad61ae9ce31548b17/output/res/anim/abc_fade_out.xml"
+    },
+    {
+        "merged": "/home/bemnet/Desktop/CPSC310/project/CPSC310-F17-Group4/code/TriniPlanApp/app/build/intermediates/res/merged/debug/anim/abc_slide_in_top.xml",
+        "source": "/home/bemnet/.android/build-cache/d5a637c02ed3c89cfc97909ad61ae9ce31548b17/output/res/anim/abc_slide_in_top.xml"
+    },
+    {
+        "merged": "/home/bemnet/Desktop/CPSC310/project/CPSC310-F17-Group4/code/TriniPlanApp/app/build/intermediates/res/merged/debug/anim/abc_fade_in.xml",
+        "source": "/home/bemnet/.android/build-cache/d5a637c02ed3c89cfc97909ad61ae9ce31548b17/output/res/anim/abc_fade_in.xml"
+    },
+    {
+        "merged": "/home/bemnet/Desktop/CPSC310/project/CPSC310-F17-Group4/code/TriniPlanApp/app/build/intermediates/res/merged/debug/anim/abc_shrink_fade_out_from_bottom.xml",
+        "source": "/home/bemnet/.android/build-cache/d5a637c02ed3c89cfc97909ad61ae9ce31548b17/output/res/anim/abc_shrink_fade_out_from_bottom.xml"
+    },
+    {
+        "merged": "/home/bemnet/Desktop/CPSC310/project/CPSC310-F17-Group4/code/TriniPlanApp/app/build/intermediates/res/merged/debug/anim/abc_slide_in_bottom.xml",
+        "source": "/home/bemnet/.android/build-cache/d5a637c02ed3c89cfc97909ad61ae9ce31548b17/output/res/anim/abc_slide_in_bottom.xml"
+    },
+    {
+        "merged": "/home/bemnet/Desktop/CPSC310/project/CPSC310-F17-Group4/code/TriniPlanApp/app/build/intermediates/res/merged/debug/anim/abc_slide_out_top.xml",
+        "source": "/home/bemnet/.android/build-cache/d5a637c02ed3c89cfc97909ad61ae9ce31548b17/output/res/anim/abc_slide_out_top.xml"
+    }
+]
