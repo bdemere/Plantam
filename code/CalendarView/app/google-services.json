@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "53169602066",
+    "firebase_url": "https://plantam310-dbd30.firebaseio.com",
+    "project_id": "plantam310-dbd30",
+    "storage_bucket": "plantam310-dbd30.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:53169602066:android:a4f40a58f55cea70",
+        "android_client_info": {
+          "package_name": "com.cpsc310proj.babib.plantam"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "53169602066-efdpavc6qjh7v2u5kef42uc1fttlrh03.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5saUPsiJp8maMhb1kQWFkJiJVEcUFl4s"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

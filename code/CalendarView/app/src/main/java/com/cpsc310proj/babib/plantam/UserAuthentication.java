@@ -1,0 +1,171 @@
+package com.cpsc310proj.babib.plantam;
+
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+public class UserAuthentication extends AppCompatActivity implements View.OnClickListener{
+    private EditText mEmailEditText;
+    private EditText mPasswordEditText;
+    private Button mSignUpButton;
+    private Button mSignInButton;
+
+    private ProgressDialog mProgressDialog;
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_user_authentication);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        mAuth = FirebaseAuth.getInstance();
+
+        mEmailEditText = (EditText)findViewById(R.id.user_auth_email);
+        mPasswordEditText = (EditText)findViewById(R.id.user_auth_password);
+        mSignUpButton = (Button)findViewById(R.id.user_auth_sign_up);
+        mSignInButton = (Button)findViewById(R.id.user_auth_sign_in);
+        mProgressDialog = new ProgressDialog(this);
+
+        mSignUpButton.setOnClickListener(this);
+        mSignInButton.setOnClickListener(this);
+//        mAuthListener = new FirebaseAuth.AuthStateListener() {
+//            @Override
+//            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+//                FirebaseUser user = firebaseAuth.getCurrentUser();
+//                if (user != null) {
+//                    // User is signed in
+//                    Log.d("Is signed in?: ", "onAuthStateChanged:signed_in:" + user.getUid());
+//                } else {
+//                    finish();
+//                    // User is signed out
+//                    Log.d("Is signed in?: ", "onAuthStateChanged:signed_out");
+//                }
+//                // ...
+//            }
+//        };
+        if(mAuth.getCurrentUser() != null){
+            finish();
+            Intent intent = new Intent(UserAuthentication.this, CalendarActivity.class);
+            startActivity(intent);
+
+        }
+        //FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+//        mAuth.addAuthStateListener(mAuthListener);
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+//        if(mAuthListener != null){
+//            mAuth.removeAuthStateListener(mAuthListener);
+//        }
+    }
+
+    public void signUp(){
+        String email = mEmailEditText.getText().toString().trim();
+        String password = mPasswordEditText.getText().toString().trim();
+        Log.d("resgister: ", email + password);
+        if(email.isEmpty()){
+            //if email is empty return
+            Toast.makeText(this, "Please enter email", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        if(password.isEmpty()){
+            //if password is empty return
+            Toast.makeText(this, "Please enter password", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        mProgressDialog.setMessage("Please wait...");
+        mProgressDialog.show();
+
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+
+                            mProgressDialog.cancel();
+                            if(task.isSuccessful()) {
+                                Toast.makeText(UserAuthentication.this, "Worked",
+                                        Toast.LENGTH_SHORT).show();
+                            }else{
+                                Toast.makeText(UserAuthentication.this, "Failed",
+                                        Toast.LENGTH_SHORT).show();
+                                Log.d("Sign up: ", "createUserWithEmail:failure", task.getException());
+
+                            }
+
+
+                        }
+
+                    });
+
+
+
+
+
+    }
+
+    public void signIn(){
+        String email = mEmailEditText.getText().toString().trim();
+        String password = mPasswordEditText.getText().toString().trim();
+
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        Log.d("logging in", "signInWithEmail:onComplete:" + task.isSuccessful());
+
+                        // If sign in fails, display a message to the user. If sign in succeeds
+                        // the auth state listener will be notified and logic to handle the
+                        // signed in user can be handled in the listener.
+                        if (!task.isSuccessful()) {
+                            Log.w("logging in", "signInWithEmail:failed", task.getException());
+                            Toast.makeText(UserAuthentication.this, "auth_failed",
+                                    Toast.LENGTH_SHORT).show();
+                        } else{
+                            finish();
+                            Intent intent = new Intent(UserAuthentication.this, CalendarActivity.class);
+                            startActivity(intent);
+                            Toast.makeText(UserAuthentication.this, "auth_success",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+
+                        // ...
+                    }
+                });
+    }
+    @Override
+    public void onClick(View v) {
+        if(v == mSignUpButton){
+            signUp();
+        } if(v == mSignInButton){
+            signIn();
+        }
+    }
+}

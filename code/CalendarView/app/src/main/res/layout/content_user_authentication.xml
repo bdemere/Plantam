@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/constraint_layout"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.cpsc310proj.babib.plantam.UserAuthentication"
+    tools:showIn="@layout/activity_user_authentication">
+
+    <EditText
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/user_auth_email"
+        android:hint="email"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginRight="50dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="50dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="137dp"
+        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp" />
+    <EditText
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/user_auth_password"
+        android:hint="password"
+        app:layout_constraintTop_toBottomOf="@+id/user_auth_email"
+        android:inputType="textPassword"
+        android:layout_marginRight="50dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="50dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp" />
+
+    <Button
+        android:layout_width="283dp"
+        android:layout_height="47dp"
+        android:text="Sign Up"
+        android:id="@+id/user_auth_sign_up"
+        app:layout_constraintTop_toBottomOf="@+id/user_auth_password"
+        android:layout_marginTop="20dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintHorizontal_bias="0.549"
+        android:layout_marginRight="8dp"
+        tools:layout_editor_absoluteY="252dp" />
+
+    <Button
+        android:id="@+id/user_auth_sign_in"
+        android:layout_width="283dp"
+        android:layout_height="47dp"
+        android:text="Login"
+        app:layout_constraintLeft_toLeftOf="@+id/user_auth_sign_up"
+        app:layout_constraintTop_toBottomOf="@+id/user_auth_sign_up"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="187dp"
+        android:layout_marginTop="14dp"
+        app:layout_constraintHorizontal_bias="0.0"
+        tools:layout_editor_absoluteY="321dp" />
+</android.support.constraint.ConstraintLayout>

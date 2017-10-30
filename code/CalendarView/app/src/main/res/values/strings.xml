@@ -12,4 +12,5 @@
         <item>event 6</item>
         <item>event 7</item>
     </string-array>
+    <string name="title_activity_user_authentication">UserAuthentication</string>
 </resources>
