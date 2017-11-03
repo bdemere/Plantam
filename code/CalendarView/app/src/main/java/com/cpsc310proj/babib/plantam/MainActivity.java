@@ -29,4 +29,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    //SampleSQL sample_database = new SampleSQL();
+
 }

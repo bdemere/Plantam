@@ -17,7 +17,7 @@ public class DailyEventList {
 
 
     /*method to add a new event into correct DailyEventList and sort events every time
-    * 2 ways: 1.click on date and create event for the specific date
+    * 2 ways: ---> 1.click on date and create event for the specific date
     *         2.create an event without specifying the date at first, use event handler to add
     *           event to the list
     */
