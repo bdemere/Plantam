@@ -1,6 +1,6 @@
 package com.cpsc310proj.babib.plantam;
 
-//import java.time.MonthDay;
+import java.util.*;
 
 /**
  * Created by anhthuynguyen on 10/27/17.
@@ -10,18 +10,18 @@ public class CalEvent {
 
     private String title;
     private String description;
-    private String date; //later change to enum or other data structure
-    private float start_time;
-    private float end_time;
+    private Date start_date;
+    private Date end_date;
+    private EventCategory category;
 
 
     //Constructors
-    public CalEvent(String title, String description, String date, float start_time, float end_time) {
+    public CalEvent(String title, String description, Date start, Date end, EventCategory category) {
         this.title = title;
         this.description = description;
-        this.date = date;
-        this.start_time = start_time;
-        this.end_time = end_time;
+        this.start_date = start;
+        this.end_date = end;
+        this.category = category;
     }
 
     //Getters
@@ -33,18 +33,17 @@ public class CalEvent {
         return this.description;
     }
 
-    public String getDate() {
-        return this.date;
+    public Date getStartDate() {
+        return start_date;
     }
 
-    public float getStartTime() {
-        return this.start_time;
+    public Date getEndDate() {
+        return end_date;
     }
 
-    public float getEndTime() {
-        return this.end_time;
+    public EventCategory getCategory() {
+        return this.category;
     }
-
     //Setters
     public void setTitle(String title){
         this.title = title;
@@ -55,27 +54,24 @@ public class CalEvent {
 
     }
 
-    public void setDate(String date){
-        this.date = date;
+    public void setStartDate(Date start_date) {
+        this.start_date = start_date;
     }
 
-    public void setStartTime(float start_time){
-        this.start_time = start_time;
+    public void setEndDate(Date end_date) {
+        this.end_date = end_date;
     }
 
-    public void setEndTime(float end_time){
-        this.end_time = end_time;
+    public void setCategory(EventCategory category){
+        this.category = category;
     }
 
-
-
-    public CalEvent createEvent(String title, String description, String date, float start_time, float end_time) {
-        return new CalEvent(title,description,date,start_time,end_time);
+    public CalEvent createEvent(String title, String description, Date start, Date end, EventCategory category) {
+        return new CalEvent(title,description,start,end,category);
        // CalEvent(title,description,date,start_time,end_time);
     }
 
     public boolean publishEvent() {
-
         //wait until Server is done :>
         return true;
     }
@@ -84,12 +80,12 @@ public class CalEvent {
     public void editEvent(CalEvent updatedEvent) {
         this.setTitle(updatedEvent.getTitle());
         this.setDescription(updatedEvent.getDescription());
-        this.setDate(updatedEvent.getDate());
-        this.setStartTime(updatedEvent.getStartTime());
-        this.setEndTime(updatedEvent.getEndTime());
+        this.setStartDate(updatedEvent.getStartDate());
+        this.setEndDate(updatedEvent.getEndDate());
     }
 
     public void deleteEvent(CalEvent event) {
+
         event = null;
     }
 
