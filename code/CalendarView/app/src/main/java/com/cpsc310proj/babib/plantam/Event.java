@@ -6,7 +6,7 @@ package com.cpsc310proj.babib.plantam;
  * Created by anhthuynguyen on 10/27/17.
  */
 
-public class CalEvent {
+public class Event {
 
     private String title;
     private String description;
@@ -16,7 +16,7 @@ public class CalEvent {
 
 
     //Constructors
-    public CalEvent(String title, String description, String date, float start_time, float end_time) {
+    public Event(String title, String description, String date, float start_time, float end_time) {
         this.title = title;
         this.description = description;
         this.date = date;
@@ -69,9 +69,9 @@ public class CalEvent {
 
 
 
-    public CalEvent createEvent(String title, String description, String date, float start_time, float end_time) {
-        return new CalEvent(title,description,date,start_time,end_time);
-       // CalEvent(title,description,date,start_time,end_time);
+    public Event createEvent(String title, String description, String date, float start_time, float end_time) {
+        return new Event(title,description,date,start_time,end_time);
+       // Event(title,description,date,start_time,end_time);
     }
 
     public boolean publishEvent() {
@@ -81,7 +81,7 @@ public class CalEvent {
     }
 
 
-    public void editEvent(CalEvent updatedEvent) {
+    public void editEvent(Event updatedEvent) {
         this.setTitle(updatedEvent.getTitle());
         this.setDescription(updatedEvent.getDescription());
         this.setDate(updatedEvent.getDate());
@@ -89,7 +89,7 @@ public class CalEvent {
         this.setEndTime(updatedEvent.getEndTime());
     }
 
-    public void deleteEvent(CalEvent event) {
+    public void deleteEvent(Event event) {
         event = null;
     }
 

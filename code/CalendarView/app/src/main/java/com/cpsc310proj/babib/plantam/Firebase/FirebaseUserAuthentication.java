@@ -1,4 +1,4 @@
-package com.cpsc310proj.babib.plantam;
+package com.cpsc310proj.babib.plantam.Firebase;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -13,13 +13,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.cpsc310proj.babib.plantam.Layouts.CalendarActivity;
+import com.cpsc310proj.babib.plantam.R;
+import com.google.android.gms.tasks.*;
+import com.google.firebase.auth.*;
+import com.google.firebase.database.*;
 
-public class UserAuthentication extends AppCompatActivity implements View.OnClickListener{
+public class FirebaseUserAuthentication extends AppCompatActivity implements View.OnClickListener{
     private EditText mEmailEditText;
     private EditText mPasswordEditText;
     private Button mSignUpButton;
@@ -27,7 +27,10 @@ public class UserAuthentication extends AppCompatActivity implements View.OnClic
 
     private ProgressDialog mProgressDialog;
     private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
+
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mUsersDatabaseReference;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,10 @@ public class UserAuthentication extends AppCompatActivity implements View.OnClic
 
         mAuth = FirebaseAuth.getInstance();
 
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mUsersDatabaseReference = mFirebaseDatabase.getReference().child("users");
+
+
         mEmailEditText = (EditText)findViewById(R.id.user_auth_email);
         mPasswordEditText = (EditText)findViewById(R.id.user_auth_password);
         mSignUpButton = (Button)findViewById(R.id.user_auth_sign_up);
@@ -46,43 +53,17 @@ public class UserAuthentication extends AppCompatActivity implements View.OnClic
 
         mSignUpButton.setOnClickListener(this);
         mSignInButton.setOnClickListener(this);
-//        mAuthListener = new FirebaseAuth.AuthStateListener() {
-//            @Override
-//            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-//                FirebaseUser user = firebaseAuth.getCurrentUser();
-//                if (user != null) {
-//                    // User is signed in
-//                    Log.d("Is signed in?: ", "onAuthStateChanged:signed_in:" + user.getUid());
-//                } else {
-//                    finish();
-//                    // User is signed out
-//                    Log.d("Is signed in?: ", "onAuthStateChanged:signed_out");
-//                }
-//                // ...
-//            }
-//        };
-        if(mAuth.getCurrentUser() != null){
-            finish();
-            Intent intent = new Intent(UserAuthentication.this, CalendarActivity.class);
-            startActivity(intent);
-
-        }
-        //FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-//        mAuth.addAuthStateListener(mAuthListener);
 
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-//        if(mAuthListener != null){
-//            mAuth.removeAuthStateListener(mAuthListener);
-//        }
     }
 
     public void signUp(){
@@ -111,10 +92,12 @@ public class UserAuthentication extends AppCompatActivity implements View.OnClic
 
                             mProgressDialog.cancel();
                             if(task.isSuccessful()) {
-                                Toast.makeText(UserAuthentication.this, "Worked",
+                                Toast.makeText(FirebaseUserAuthentication.this, "Worked",
                                         Toast.LENGTH_SHORT).show();
+                                signIn(true);
+
                             }else{
-                                Toast.makeText(UserAuthentication.this, "Failed",
+                                Toast.makeText(FirebaseUserAuthentication.this, "Failed",
                                         Toast.LENGTH_SHORT).show();
                                 Log.d("Sign up: ", "createUserWithEmail:failure", task.getException());
 
@@ -131,7 +114,7 @@ public class UserAuthentication extends AppCompatActivity implements View.OnClic
 
     }
 
-    public void signIn(){
+    public void signIn(final boolean write){
         String email = mEmailEditText.getText().toString().trim();
         String password = mPasswordEditText.getText().toString().trim();
 
@@ -146,14 +129,18 @@ public class UserAuthentication extends AppCompatActivity implements View.OnClic
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
                             Log.w("logging in", "signInWithEmail:failed", task.getException());
-                            Toast.makeText(UserAuthentication.this, "auth_failed",
+                            Toast.makeText(FirebaseUserAuthentication.this, "auth_failed",
                                     Toast.LENGTH_SHORT).show();
                         } else{
+                            if(write) mUsersDatabaseReference.child(mAuth.getCurrentUser().getUid()).setValue(true);
+
+
                             finish();
-                            Intent intent = new Intent(UserAuthentication.this, CalendarActivity.class);
+                            Intent intent = new Intent(FirebaseUserAuthentication.this, CalendarActivity.class);
                             startActivity(intent);
-                            Toast.makeText(UserAuthentication.this, "auth_success",
+                            Toast.makeText(FirebaseUserAuthentication.this, "auth_success",
                                     Toast.LENGTH_SHORT).show();
+
                         }
 
                         // ...
@@ -165,7 +152,7 @@ public class UserAuthentication extends AppCompatActivity implements View.OnClic
         if(v == mSignUpButton){
             signUp();
         } if(v == mSignInButton){
-            signIn();
+            signIn(false);
         }
     }
 }

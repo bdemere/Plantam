@@ -1,46 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
-
-
-    <LinearLayout
-        android:id="@+id/upper_part_monthly_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:clipToPadding="false"
-        android:paddingBottom="10dp"
-        android:elevation="10dp">
-
-
-    </LinearLayout>
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatingActionButton"
-        android:layout_width="220dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/upper_part_monthly_view"
-        android:layout_gravity="bottom|end|right"
-        android:clickable="true"
-        app:fabSize="normal" />
-
-    <LinearLayout
-    android:id="@+id/lower_part_monthly_view"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/calendar_view_constraint"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_alignParentBottom="true"
+    android:orientation="vertical">
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/calendar_event_add"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/calendar_events_list_view"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="bottom|end|right"
+        android:clickable="true"
+        app:fabSize="normal"
+        app:layout_constraintEnd_toEndOf="@+id/calendar_view"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <CalendarView
+        android:id="@+id/calendar_view"
+        android:layout_width="match_parent"
+        android:layout_height="308dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:orientation="horizontal"
-        android:layout_below="@+id/upper_part_monthly_view"
-        android:layout_marginTop="3dp"></LinearLayout>
+        android:layout_alignParentTop="true"
+        android:elevation="10dp"
+        app:layout_constraintEnd_toEndOf="@id/calendar_view_constraint"
+        app:layout_constraintTop_toTopOf="@id/calendar_view_constraint" />
+    <TextView
+        android:id="@+id/calendar_date_text_view"
+        android:layout_width="386dp"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/calendar_view"
+        android:elevation="10dp"
+        android:gravity="center"
+        android:text="TextView"
+        app:layout_constraintTop_toBottomOf="@+id/calendar_view" />
+
+    <ListView
+        android:id="@+id/calendar_events_list_view"
+        android:layout_width="387dp"
+        android:layout_height="361dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/calendar_date_text_view"
+        app:layout_constraintTop_toBottomOf="@id/calendar_date_text_view" />
+
+
+
 
 </RelativeLayout>

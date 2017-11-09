@@ -11,10 +11,10 @@ import android.view.ViewGroup;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CalendarViewDetailFragmnet extends Fragment {
+public class CalendarViewDetailFragment extends Fragment {
 
 
-    public CalendarViewDetailFragmnet() {
+    public CalendarViewDetailFragment() {
         // Required empty public constructor
     }
 
