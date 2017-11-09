@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CalendarView</string>
+    <string name="app_name">Plantam</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -12,5 +12,24 @@
         <item>event 6</item>
         <item>event 7</item>
     </string-array>
-    <string name="title_activity_user_authentication">UserAuthentication</string>
+
+    <string name="prompt_email">Email</string>
+    <string name="prompt_username">Username</string>
+    <string name="prompt_password">Password</string>
+    <string name="prompt_password_again">Confirm Password</string>
+    <string name="prompt_msg">Type a message</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_register">Create Account</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="action_sign_up">Sign up</string>
+    <string name="action_send">Send</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">Password too short or does not match</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+
+
 </resources>

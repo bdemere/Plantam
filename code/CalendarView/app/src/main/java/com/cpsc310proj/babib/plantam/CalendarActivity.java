@@ -70,7 +70,7 @@ public class CalendarActivity extends AppCompatActivity {
 //                Toast.makeText(this, mAuth.getCurrentUser() + " is signed in??", Toast.LENGTH_SHORT)
 //                        .show();
                 finish();
-                Intent intent = new Intent(CalendarActivity.this, UserAuthentication.class);
+                Intent intent = new Intent(CalendarActivity.this, LoginActivity.class);
                 startActivity(intent);
                 break;
         }
