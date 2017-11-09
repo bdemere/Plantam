@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.cpsc310proj.babib.plantam.Layouts.PublicEventsActivity">
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/public_action_update"
+        android:title="Update events"
+        app:showAsAction="always"
+        android:icon="@mipmap/ic_update_white_18dp">
+
+    </item>
+</menu>

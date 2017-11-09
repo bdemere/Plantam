@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/constraint_layout"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.cpsc310proj.babib.plantam.UserAuthentication"
+    tools:context="com.cpsc310proj.babib.plantam.Firebase.FirebaseUserAuthentication"
     tools:showIn="@layout/activity_user_authentication">
 
     <EditText
