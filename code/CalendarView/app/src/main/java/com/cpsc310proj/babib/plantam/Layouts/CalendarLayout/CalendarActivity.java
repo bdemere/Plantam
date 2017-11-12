@@ -1,4 +1,4 @@
-package com.cpsc310proj.babib.plantam.Layouts;
+package com.cpsc310proj.babib.plantam.Layouts.CalendarLayout;
 
 import android.content.Context;
 import android.content.Intent;
@@ -23,6 +23,8 @@ import android.widget.Toast;
 import com.cpsc310proj.babib.plantam.Event;
 import com.cpsc310proj.babib.plantam.DailyEventList;
 import com.cpsc310proj.babib.plantam.Firebase.FirebaseUserAuthentication;
+import com.cpsc310proj.babib.plantam.Layouts.AddEventLayout.AddEventActivity;
+import com.cpsc310proj.babib.plantam.Layouts.PublicEventsLayout.PublicEventsActivity;
 import com.cpsc310proj.babib.plantam.R;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -60,12 +62,16 @@ public class CalendarActivity extends AppCompatActivity {
         mAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Event c = new Event("test title", "test d", "date", 12, 12);
-                DailyEventList.addEventToList(c);
-                Log.d("added:", "" + DailyEventList.getEventListInstance().size());
-                mListAdapter.notifyDataSetChanged();
+//                Event c = new Event("test title", "test d", "date", 12, 12);
+//                DailyEventList.addEventToList(c);
+//                Log.d("added:", "" + DailyEventList.getEventListInstance().size());
+//                mListAdapter.notifyDataSetChanged();
+                Intent intent = new Intent(CalendarActivity.this, AddEventActivity.class);
+                startActivity(intent);
             }
         });
+
+
         mListAdapter = new CustomListAdapter(this, DailyEventList.getEventListInstance());
 
         mCalendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -208,6 +214,7 @@ public class CalendarActivity extends AppCompatActivity {
                 holder.time.setText(toDisplay.get(position).getDate().toString());
                 holder.description.setText(toDisplay.get(position).getDescription());
             }
+
 
             return convertView;
         }

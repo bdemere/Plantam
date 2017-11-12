@@ -18,6 +18,7 @@
         android:layout_gravity="bottom|end|right"
         android:clickable="true"
         app:fabSize="normal"
+        android:src="@mipmap/ic_add_white_18dp"
         app:layout_constraintEnd_toEndOf="@+id/calendar_view"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,9 +30,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:elevation="10dp"
-        app:layout_constraintEnd_toEndOf="@id/calendar_view_constraint"
-        app:layout_constraintTop_toTopOf="@id/calendar_view_constraint" />
+        android:elevation="10dp" />
     <TextView
         android:id="@+id/calendar_date_text_view"
         android:layout_width="386dp"

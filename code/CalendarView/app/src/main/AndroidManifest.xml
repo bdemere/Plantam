@@ -19,7 +19,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity" />
-        <activity android:name=".Layouts.CalendarActivity">
+        <activity android:name=".Layouts.CalendarLayout.CalendarActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,14 +31,18 @@
             android:label="@string/title_activity_user_authentication"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Layouts.PublicEventsActivity"
+            android:name=".Layouts.PublicEventsLayout.PublicEventsActivity"
             android:label="@string/title_activity_public_events"
-            android:parentActivityName=".Layouts.CalendarActivity"
+            android:parentActivityName=".Layouts.CalendarLayout.CalendarActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cpsc310proj.babib.plantam.Layouts.CalendarActivity" />
+                android:value="com.cpsc310proj.babib.plantam.Layouts.CalendarLayout.CalendarActivity" />
         </activity>
+        <activity
+            android:name=".Layouts.AddEventLayout.AddEventActivity"
+            android:label="@string/title_activity_add_event"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

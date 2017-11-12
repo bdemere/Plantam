@@ -1,18 +1,20 @@
 package com.cpsc310proj.babib.plantam.Firebase;
 
+import android.support.annotation.NonNull;
 import android.util.Log;
-import android.widget.Adapter;
 
 import com.cpsc310proj.babib.plantam.Enums.Category;
 import com.cpsc310proj.babib.plantam.Event;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -26,85 +28,114 @@ import java.util.Map;
  */
 
 public class FBDatabase {
+    private static String EVENT_ROOT = "events";
     private static FirebaseDatabase mFirebaseDatabase = null;
 
     private static DatabaseReference mUsersDatabaseReference  = null;
     private static DatabaseReference mEventsDatabaseReference = null;
 
-    private static class EventCategoryCache{
-        public static ArrayList<String> Sport = new ArrayList<>();
-        public static ArrayList<String> Club = new ArrayList<>();
-        public static ArrayList<String> Academic = new ArrayList<>();
-        public static ArrayList<String> Social = new ArrayList<>();
-//
-//        public static boolean mDatasetchanged_sport = false;
-//        public static boolean mDatasetchanged_club = false;
-//        public static boolean mDatasetchanged_academic = false;
-//        public static boolean mDatasetchanged_social = false;
-
-//        public static boolean isDatasetchanged_sport(){return mDatasetchanged_sport;}
-//        public static boolean isDatasetchanged_club(){return mDatasetchanged_club;}
-//        public static boolean isDatasetchanged_academic(){return mDatasetchanged_academic;}
-//        public static boolean isDatasetchanged_social(){return mDatasetchanged_social;}
+    private static Map<Category, ArrayList<String>> EventCategoryCache = null;
+    private static Map<Category, DatabaseReference> EventCategoryDatabaseReferences = null;
 
 
+    private static ArrayList<FireBaseDataObserver> dataObservers = null;
+
+    public static void addObserver(FireBaseDataObserver observer){
+        if(dataObservers == null) {
+            dataObservers = new ArrayList<>();
+            dataObservers.add(observer);
+        } else {
+            dataObservers.add(observer);
+        }
     }
 
-    private static class EventDatabaseReferences{
-        public static DatabaseReference Sport = null;
-        public static DatabaseReference Club = null;
-        public static DatabaseReference Academic = null;
-        public static DatabaseReference Social = null;
+    public static boolean removeObserver(FireBaseDataObserver observer){
+        return dataObservers.remove(observer);
     }
 
-    private static boolean isDatasetchanged = false;
 
-    public static void makeLocal(){
+
+    public static void writeEvent(Event e){
         if(mFirebaseDatabase == null)
             mFirebaseDatabase = FirebaseDatabase.getInstance();
         if(mEventsDatabaseReference == null)
-            mEventsDatabaseReference = mFirebaseDatabase.getReference().child("events");
+            mEventsDatabaseReference = mFirebaseDatabase.getReference().child(EVENT_ROOT);
+
+        mEventsDatabaseReference.child("sport").child(e.getTitle()).setValue(e).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    Log.d("Writing: ", "Great");
+                }else{
+                    Log.d("Writing: ", task.getException().toString());
+                }
+            }
+        });
+    }
 
 
-        if(EventDatabaseReferences.Sport == null)
-            EventDatabaseReferences.Sport = mEventsDatabaseReference.child(Category.SPORT.toString());
-        if(EventDatabaseReferences.Club == null)
-            EventDatabaseReferences.Club = mEventsDatabaseReference.child(Category.CLUB.toString());
-        if(EventDatabaseReferences.Academic == null)
-            EventDatabaseReferences.Academic = mEventsDatabaseReference.child(Category.ACADEMIC.toString());
-        if(EventDatabaseReferences.Social == null)
-            EventDatabaseReferences.Social = mEventsDatabaseReference.child(Category.SOCIAL.toString());
+    private static boolean isEventDataUpdated = false;
 
-        if(!isDatasetchanged) {
-            updateCache(EventDatabaseReferences.Sport, EventCategoryCache.Sport);
-            updateCache(EventDatabaseReferences.Club, EventCategoryCache.Club);
-            updateCache(EventDatabaseReferences.Academic, EventCategoryCache.Academic);
-            updateCache(EventDatabaseReferences.Social, EventCategoryCache.Social);
+    public static void eventDataUpdated(){
+        if(dataObservers != null)
+            for(FireBaseDataObserver fireBaseDataObserver: dataObservers)
+                fireBaseDataObserver.eventDataChanged();
+    }
 
-//            EventCategoryCache.mDatasetchanged_sport = true;
-//            EventCategoryCache.mDatasetchanged_club = true;
-//            EventCategoryCache.mDatasetchanged_academic = true;
-//            EventCategoryCache.mDatasetchanged_social = true;
+    /**
+     * A function to fetch data under the events root from
+     * the Firebase Database
+     */
+    public static void makeEventsDataLocal(){
+        //if not initialized, initialize database reference
+        if(mFirebaseDatabase == null)
+            mFirebaseDatabase = FirebaseDatabase.getInstance();
+        if(mEventsDatabaseReference == null)
+            mEventsDatabaseReference = mFirebaseDatabase.getReference().child(EVENT_ROOT);
 
-            isDatasetchanged = true;
+        //If cache is uninitialized
+        if(EventCategoryCache == null || EventCategoryDatabaseReferences == null) {
+            EventCategoryCache = new HashMap<>();
+            EventCategoryDatabaseReferences = new HashMap<>();
+            for (Category category : Category.values()) {
+                EventCategoryCache.put(category, new ArrayList<String>());
+                EventCategoryDatabaseReferences.put(category,
+                        mEventsDatabaseReference.child(category.toString()));
+            }
+        }
+
+        //if not updated, fill local cache with data from the database
+        if(!isEventDataUpdated) {
+            for(Category category : Category.values())
+                updateEventsCache(EventCategoryDatabaseReferences.get(category),
+                        EventCategoryCache.get(category));
+            isEventDataUpdated = true;
         }
 
 
 
 
+
+
     }
 
+    /**
+     * A function to update local data
+     */
     public static void update(){
-        isDatasetchanged = false;
-        EventCategoryCache.Sport = new ArrayList<>();
-        EventCategoryCache.Club = new ArrayList<>();
-        EventCategoryCache.Academic = new ArrayList<>();
-        EventCategoryCache.Social = new ArrayList<>();
-        makeLocal();
+        isEventDataUpdated = false;
+        for(Category category : Category.values())
+            EventCategoryCache.put(category, new ArrayList<String>());
+        makeEventsDataLocal();
 
     }
 
-    private static void updateCache(DatabaseReference dbRef, final ArrayList<String> toUpdate){
+    /**
+     * A function to pull data from a given root in the events database
+     * @param dbRef
+     * @param toUpdate
+     */
+    private static void updateEventsCache(DatabaseReference dbRef, final ArrayList<String> toUpdate){
         dbRef.addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override
@@ -115,8 +146,9 @@ public class FBDatabase {
                             toUpdate.add(entry.getKey());
 
                         }
+                        eventDataUpdated();
 
-                        Log.d("ayyyy::::", "" + toUpdate.toString());
+                        //Log.d("ayyyy::::", "" + toUpdate.toString());
 
 
                     }
@@ -129,19 +161,17 @@ public class FBDatabase {
                 });
     }
 
+    /**
+     * Given an events category, return a list of the events
+     * @param category
+     * @return
+     */
+
     public static ArrayList<String> getPublicEventsWithCategory(Category category){
-        ArrayList<String> toReturn = new ArrayList<>();
-        switch (category){
-            case SOCIAL:
-                toReturn = EventCategoryCache.Social; break;
-            case CLUB:
-                toReturn = EventCategoryCache.Club; break;
-            case ACADEMIC:
-                toReturn = EventCategoryCache.Academic; break;
-            case SPORT:
-                toReturn = EventCategoryCache.Sport; break;
-        }
-        return toReturn;
+        ArrayList<String> toReturn = EventCategoryCache.get(category);
+
+        return toReturn != null ? //in case cache is empty, return an empty list
+                toReturn : new ArrayList<String>();
     }
 
 

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.cpsc310proj.babib.plantam.Layouts.PublicEventsActivity">
+    tools:context="com.cpsc310proj.babib.plantam.Layouts.PublicEventsLayout.PublicEventsActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
@@ -30,7 +30,8 @@
         <android.support.design.widget.TabLayout
             android:id="@+id/public_event_tabs"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:tabMode="scrollable">
 
         </android.support.design.widget.TabLayout>
     </android.support.design.widget.AppBarLayout>

@@ -12,7 +12,8 @@ public enum Category {
     SPORT("sport"),
     CLUB("club"),
     ACADEMIC("academic"),
-    SOCIAL("social");
+    SOCIAL("social"),
+    OTHER("other");
 
     private String type_name;
     private Category(String type_name){

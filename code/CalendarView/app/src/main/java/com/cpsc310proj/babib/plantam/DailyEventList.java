@@ -33,14 +33,14 @@ public class DailyEventList {
             list.add(newEvent);
     }
 
-    public void sortEvent(Event newEvent) {
-        for (int i = 0; i < list.size(); i++) {
-            if (newEvent.getStartTime() > list.get(i).getStartTime()){
-                list.add(i + 1, newEvent);
-                break;
-            }
-        }
-    }
+//    public void sortEvent(Event newEvent) {
+//        for (int i = 0; i < list.size(); i++) {
+//            if (newEvent.getStartTime() > list.get(i).getStartTime()){
+//                list.add(i + 1, newEvent);
+//                break;
+//            }
+//        }
+//    }
 
     //Send information of all events to corresponding .xml file and let the file display
     public void displayAllEvent() {

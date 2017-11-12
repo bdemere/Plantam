@@ -2,27 +2,44 @@ package com.cpsc310proj.babib.plantam;
 
 //import java.time.MonthDay;
 
+import com.cpsc310proj.babib.plantam.Enums.Category;
+
+import java.util.Date;
+import java.util.UUID;
+
 /**
  * Created by anhthuynguyen on 10/27/17.
  */
 
 public class Event {
 
+    private String ID;
+
     private String title;
     private String description;
     private String date; //later change to enum or other data structure
-    private float start_time;
-    private float end_time;
-
+    private String start_time;
+    private String end_time;
+    private String category;
+    //TODO: add location field
+    //TODO: unique user ID in case of public events
+    
 
     //Constructors
-    public Event(String title, String description, String date, float start_time, float end_time) {
+    public Event(String title, String description, String date, String start_time, String end_time,
+                Category category) {
         this.title = title;
         this.description = description;
         this.date = date;
         this.start_time = start_time;
         this.end_time = end_time;
+        this.category = category.toString();
+        this.ID = UUID.randomUUID().toString();
+
     }
+
+    public Event(){}
+
 
     //Getters
     public String getTitle() {
@@ -37,11 +54,11 @@ public class Event {
         return this.date;
     }
 
-    public float getStartTime() {
+    public String getStartTime() {
         return this.start_time;
     }
 
-    public float getEndTime() {
+    public String getEndTime() {
         return this.end_time;
     }
 
@@ -59,20 +76,20 @@ public class Event {
         this.date = date;
     }
 
-    public void setStartTime(float start_time){
+    public void setStartTime(String start_time){
         this.start_time = start_time;
     }
 
-    public void setEndTime(float end_time){
+    public void setEndTime(String end_time){
         this.end_time = end_time;
     }
 
 
-
-    public Event createEvent(String title, String description, String date, float start_time, float end_time) {
-        return new Event(title,description,date,start_time,end_time);
-       // Event(title,description,date,start_time,end_time);
-    }
+//
+//    public Event createEvent(String title, String description, String date, float start_time, float end_time) {
+//        return new Event(title,description,date,start_time,end_time);
+//       // Event(title,description,date,start_time,end_time);
+//    }
 
     public boolean publishEvent() {
 

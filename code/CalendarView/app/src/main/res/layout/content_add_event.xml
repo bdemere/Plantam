@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/add_event_constraint_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.cpsc310proj.babib.plantam.Layouts.AddEventLayout.AddEventActivity"
+    tools:showIn="@layout/activity_add_event">
+
+
+    <EditText
+        android:id="@+id/add_event_title_input"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="20dp"
+        android:hint="@string/event_title"
+        app:layout_constraintLeft_toLeftOf="@id/add_event_constraint_layout"
+        app:layout_constraintTop_toTopOf="@id/add_event_constraint_layout"
+        tools:layout_editor_absoluteX="30dp"
+        tools:layout_editor_absoluteY="57dp" />
+
+    <EditText
+        android:id="@+id/add_event_description_input"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="20dp"
+        android:hint="@string/description"
+        android:inputType="textMultiLine"
+        android:lines="7"
+        app:layout_constraintLeft_toLeftOf="@id/add_event_title_input"
+        app:layout_constraintTop_toBottomOf="@id/add_event_title_input" />
+
+    <Button
+        android:id="@+id/add_event_date_picker"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="20dp"
+        android:gravity="center"
+        android:text="@string/date"
+        android:backgroundTint="#FFFFFF"
+        app:layout_constraintLeft_toLeftOf="@id/add_event_description_input"
+        app:layout_constraintTop_toBottomOf="@id/add_event_description_input" tools:targetApi="lollipop"/>
+
+    <Button
+        android:id="@+id/add_event_start_time_picker"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="20dp"
+        android:gravity="center"
+        android:text="start time"
+        android:backgroundTint="#FFFFFF"
+
+        app:layout_constraintLeft_toLeftOf="@id/add_event_date_picker"
+        app:layout_constraintTop_toBottomOf="@id/add_event_date_picker" />
+
+    <Button
+        android:id="@+id/add_event_end_time_picker"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="20dp"
+        android:gravity="center"
+        android:text="end time"
+        android:backgroundTint="#FFFFFF"
+
+        app:layout_constraintLeft_toLeftOf="@id/add_event_start_time_picker"
+        app:layout_constraintTop_toBottomOf="@id/add_event_start_time_picker" />
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/add_event_public_or_personal_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="36dp"
+        app:layout_constraintLeft_toLeftOf="@id/add_event_start_time_picker"
+        app:layout_constraintTop_toBottomOf="@id/add_event_end_time_picker" android:layout_marginStart="8dp" />
+
+    <Spinner
+        android:id="@+id/add_event_category_spinner"
+        android:layout_width="105dp"
+        android:layout_height="50dp"
+        android:layout_margin="20dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="24dp"
+        android:gravity="center"
+        app:layout_constraintHorizontal_bias="0.88"
+        app:layout_constraintLeft_toRightOf="@id/add_event_public_or_personal_switch"
+        app:layout_constraintRight_toRightOf="@id/add_event_end_time_picker"
+        app:layout_constraintTop_toBottomOf="@id/add_event_end_time_picker" />
+
+    <TextView
+        android:id="@+id/add_event_switch_textView"
+        android:layout_width="150dp"
+        android:layout_height="29dp"
+        android:text="Public"
+        android:backgroundTint="#000000"
+        android:gravity="center"
+        android:layout_marginTop="36dp"
+        app:layout_constraintHorizontal_bias="0.428"
+        app:layout_constraintLeft_toRightOf="@id/add_event_public_or_personal_switch"
+        app:layout_constraintRight_toLeftOf="@id/add_event_category_spinner"
+        app:layout_constraintTop_toBottomOf="@id/add_event_end_time_picker" />
+
+</android.support.constraint.ConstraintLayout>
+
+
+
+

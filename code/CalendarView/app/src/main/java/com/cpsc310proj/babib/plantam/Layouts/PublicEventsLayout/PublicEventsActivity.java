@@ -1,6 +1,7 @@
-package com.cpsc310proj.babib.plantam.Layouts;
+package com.cpsc310proj.babib.plantam.Layouts.PublicEventsLayout;
 
 import android.app.ProgressDialog;
+import android.content.res.Resources;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -16,11 +17,11 @@ import android.view.MenuItem;
 
 import com.cpsc310proj.babib.plantam.Enums.Category;
 import com.cpsc310proj.babib.plantam.Firebase.FBDatabase;
-import com.cpsc310proj.babib.plantam.Layouts.dummy.DummyContent;
+import com.cpsc310proj.babib.plantam.Firebase.FireBaseDataObserver;
 import com.cpsc310proj.babib.plantam.R;
 
 public class PublicEventsActivity extends AppCompatActivity
-        implements PublicEventCategoryFragment.OnListFragmentInteractionListener {
+        implements PublicEventCategoryFragment.OnListFragmentInteractionListener, FireBaseDataObserver {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -51,6 +52,7 @@ public class PublicEventsActivity extends AppCompatActivity
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        mProgressDialog = new ProgressDialog(this);
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
@@ -64,8 +66,13 @@ public class PublicEventsActivity extends AppCompatActivity
 
 
 
-        FBDatabase.makeLocal();
+        FBDatabase.addObserver(this);
+        FBDatabase.makeEventsDataLocal();
+        mProgressDialog.setMessage("Please wait ...");
+        mProgressDialog.show();
+
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
 
@@ -73,6 +80,23 @@ public class PublicEventsActivity extends AppCompatActivity
 
     }
 
+    public void eventDataChanged(){
+        Log.d("PublicEventsActivity: ", "eventDataChanged()");
+        if(mProgressDialog.isShowing()) mProgressDialog.cancel();
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        FBDatabase.removeObserver(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        FBDatabase.addObserver(this);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -92,6 +116,11 @@ public class PublicEventsActivity extends AppCompatActivity
         if (id == R.id.action_settings) {
             return true;
         } else if(id == R.id.public_action_update){
+            mProgressDialog.setMessage("Please wait...");
+            mProgressDialog.show();
+            //Event x = new Event("What", "Amazing", "today", 123, 124);
+
+            //FBDatabase.writeEvent(x);
             FBDatabase.update();
         }
 
@@ -112,7 +141,7 @@ public class PublicEventsActivity extends AppCompatActivity
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            Log.d("Change:: ", Category.values()[position].toString()+"");
+            //Log.d("Change:: ", Category.values()[position].toString()+"");
             return PublicEventCategoryFragment.newInstance(Category.values()[position]);
         }
 

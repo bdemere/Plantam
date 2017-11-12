@@ -13,7 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.cpsc310proj.babib.plantam.Layouts.CalendarActivity;
+import com.cpsc310proj.babib.plantam.Layouts.CalendarLayout.CalendarActivity;
 import com.cpsc310proj.babib.plantam.R;
 import com.google.android.gms.tasks.*;
 import com.google.firebase.auth.*;

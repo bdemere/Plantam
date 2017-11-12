@@ -1,4 +1,4 @@
-package com.cpsc310proj.babib.plantam.Layouts;
+package com.cpsc310proj.babib.plantam.Layouts.PublicEventsLayout;
 
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -7,23 +7,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.cpsc310proj.babib.plantam.Layouts.PublicEventCategoryFragment.OnListFragmentInteractionListener;
-import com.cpsc310proj.babib.plantam.Layouts.dummy.DummyContent.DummyItem;
 import com.cpsc310proj.babib.plantam.R;
 
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
+ * {@link RecyclerView.Adapter} that can display a and makes a call to the
+ * specified {@link PublicEventCategoryFragment.OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
 public class EventRecyclerViewAdapter extends RecyclerView.Adapter<EventRecyclerViewAdapter.ViewHolder> {
 
     private final List<String> mValues;
-    private final OnListFragmentInteractionListener mListener;
+    private final PublicEventCategoryFragment.OnListFragmentInteractionListener mListener;
 
-    public EventRecyclerViewAdapter(List<String> items, OnListFragmentInteractionListener listener) {
+    public EventRecyclerViewAdapter(List<String> items, PublicEventCategoryFragment.OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -31,7 +29,7 @@ public class EventRecyclerViewAdapter extends RecyclerView.Adapter<EventRecycler
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_item, parent, false);
+                .inflate(R.layout.fragment_public_event_item, parent, false);
         return new ViewHolder(view);
     }
 

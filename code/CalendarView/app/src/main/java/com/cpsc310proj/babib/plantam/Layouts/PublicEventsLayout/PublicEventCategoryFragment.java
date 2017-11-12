@@ -1,23 +1,18 @@
-package com.cpsc310proj.babib.plantam.Layouts;
+package com.cpsc310proj.babib.plantam.Layouts.PublicEventsLayout;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.cpsc310proj.babib.plantam.Enums.Category;
 import com.cpsc310proj.babib.plantam.Firebase.FBDatabase;
+import com.cpsc310proj.babib.plantam.Firebase.FireBaseDataObserver;
 import com.cpsc310proj.babib.plantam.R;
-import com.cpsc310proj.babib.plantam.Layouts.dummy.DummyContent;
-import com.cpsc310proj.babib.plantam.Layouts.dummy.DummyContent.DummyItem;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A fragment representing a list of Items.
@@ -25,7 +20,7 @@ import java.util.List;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class PublicEventCategoryFragment extends Fragment {
+public class PublicEventCategoryFragment extends Fragment implements FireBaseDataObserver {
 
     // TODO: Customize parameter argument names
     private static final String ARG_CATEGORY_NAME = "com.cpsc310proj.babib.plantam.Layouts." +
@@ -33,6 +28,8 @@ public class PublicEventCategoryFragment extends Fragment {
 
     // TODO: Customize parameters
     private Category mCategory;
+    private RecyclerView mRecyclerView;
+    private EventRecyclerViewAdapter mAdapter;
     private OnListFragmentInteractionListener mListener;
 
     /**
@@ -66,28 +63,34 @@ public class PublicEventCategoryFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_item_list, container, false);
 
-        // Set the adapter
+        // Set the mAdapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
+            mRecyclerView = (RecyclerView) view;
             //if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
             //} else {
             //    recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             //}
-            ArrayList<String> wazza = FBDatabase.getPublicEventsWithCategory(mCategory);
-            Log.d("test::", wazza.size() + "");
-            EventRecyclerViewAdapter adapter = new EventRecyclerViewAdapter(wazza, mListener);
 
-            recyclerView.setAdapter(adapter);
+            mAdapter = new EventRecyclerViewAdapter(FBDatabase.getPublicEventsWithCategory(mCategory)
+                      , mListener);
+
+            mRecyclerView.setAdapter(mAdapter);
         }
         return view;
     }
 
 
+    public void eventDataChanged(){
+        if(mAdapter != null)
+            mAdapter.notifyDataSetChanged();
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        FBDatabase.addObserver(this);
         if (context instanceof OnListFragmentInteractionListener) {
             mListener = (OnListFragmentInteractionListener) context;
         } else {
@@ -99,6 +102,7 @@ public class PublicEventCategoryFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
+        FBDatabase.removeObserver(this);
         mListener = null;
     }
 
