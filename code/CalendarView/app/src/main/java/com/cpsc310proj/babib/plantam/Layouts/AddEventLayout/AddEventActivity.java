@@ -122,7 +122,7 @@ public class AddEventActivity extends AppCompatActivity
         for(Category category : Category.values()){
             categories.add(category.toString().toUpperCase());
         }
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 this, android.R.layout.simple_spinner_item, categories);
 
         category_spinner.setAdapter(adapter);
