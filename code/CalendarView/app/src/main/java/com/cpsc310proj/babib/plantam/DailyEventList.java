@@ -27,7 +27,7 @@ public class DailyEventList {
 
     public void sortEvent(CalEvent newEvent) {
         for (int i = 0; i < list.size(); i++) {
-            if (newEvent.getStartTime() > list.get(i).getStartTime()){
+            if (newEvent.getStartDate()) > list.get(i).getStartDate()){
                 list.add(i + 1, newEvent);
                 break;
             }

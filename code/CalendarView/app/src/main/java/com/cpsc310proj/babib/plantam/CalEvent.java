@@ -10,18 +10,20 @@ public class CalEvent {
 
     private String title;
     private String description;
-    private Date start_date;
-    private Date end_date;
+    private String start_date;
+    private String end_date;
     private EventCategory category;
+    private Location location;
 
 
     //Constructors
-    public CalEvent(String title, String description, Date start, Date end, EventCategory category) {
+    public CalEvent(String title, String description, String start, String end, EventCategory category, Location location) {
         this.title = title;
         this.description = description;
         this.start_date = start;
         this.end_date = end;
         this.category = category;
+        this.location = location;
     }
 
     //Getters
@@ -33,17 +35,22 @@ public class CalEvent {
         return this.description;
     }
 
-    public Date getStartDate() {
+    public String getStartDate() {
         return start_date;
     }
 
-    public Date getEndDate() {
+    public String getEndDate() {
         return end_date;
     }
 
     public EventCategory getCategory() {
         return this.category;
     }
+
+    public Location getLocation() {
+        return location;
+    }
+
     //Setters
     public void setTitle(String title){
         this.title = title;
@@ -54,11 +61,11 @@ public class CalEvent {
 
     }
 
-    public void setStartDate(Date start_date) {
+    public void setStartDate(String start_date) {
         this.start_date = start_date;
     }
 
-    public void setEndDate(Date end_date) {
+    public void setEndDate(String end_date) {
         this.end_date = end_date;
     }
 
@@ -66,8 +73,12 @@ public class CalEvent {
         this.category = category;
     }
 
-    public CalEvent createEvent(String title, String description, Date start, Date end, EventCategory category) {
-        return new CalEvent(title,description,start,end,category);
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+    public CalEvent createEvent(String title, String description, String start, String end, EventCategory category, Location location) {
+        return new CalEvent(title,description,start,end,category,location);
        // CalEvent(title,description,date,start_time,end_time);
     }
 

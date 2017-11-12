@@ -10,6 +10,7 @@ import android.text.style.TtsSpan;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.UUID;
+
 /**
  * Created by anhthuynguyen on 11/2/17.
  */
@@ -40,9 +41,8 @@ public class EventDatabase {
         //get content value of an event
         ContentValues values = new ContentValues();
         values.put(DatabaseHelper.KEY_TITLE, event.getTitle().toString());
-        values.put(DatabaseHelper.KEY_DATE, event.getDate().toString());
-        values.put(DatabaseHelper.KEY_START, event.getStartTime());
-        values.put(DatabaseHelper.KEY_END, event.getEndTime());
+        values.put(DatabaseHelper.KEY_START, event.getStartDate());
+        values.put(DatabaseHelper.KEY_END, event.getEndDate());
         values.put(DatabaseHelper.KEY_DESCRP, event.getDescription().toString());
 
         mDatabase.insert(DatabaseHelper.DATABASE_NAME, null, values);
@@ -58,9 +58,8 @@ public class EventDatabase {
         String eventTitle = event.getTitle().toString();
         ContentValues values = new ContentValues();
         values.put(DatabaseHelper.KEY_TITLE, event.getTitle().toString());
-        values.put(DatabaseHelper.KEY_DATE, event.getDate().toString());
-        values.put(DatabaseHelper.KEY_START, event.getStartTime());
-        values.put(DatabaseHelper.KEY_END, event.getEndTime());
+        values.put(DatabaseHelper.KEY_START, event.getStartDate());
+        values.put(DatabaseHelper.KEY_END, event.getEndDate());
         values.put(DatabaseHelper.KEY_DESCRP, event.getDescription().toString());
 
         mDatabase.update(DatabaseHelper.DATABASE_NAME, values, DatabaseHelper.KEY_TITLE + " = ? ", new String[]{eventTitle});
