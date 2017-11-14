@@ -35,6 +35,11 @@ public class DatabaseHelper extends SQLiteOpenHelper { //change variables to pub
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 // Drop older table if existed
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_EVENTS);
+
+        //Sort table based on starting time
+        final String sortSQL = "select * from " + TABLE_EVENTS + " ORDER by " + KEY_START + " asc";
+        db.execSQL(sortSQL);
+
 // Creating tables again
         onCreate(db);
     }
