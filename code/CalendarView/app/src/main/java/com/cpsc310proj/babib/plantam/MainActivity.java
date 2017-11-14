@@ -30,5 +30,12 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        EventDatabase db = new EventDatabase(this);
+        Event e1 = new Event("FootballGame", "Fun times Trin vs Amherst", "11/23/17", "2pm","6pm","Sports");
+        db.addEvent(e1);
+        System.out.println(db.getEvent("FootballGame").toString());
+
+
     }
 }
