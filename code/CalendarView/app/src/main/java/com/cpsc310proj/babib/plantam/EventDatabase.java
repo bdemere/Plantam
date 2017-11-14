@@ -3,6 +3,11 @@ package com.cpsc310proj.babib.plantam;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.Cursor;
+import android.provider.ContactsContract;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by anhthuynguyen on 11/2/17.
@@ -14,7 +19,7 @@ public class EventDatabase {
     private static SQLiteDatabase mDatabase;
 
     /* Constructor */
-    private EventDatabase(Context context) {
+    public EventDatabase(Context context) {
         mContext = context.getApplicationContext();
         mDatabase = new DatabaseHelper(mContext).getWritableDatabase();
     }
@@ -57,5 +62,33 @@ public class EventDatabase {
         values.put(DatabaseHelper.KEY_DESCRP, event.getDescription().toString());
 
         mDatabase.update(DatabaseHelper.DATABASE_NAME, values, DatabaseHelper.KEY_TITLE + " = ? ", new String[]{eventTitle});
+    }
+
+    public Event getEvent(String eventTitle){
+        Cursor dbCursor = mDatabase.query(DatabaseHelper.DATABASE_NAME, new String[]{DatabaseHelper.KEY_TITLE,
+                DatabaseHelper.KEY_START,DatabaseHelper.KEY_END,DatabaseHelper.KEY_DESCRP },
+                eventTitle + "=?", new String[] {eventTitle, null, null, null, null}, null,
+                null, "asc") ;
+
+        if(dbCursor != null) { dbCursor.moveToFirst(); }
+
+        Event event = new Event(dbCursor.getString(0), dbCursor.getString(1), dbCursor.getString(2), dbCursor.getString(3), dbCursor.getString(4), dbCursor.getString(5));
+
+        return event;
+    }
+
+    public List<Event> getAllEvents(){
+        List<Event> eventList = new ArrayList<Event>();
+        String selectQuery = "SELECT *FROM" + DatabaseHelper.DATABASE_NAME;
+        Cursor dbCursor = mDatabase.rawQuery(selectQuery, null);
+
+        if(dbCursor.moveToFirst()){
+            while(dbCursor.moveToNext()){
+                Event event = new Event(dbCursor.getString(0), dbCursor.getString(1), dbCursor.getString(2), dbCursor.getString(3), dbCursor.getString(4), dbCursor.getString(5));
+                eventList.add(event);
+            }
+        }
+
+        return eventList;
     }
 }
