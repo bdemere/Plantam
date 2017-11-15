@@ -17,17 +17,17 @@ public class Event {
     private String date; //later change to enum or other data structure
     private String start_time;
     private String end_time;
-    private Category category;
+    private String category;
 
     //Constructors
     public Event(String title, String description, String date, String start_time, String end_time,
-                Category category) {
+                String category) {
         this.title = title;
         this.description = description;
         this.date = date;
         this.start_time = start_time;
         this.end_time = end_time;
-        this.category = category;
+        this.category = category.toString();
     }
 
     public Event(){}
