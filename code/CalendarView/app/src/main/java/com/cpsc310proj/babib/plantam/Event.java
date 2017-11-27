@@ -5,6 +5,7 @@ package com.cpsc310proj.babib.plantam;
 import com.cpsc310proj.babib.plantam.Enums.Category;
 
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * Created by anhthuynguyen on 10/27/17.
@@ -12,16 +13,24 @@ import java.util.Date;
 
 public class Event {
 
+    private String event_uid; //this events unique ID
     private String title;
     private String description;
-    private String date; //later change to enum or other data structure
+    private String date;
     private String start_time;
     private String end_time;
     private String category;
 
     //Constructors
-    public Event(String title, String description, String date, String start_time, String end_time,
-                String category) {
+    public Event(
+            String title,
+            String date,
+            String start_time,
+            String end_time,
+            String description,
+            String category) {
+
+        this.event_uid = UUID.randomUUID().toString() + "__" + title;
         this.title = title;
         this.description = description;
         this.date = date;
@@ -54,6 +63,7 @@ public class Event {
         return this.end_time;
     }
 
+
     //Setters
     public void setTitle(String title){
         this.title = title;
@@ -76,7 +86,13 @@ public class Event {
         this.end_time = end_time;
     }
 
+    public String getCategory() {
+        return category;
+    }
 
+    public void setEventUID(String event_uid){
+        this.event_uid = event_uid;
+    }
 //
 //    public Event createEvent(String title, String description, String date, float start_time, float end_time) {
 //        return new Event(title,description,date,start_time,end_time);

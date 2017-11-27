@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
@@ -20,9 +21,12 @@ import android.widget.Switch;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.cpsc310proj.babib.plantam.CurrentDate;
 import com.cpsc310proj.babib.plantam.Enums.Category;
+import com.cpsc310proj.babib.plantam.Event;
 import com.cpsc310proj.babib.plantam.Layouts.CalendarLayout.CalendarActivity;
 import com.cpsc310proj.babib.plantam.R;
+import com.cpsc310proj.babib.plantam.SQLiteDatabase.EventDatabase;
 
 import java.sql.Array;
 import java.sql.Date;
@@ -95,7 +99,21 @@ public class AddEventActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 if(sanity_check().equalsIgnoreCase("OK")){
+                    Event new_event = new Event(
+                            mTitleEditText.getText().toString(),
+                            mDatePicker.getText().toString(),
+                            mStartTimePicker.getText().toString(),
+                            mEndTimePicker.getText().toString(),
+                            mDescriptionEditText.getText().toString(),
+                            mCategorySpinner.getSelectedItem().toString()
+                    );
 
+
+                    //Log.d("Category: ", mCategorySpinner.getSelectedItem().toString());
+                    //TODO: ADD to database
+                    EventDatabase eventDatabase = new EventDatabase(AddEventActivity.this);
+
+                    eventDatabase.addEvent(new_event);
                 } else {
                     Snackbar.make(view, sanity_check(), Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
@@ -130,12 +148,13 @@ public class AddEventActivity extends AppCompatActivity
 
 
     private void initialize_date_dialog(){
-        java.util.Date date = Calendar.getInstance().getTime();
+        int day = CurrentDate.getDay();
+        int month = CurrentDate.getMonth();
+        int year = CurrentDate.getYear();
 
 
         mDatePickerDialog = new DatePickerDialog(AddEventActivity.this, this,
-                date.getYear(), date.getMonth(),
-                date.getDay());
+                year, month,day);
     }
 
     private void initialize_start_time_dialog(){
@@ -144,7 +163,7 @@ public class AddEventActivity extends AppCompatActivity
         mStartTimePickerDialog = new TimePickerDialog(AddEventActivity.this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                mStartTimePicker.setText( selectedHour + ":" + selectedMinute);
+                mStartTimePicker.setText( selectedHour % 12 + ":" + selectedMinute);
             }
         }, date.getHours(), date.getMinutes(), false);
     }
@@ -155,7 +174,7 @@ public class AddEventActivity extends AppCompatActivity
         mEndTimePickerDialog = new TimePickerDialog(AddEventActivity.this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                mEndTimePicker.setText( selectedHour + ":" + selectedMinute);
+                mEndTimePicker.setText( selectedHour %12 + ":" + selectedMinute);
             }
         }, date.getHours(), date.getMinutes(), false);
     }

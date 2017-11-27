@@ -20,15 +20,19 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cpsc310proj.babib.plantam.CurrentDate;
 import com.cpsc310proj.babib.plantam.Event;
 import com.cpsc310proj.babib.plantam.DailyEventList;
 import com.cpsc310proj.babib.plantam.Firebase.FirebaseUserAuthentication;
 import com.cpsc310proj.babib.plantam.Layouts.AddEventLayout.AddEventActivity;
 import com.cpsc310proj.babib.plantam.Layouts.PublicEventsLayout.PublicEventsActivity;
 import com.cpsc310proj.babib.plantam.R;
+import com.cpsc310proj.babib.plantam.SQLiteDatabase.EventDatabase;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by MyNameIsYou on 10/21/17.
@@ -62,17 +66,26 @@ public class CalendarActivity extends AppCompatActivity {
         mAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Event c = new Event("test title", "test d", "date", 12, 12);
-//                DailyEventList.addEventToList(c);
-//                Log.d("added:", "" + DailyEventList.getEventListInstance().size());
-//                mListAdapter.notifyDataSetChanged();
                 Intent intent = new Intent(CalendarActivity.this, AddEventActivity.class);
                 startActivity(intent);
             }
         });
 
 
-        mListAdapter = new CustomListAdapter(this, DailyEventList.getEventListInstance());
+        //mListAdapter = new CustomListAdapter(this, DailyEventList.getEventListInstance());
+        EventDatabase eventDatabase = new EventDatabase(CalendarActivity.this);
+
+        mListAdapter = new CustomListAdapter(this, eventDatabase.getAllEvents());
+
+
+        int day = CurrentDate.getDay();
+        int month = CurrentDate.getMonth();
+        int year = CurrentDate.getYear();
+
+
+        mDateView.setText(""+ year + ":" + month + ":" + day);
+        mCalendarView.setDate(CurrentDate.getDate());
+
 
         mCalendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
@@ -195,8 +208,6 @@ public class CalendarActivity extends AppCompatActivity {
         }
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-
-            View list_view;
             ViewHolder holder = new ViewHolder();
 
             if (convertView == null) {
@@ -211,7 +222,7 @@ public class CalendarActivity extends AppCompatActivity {
 
             if(!toDisplay.isEmpty()){
                 holder.title.setText(toDisplay.get(position).getTitle());
-                holder.time.setText(toDisplay.get(position).getDate().toString());
+                holder.time.setText(toDisplay.get(position).getDate());
                 holder.description.setText(toDisplay.get(position).getDescription());
             }
 
