@@ -9,32 +9,25 @@
 
     <TextView
         android:id="@+id/calendar_detail_list_view_time"
-        android:layout_width="100dp"
-        android:layout_height="18dp"
-        android:layout_margin="12dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
 
-
-        android:gravity="center"
+        android:gravity="center_vertical"
         android:text="TextView"
-        app:layout_constraintEnd_toStartOf="@+id/calendar_detail_list_view_description"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/calendar_detail_list_view_title"
-
-        android:layout_width="244dp"
+        android:gravity="center_vertical"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="15dp"
         android:text="TextView"
         app:layout_constraintStart_toEndOf="@+id/calendar_detail_list_view_time"
-        app:layout_constraintTop_toTopOf="@id/calendar_detail_list_view_time" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/calendar_detail_list_view_description"
-        android:layout_width="244dp"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintLeft_toLeftOf="@+id/calendar_detail_list_view_title"
-        app:layout_constraintTop_toBottomOf="@id/calendar_detail_list_view_title" />
+
 </android.support.constraint.ConstraintLayout>

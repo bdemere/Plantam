@@ -42,7 +42,12 @@
         <activity
             android:name=".Layouts.AddEventLayout.AddEventActivity"
             android:label="@string/title_activity_add_event"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".Layouts.CalendarLayout.CalendarActivity" />
+
+        </activity>
     </application>
 
 </manifest>

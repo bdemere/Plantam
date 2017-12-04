@@ -1,4 +1,6 @@
 package com.cpsc310proj.babib.plantam;
+import com.cpsc310proj.babib.plantam.Event.Event;
+
 import java.util.ArrayList;
 
 /**

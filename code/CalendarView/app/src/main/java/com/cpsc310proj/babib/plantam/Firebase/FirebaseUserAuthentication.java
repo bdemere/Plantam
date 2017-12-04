@@ -19,6 +19,9 @@ import com.google.android.gms.tasks.*;
 import com.google.firebase.auth.*;
 import com.google.firebase.database.*;
 
+/**
+ * T
+ */
 public class FirebaseUserAuthentication extends AppCompatActivity implements View.OnClickListener{
     private EditText mEmailEditText;
     private EditText mPasswordEditText;

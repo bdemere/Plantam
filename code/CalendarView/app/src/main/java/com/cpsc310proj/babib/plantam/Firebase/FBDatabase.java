@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.cpsc310proj.babib.plantam.Enums.Category;
-import com.cpsc310proj.babib.plantam.Event;
+import com.cpsc310proj.babib.plantam.Event.Event;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -28,20 +28,38 @@ import java.util.Map;
  */
 
 public class FBDatabase {
-    private static String EVENT_ROOT = "events";
-    private static FirebaseDatabase mFirebaseDatabase = null;
+    private static String
+            EVENT_ROOT = "events";    //event root node name in the jason structure
+    private static FirebaseDatabase
+            mFirebaseDatabase = null; //Firebase database reference object
 
-    private static DatabaseReference mUsersDatabaseReference  = null;
-    private static DatabaseReference mEventsDatabaseReference = null;
+    private static DatabaseReference
+            mEventsDatabaseReference = null; //Reference for the event node
 
-    private static Map<Category, ArrayList<String>> EventCategoryCache = null;
-    private static Map<Category, DatabaseReference> EventCategoryDatabaseReferences = null;
+    private static Map<Category, ArrayList<String>>
+            EventCategoryCache = null; //A temporary storage place for database events
+
+    private static Map<Category, DatabaseReference>
+            EventCategoryDatabaseReferences = null;
+            //A map of category to their Firebase database root references
 
 
-    private static ArrayList<FireBaseDataObserver> dataObservers = null;
+    /**
+     * This is a list of Observers that wait on data change on the local cache
+     *
+     **/
+    private static ArrayList<FireBaseDataObserver>
+            dataObservers = null;
 
+
+    /**
+     * This method is used to add observer objects that
+     * will be notified when there is a change made
+     * to the downloaded data
+     * @param observer
+     */
     public static void addObserver(FireBaseDataObserver observer){
-        if(dataObservers == null) {
+        if(dataObservers == null) { //if not initialized
             dataObservers = new ArrayList<>();
             dataObservers.add(observer);
         } else {
@@ -49,6 +67,12 @@ public class FBDatabase {
         }
     }
 
+
+    /**
+     * Remove an observer
+     * @param observer
+     * @return
+     */
     public static boolean removeObserver(FireBaseDataObserver observer){
         return dataObservers.remove(observer);
     }
@@ -74,8 +98,12 @@ public class FBDatabase {
     }
 
 
-    private static boolean isEventDataUpdated = false;
+    private static boolean isEventDataUpdated = false; //boolean value to
 
+
+    /**
+     * Notify all observers that a data has changed
+     */
     public static void eventDataUpdated(){
         if(dataObservers != null)
             for(FireBaseDataObserver fireBaseDataObserver: dataObservers)
@@ -149,8 +177,6 @@ public class FBDatabase {
                         eventDataUpdated();
 
                         //Log.d("ayyyy::::", "" + toUpdate.toString());
-
-
                     }
 
                     @Override

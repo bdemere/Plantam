@@ -14,6 +14,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.CalendarView;
 import android.widget.ListView;
@@ -21,8 +22,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cpsc310proj.babib.plantam.CurrentDate;
-import com.cpsc310proj.babib.plantam.Event;
-import com.cpsc310proj.babib.plantam.DailyEventList;
+import com.cpsc310proj.babib.plantam.Event.CustomDate;
+import com.cpsc310proj.babib.plantam.Event.Event;
 import com.cpsc310proj.babib.plantam.Firebase.FirebaseUserAuthentication;
 import com.cpsc310proj.babib.plantam.Layouts.AddEventLayout.AddEventActivity;
 import com.cpsc310proj.babib.plantam.Layouts.PublicEventsLayout.PublicEventsActivity;
@@ -31,36 +32,45 @@ import com.cpsc310proj.babib.plantam.SQLiteDatabase.EventDatabase;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.List;
 
 /**
  * Created by MyNameIsYou on 10/21/17.
+ *
+ * An Activity class that will show the schedule of the user
+ * It has a Calendar
+ *        List of events on a selected day
  */
-
 public class CalendarActivity extends AppCompatActivity {
 
     private static final String TAG = "CalendarActivity";
+
+
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
 
-    private TextView mDateView;
-    private CalendarView mCalendarView;
-    private ListView mEventsListView;
-    private FloatingActionButton mAddButton;
+    private CalendarView mCalendarView; //Calendar: show the calendar
+    private ListView mEventsListView; //List: show list of events selected in a date selected
+    private FloatingActionButton mAddButton;//Floating Button: button to open a form to add events
+
+    /**
+     * A custom Adapter for the list class
+     * It enables to define a new design for the items in the list
+     **/
     private CustomListAdapter mListAdapter;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.calendar_layout);
+        setContentView(R.layout.calendar_layout); //attach layout to the activity
 
         mFirebaseAuth = FirebaseAuth.getInstance();
 
-        mDateView = (TextView)findViewById(R.id.calendar_date_text_view);
+
         mCalendarView = (CalendarView)findViewById(R.id.calendar_view);
         mEventsListView = (ListView)findViewById(R.id.calendar_events_list_view);
+
         mAddButton = (FloatingActionButton)findViewById(R.id.calendar_event_add);
 
         mAddButton.setOnClickListener(new View.OnClickListener() {
@@ -72,10 +82,7 @@ public class CalendarActivity extends AppCompatActivity {
         });
 
 
-        //mListAdapter = new CustomListAdapter(this, DailyEventList.getEventListInstance());
-        EventDatabase eventDatabase = new EventDatabase(CalendarActivity.this);
 
-        mListAdapter = new CustomListAdapter(this, eventDatabase.getAllEvents());
 
 
         int day = CurrentDate.getDay();
@@ -83,15 +90,33 @@ public class CalendarActivity extends AppCompatActivity {
         int year = CurrentDate.getYear();
 
 
-        mDateView.setText(""+ year + ":" + month + ":" + day);
+        //mDateView.setText(""+ year + ":" + month + ":" + day);
         mCalendarView.setDate(CurrentDate.getDate());
 
+        EventDatabase eventDatabase =  EventDatabase.getEventDatabase(CalendarActivity.this);
+        //new EventDatabase(CalendarActivity.this);
+
+        mListAdapter = new CustomListAdapter(
+                this,
+                eventDatabase.getEventsAtDate( //when date is changed
+                    (new CustomDate()).setYear(year).setMonth(month).setDay(day)
+                )
+        );
 
         mCalendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                mDateView.setText("" + year + ":" + month + ":" + dayOfMonth);
-                Log.d("testing", "" + year + ":" + month + ":" + dayOfMonth);
+                //mDateView.setText("" + year + ":" + month + ":" + dayOfMonth);
+                //Log.d("testing", "" + year + ":" + month + ":" + dayOfMonth);
+                EventDatabase eventDatabase = EventDatabase.getEventDatabase(CalendarActivity.this);
+                ArrayList<Event> events = eventDatabase.getEventsAtDate( //when date is changed
+                        (new CustomDate()).setYear(year).setMonth(month).setDay(dayOfMonth)
+                );
+
+
+                mListAdapter.setList(events);
+                mListAdapter.notifyDataSetChanged();
+
             }
         });
 
@@ -101,19 +126,16 @@ public class CalendarActivity extends AppCompatActivity {
 
         mEventsListView.setAdapter(mListAdapter);
 
+        //TODO: open dialog when an event clicked
+        mEventsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("CalendarActivity: ", position + " clicked");
+                Toast.makeText(getBaseContext(), "TODO: show dialog for "
+                        + mListAdapter.getList().get(position).getTitle(), Toast.LENGTH_LONG);
+            }
+        });
 
-        /*
-        CalendarViewFragment upperFragment = new CalendarViewFragment();
-        FragmentManager manager = getSupportFragmentManager();
-        manager.beginTransaction()
-                .replace(R.id.upper_part_monthly_view, upperFragment, upperFragment.getTag())
-                .commit();
-
-        CalendarViewDetailFragment lowerFragment = new CalendarViewDetailFragment();
-        FragmentManager manager1 = getSupportFragmentManager();
-        manager1.beginTransaction()
-                .replace(R.id.lower_part_monthly_view, lowerFragment, lowerFragment.getTag())
-                .commit();*/
 
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -129,6 +151,8 @@ public class CalendarActivity extends AppCompatActivity {
             }
         };
     }
+
+
 
     @Override
     protected void onResume() {
@@ -157,8 +181,8 @@ public class CalendarActivity extends AppCompatActivity {
                 Toast.makeText(this, "Signing out...", Toast.LENGTH_SHORT)
                         .show();
                 mFirebaseAuth.getInstance().signOut();
-//                Toast.makeText(this, mAuth.getCurrentUser() + " is signed in??", Toast.LENGTH_SHORT)
-//                        .show();
+
+
                 finish();
                 Intent intent = new Intent(CalendarActivity.this, FirebaseUserAuthentication.class);
                 startActivity(intent);
@@ -173,7 +197,7 @@ public class CalendarActivity extends AppCompatActivity {
     }
 
     private class CustomListAdapter extends BaseAdapter{
-        ArrayList<Event> toDisplay;
+        private List<Event> toDisplay;
         private LayoutInflater inflater;
 
         public CustomListAdapter(Context context, ArrayList<Event> event_list) {
@@ -181,6 +205,15 @@ public class CalendarActivity extends AppCompatActivity {
             Log.d("list: ", "got here");
             toDisplay = event_list;
             inflater = LayoutInflater.from(context);
+        }
+
+
+
+        public void setList(List<Event> list){
+            toDisplay = list;
+        }
+        public List<Event> getList(){
+            return toDisplay;
         }
 
         @Override
@@ -218,12 +251,12 @@ public class CalendarActivity extends AppCompatActivity {
 
             holder.title = (TextView)convertView.findViewById(R.id.calendar_detail_list_view_title);
             holder.time = (TextView)convertView.findViewById(R.id.calendar_detail_list_view_time);
-            holder.description = (TextView)convertView.findViewById(R.id.calendar_detail_list_view_description);
+            //holder.description = (TextView)convertView.findViewById(R.id.calendar_detail_list_view_description);
 
             if(!toDisplay.isEmpty()){
                 holder.title.setText(toDisplay.get(position).getTitle());
-                holder.time.setText(toDisplay.get(position).getDate());
-                holder.description.setText(toDisplay.get(position).getDescription());
+                holder.time.setText(toDisplay.get(position).getStartTime().toString());
+                //holder.description.setText(toDisplay.get(position).getDescription());
             }
 
 

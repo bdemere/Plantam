@@ -21,7 +21,8 @@ public class EventRecyclerViewAdapter extends RecyclerView.Adapter<EventRecycler
     private final List<String> mValues;
     private final PublicEventCategoryFragment.OnListFragmentInteractionListener mListener;
 
-    public EventRecyclerViewAdapter(List<String> items, PublicEventCategoryFragment.OnListFragmentInteractionListener listener) {
+    public EventRecyclerViewAdapter(List<String> items,
+                                    PublicEventCategoryFragment.OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
