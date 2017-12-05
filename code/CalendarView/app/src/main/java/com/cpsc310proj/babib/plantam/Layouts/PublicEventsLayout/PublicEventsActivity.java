@@ -118,9 +118,7 @@ public class PublicEventsActivity extends AppCompatActivity
         } else if(id == R.id.public_action_update){
             mProgressDialog.setMessage("Please wait...");
             mProgressDialog.show();
-            //Event x = new Event("What", "Amazing", "today", 123, 124);
 
-            //FBDatabase.writeEvent(x);
             FBDatabase.update();
         }
 

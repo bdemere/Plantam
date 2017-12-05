@@ -2,6 +2,11 @@ package com.cpsc310proj.babib.plantam.Event;
 
 //import java.time.MonthDay;
 
+import android.util.Log;
+
+import com.cpsc310proj.babib.plantam.Enums.Accessibility;
+import com.cpsc310proj.babib.plantam.SQLiteDatabase.DatabaseEntry;
+
 import java.util.Date;
 import java.util.UUID;
 
@@ -9,7 +14,7 @@ import java.util.UUID;
  * Created by anhthuynguyen on 10/27/17.
  */
 
-public class Event {
+public class Event implements DatabaseEntry {
     //Event Table Columns names
     public static final String KEY_ID = "ID";
     public static final String KEY_TITLE = "TITLE";
@@ -18,6 +23,19 @@ public class Event {
     public static final String KEY_END = "END_TIME";
     public static final String KEY_DESCRIPTION = "DESCRIPTION";
     public static final String KEY_CATEGORY = "CATEGORY";
+    public static final String KEY_ACCESSIBILITY = "ACCESSIBILITY";
+
+    public static String[] KEYS = {
+            "",
+            Event.KEY_ID,
+            Event.KEY_TITLE,
+            Event.KEY_DATE,
+            Event.KEY_START,
+            Event.KEY_END,
+            Event.KEY_DESCRIPTION,
+            Event.KEY_CATEGORY,
+            Event.KEY_ACCESSIBILITY
+    };
 
 
     private String event_uid; //this events unique ID
@@ -27,6 +45,7 @@ public class Event {
     private String start_time;
     private String end_time;
     private String category;
+    private String accessibility;
 
     //Constructors
     public Event(
@@ -35,7 +54,8 @@ public class Event {
             String start_time,
             String end_time,
             String description,
-            String category) {
+            String category,
+            String accessibility) {
 
         this.event_uid = UUID.randomUUID().toString() + ":" + title;
         this.title = title;
@@ -44,6 +64,7 @@ public class Event {
         this.start_time = start_time;
         this.end_time = end_time;
         this.category = category.toString();
+        this.accessibility = accessibility;
     }
 
     public Event(
@@ -52,7 +73,8 @@ public class Event {
             CustomTime start_time,
             CustomTime end_time,
             String description,
-            String category) {
+            String category,
+            String accessibility) {
 
         this.event_uid = UUID.randomUUID().toString() + ":" + title;
         this.title = title;
@@ -61,9 +83,13 @@ public class Event {
         this.start_time = start_time.toString();
         this.end_time = end_time.toString();
         this.category = category.toString();
+        this.accessibility = accessibility;
     }
 
-    public Event(){}
+    public Event(){
+        event_uid = UUID.randomUUID().toString();
+        Log.d("EventCreation: ", "UUID: " + event_uid);
+    }
 
 
     //Getters
@@ -85,6 +111,14 @@ public class Event {
 
     public CustomTime getEndTime() {
         return new CustomTime(this.end_time);
+    }
+
+    public void setAccessibility(String accessibility){
+        this.accessibility = accessibility;
+    }
+
+    public String getAccessibility(){
+        return accessibility;
     }
 
 
@@ -113,17 +147,18 @@ public class Event {
     public void setCategory(String category){
         this.category = category;
     }
-    public void setEventUID(){
-        this.event_uid = UUID.randomUUID().toString() + ":" + title;
-    }
 
+
+    public void setEventUID(String uid){event_uid = uid;}
+
+    public String getEventUID(){
+        Log.d("getEventUID(): ", event_uid.toString());
+        return event_uid;
+    }
     public String getCategory() {
         return category;
     }
 
-    public void setEventUID(String event_uid){
-        this.event_uid = event_uid;
-    }
 //
 //    public Event createEvent(String title, String description, String date, float start_time, float end_time) {
 //        return new Event(title,description,date,start_time,end_time);
@@ -159,6 +194,11 @@ public class Event {
                 ", start_time='" + start_time + '\'' +
                 ", end_time='" + end_time + '\'' +
                 ", category='" + category + '\'' +
+                ", accessibility='" + accessibility + '\'' +
                 '}';
+    }
+
+    public String getTableSpecification(){
+        return "";
     }
 }

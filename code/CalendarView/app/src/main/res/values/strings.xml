@@ -28,4 +28,9 @@
     <string name="date">date</string>
     <string name="start_time">start time</string>
     <string name="end_time">end time</string>
+
+    <!-- Event detail dialog-->
+    <string name="event_detail_delete">Delete</string>
+    <string name="event_detail_edit">Edit</string>
+
 </resources>

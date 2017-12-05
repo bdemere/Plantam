@@ -41,62 +41,84 @@ public class EventDatabase {
     public void addEvent(Event event) {
         //get content value of an event
         ContentValues values = new ContentValues();
+        Log.d("Eve..base.addEvent(): ", event.getEventUID());
+        values.put(Event.KEY_ID, event.getEventUID());
         values.put(Event.KEY_TITLE, event.getTitle());
         values.put(Event.KEY_DATE, event.getDate().toString());
         values.put(Event.KEY_START, event.getStartTime().toString());
         values.put(Event.KEY_END, event.getEndTime().toString());
         values.put(Event.KEY_DESCRIPTION, event.getDescription());
         values.put(Event.KEY_CATEGORY, event.getCategory());
+        values.put(Event.KEY_ACCESSIBILITY, event.getAccessibility());
 
         mDatabase.insert(DatabaseHelper.TABLE_NAME, null, values);
     }
 
-    public void deleteEvent(Event event) {
-        String eventTitle = event.getTitle().toString();
-        mDatabase.delete(DatabaseHelper.DATABASE_NAME, Event.KEY_TITLE + " = ?",
-                new String[]{eventTitle});
+    public void deleteEvent(String eventID) {
+        mDatabase.delete(DatabaseHelper.TABLE_NAME, Event.KEY_ID + " = ?",
+                new String[]{eventID});
     }
+//
+//    public void updateEvent(Event event){
+//        String eventTitle = event.getTitle().toString();
+//        ContentValues values = new ContentValues();
+//        values.put(Event.KEY_TITLE, event.getTitle().toString());
+//        values.put(Event.KEY_START, event.getStartTime().toString());
+//        values.put(Event.KEY_END, event.getEndTime().toString());
+//        values.put(Event.KEY_DESCRIPTION, event.getDescription().toString());
+//
+//        mDatabase.update(DatabaseHelper.DATABASE_NAME, values, Event.KEY_TITLE + " = ? ", new String[]{eventTitle});
+//    }
+//
+//    public Event getEvent(String eventTitle){
+//        Cursor dbCursor = mDatabase.query(
+//                DatabaseHelper.DATABASE_NAME,
+//                new String[]{
+//                        Event.KEY_TITLE,
+//                        Event.KEY_START,
+//                        Event.KEY_END,
+//                        Event.KEY_DESCRIPTION
+//                },
+//                eventTitle + "=?",
+//                new String[] {
+//                        eventTitle, null, null, null, null
+//                },
+//                null,
+//                null,
+//                "asc") ;
+//
+//        if(dbCursor != null) { dbCursor.moveToFirst(); }
+//
+//        Event event =
+//                new Event(
+//                        dbCursor.getString(0),
+//                        dbCursor.getString(1),
+//                        dbCursor.getString(2),
+//                        dbCursor.getString(3),
+//                        dbCursor.getString(4),
+//                        dbCursor.getString(5),
+//                        dbCursor.getString(6));
+//
+//        return event;
+//    }
 
-    public void updateEvent(Event event){
-        String eventTitle = event.getTitle().toString();
-        ContentValues values = new ContentValues();
-        values.put(Event.KEY_TITLE, event.getTitle().toString());
-        values.put(Event.KEY_START, event.getStartTime().toString());
-        values.put(Event.KEY_END, event.getEndTime().toString());
-        values.put(Event.KEY_DESCRIPTION, event.getDescription().toString());
 
-        mDatabase.update(DatabaseHelper.DATABASE_NAME, values, Event.KEY_TITLE + " = ? ", new String[]{eventTitle});
-    }
-
-    public Event getEvent(String eventTitle){
+    public Event getEvent(String UID){
         Cursor dbCursor = mDatabase.query(
-                DatabaseHelper.DATABASE_NAME,
-                new String[]{
-                        Event.KEY_TITLE,
-                        Event.KEY_START,
-                        Event.KEY_END,
-                        Event.KEY_DESCRIPTION
-                },
-                eventTitle + "=?",
-                new String[] {
-                        eventTitle, null, null, null, null
-                },
-                null,
-                null,
-                "asc") ;
+                DatabaseHelper.TABLE_NAME,
+                null, null, null, null, null,
+                Event.KEY_START + " ASC"
+        );
 
-        if(dbCursor != null) { dbCursor.moveToFirst(); }
-
-        Event event =
-                new Event(
-                        dbCursor.getString(0),
-                        dbCursor.getString(1),
-                        dbCursor.getString(2),
-                        dbCursor.getString(3),
-                        dbCursor.getString(4),
-                        dbCursor.getString(5));
-
-        return event;
+        if(dbCursor.moveToFirst()){
+            do{
+                Event event = DatabaseHelper.getEvent(dbCursor);
+                Log.d("EventDatabase: ", event.toString());
+                if(event.getEventUID().equals(UID))
+                    return event;
+            } while(dbCursor.moveToNext());
+        }
+        return null;
     }
 
     public ArrayList<Event> getEventsAtDate(CustomDate date){

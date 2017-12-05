@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.cpsc310proj.babib.plantam.Enums.DatabaseKey;
 import com.cpsc310proj.babib.plantam.Event.Event;
 
 public class DatabaseHelper extends SQLiteOpenHelper { //change variables to public to try adding event to database
@@ -17,16 +16,8 @@ public class DatabaseHelper extends SQLiteOpenHelper { //change variables to pub
     public static final String TABLE_NAME = DATABASE_NAME + "_events";
 
 
-    public static String[] KEYS = {
-            "",
-            Event.KEY_ID,
-            Event.KEY_TITLE,
-            Event.KEY_DATE,
-            Event.KEY_START,
-            Event.KEY_END,
-            Event.KEY_DESCRIPTION,
-            Event.KEY_CATEGORY
-    };
+    public static String[] KEYS = Event.KEYS;
+
 
 
 
@@ -46,7 +37,8 @@ public class DatabaseHelper extends SQLiteOpenHelper { //change variables to pub
                     KEYS[4] + " TEXT, " +
                     KEYS[5] + " TEXT, " +
                     KEYS[6] + " TEXT, " +
-                    KEYS[7] + " TEXT  " +
+                    KEYS[7] + " TEXT, " +
+                    KEYS[8] + " TEXT  " +
             ");"
         );
     }
@@ -86,6 +78,8 @@ public class DatabaseHelper extends SQLiteOpenHelper { //change variables to pub
                 getKeyIndex(Event.KEY_CATEGORY)));
         event.setEventUID(dbCursor.getString(
                 getKeyIndex(Event.KEY_ID)));
+        event.setAccessibility(dbCursor.getString(
+                getKeyIndex(Event.KEY_ACCESSIBILITY)));
 
         return event;
     }

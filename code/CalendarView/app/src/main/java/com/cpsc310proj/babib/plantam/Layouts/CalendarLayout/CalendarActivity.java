@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -121,15 +122,19 @@ public class CalendarActivity extends AppCompatActivity {
         });
 
 
-
-
-
         mEventsListView.setAdapter(mListAdapter);
 
         //TODO: open dialog when an event clicked
         mEventsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                // Create and show the dialog.
+                EventDetailDialog newFragment =
+                        EventDetailDialog.newInstance(mListAdapter.getList().get(position).getEventUID());
+                newFragment.show(ft, "EventDetailDialog: " + id);
+
+
                 Log.d("CalendarActivity: ", position + " clicked");
                 Toast.makeText(getBaseContext(), "TODO: show dialog for "
                         + mListAdapter.getList().get(position).getTitle(), Toast.LENGTH_LONG);

@@ -1,0 +1,31 @@
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.cpsc310proj.babib.plantam.Layouts.CalendarLayout.EventDetailDialog">
+
+    <!-- TODO: Update blank fragment layout -->
+    <include layout="@layout/content_event_form" />
+
+    <Button
+        android:id="@+id/event_dialog_delete_event"
+        android:layout_width="wrap_content"
+        android:layout_height="53dp"
+        android:text="Delete"
+        tools:layout_editor_absoluteX="280dp"
+        tools:layout_editor_absoluteY="442dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="parent"/>
+
+    <Button
+        android:id="@+id/event_dialog_edit_event"
+        android:layout_width="wrap_content"
+        android:layout_height="53dp"
+        android:text="Edit"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="442dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+</android.support.constraint.ConstraintLayout>
