@@ -25,7 +25,7 @@ import android.widget.Toast;
 import com.cpsc310proj.babib.plantam.CurrentDate;
 import com.cpsc310proj.babib.plantam.Event.CustomDate;
 import com.cpsc310proj.babib.plantam.Event.Event;
-import com.cpsc310proj.babib.plantam.Firebase.FirebaseUserAuthentication;
+import com.cpsc310proj.babib.plantam.Firebase.LoginActivity;
 import com.cpsc310proj.babib.plantam.Layouts.AddEventLayout.AddEventActivity;
 import com.cpsc310proj.babib.plantam.Layouts.PublicEventsLayout.PublicEventsActivity;
 import com.cpsc310proj.babib.plantam.R;
@@ -148,7 +148,7 @@ public class CalendarActivity extends AppCompatActivity {
                 if(firebaseAuth.getCurrentUser() == null){
                     // user is signed out
                     finish();
-                    Intent intent = new Intent(CalendarActivity.this, FirebaseUserAuthentication.class);
+                    Intent intent = new Intent(CalendarActivity.this, LoginActivity.class);
                     startActivity(intent);
                 }else{
                     // user is signed int
@@ -189,7 +189,7 @@ public class CalendarActivity extends AppCompatActivity {
 
 
                 finish();
-                Intent intent = new Intent(CalendarActivity.this, FirebaseUserAuthentication.class);
+                Intent intent = new Intent(CalendarActivity.this, LoginActivity.class);
                 startActivity(intent);
                 break;
             case R.id.action_explore:
