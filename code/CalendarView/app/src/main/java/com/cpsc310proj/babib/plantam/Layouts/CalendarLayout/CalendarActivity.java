@@ -25,12 +25,14 @@ import android.widget.Toast;
 import com.cpsc310proj.babib.plantam.CurrentDate;
 import com.cpsc310proj.babib.plantam.Event.CustomDate;
 import com.cpsc310proj.babib.plantam.Event.Event;
+import com.cpsc310proj.babib.plantam.Firebase.FBDatabase;
 import com.cpsc310proj.babib.plantam.Firebase.LoginActivity;
 import com.cpsc310proj.babib.plantam.Layouts.AddEventLayout.AddEventActivity;
 import com.cpsc310proj.babib.plantam.Layouts.PublicEventsLayout.PublicEventsActivity;
 import com.cpsc310proj.babib.plantam.R;
 import com.cpsc310proj.babib.plantam.SQLiteDatabase.EventDatabase;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -195,6 +197,13 @@ public class CalendarActivity extends AppCompatActivity {
             case R.id.action_explore:
                 Intent intent1 = new Intent(CalendarActivity.this, PublicEventsActivity.class);
                 startActivity(intent1);
+                break;
+
+            case R.id.action_settings:
+                FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+                Log.d("USERID: ",
+                        "" + FBDatabase.writeUser(FirebaseAuth.getInstance().getCurrentUser().getUid()));
+
                 break;
         }
 

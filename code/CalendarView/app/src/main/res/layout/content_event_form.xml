@@ -56,7 +56,8 @@
         android:text="@string/date"
         android:backgroundTint="#00FFFFFF"
         app:layout_constraintLeft_toLeftOf="@id/add_event_description_input"
-        app:layout_constraintTop_toBottomOf="@id/add_event_description_input" tools:targetApi="lollipop"/>
+        app:layout_constraintTop_toBottomOf="@id/add_event_description_input"
+        tools:targetApi="lollipop"/>
 
     <Button
         android:id="@+id/add_event_start_time_picker"

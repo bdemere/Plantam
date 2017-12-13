@@ -20,6 +20,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
+
 /**
  * Backend: Binh
  * Izzi designed layouts.
@@ -132,6 +134,7 @@ public class RegisterActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     Toast.makeText(RegisterActivity.this, "Account is created",
                             Toast.LENGTH_SHORT).show();
+                    FBDatabase.writeUser(mAuth.getCurrentUser().getUid());
                     Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                     saveDisplayName(); // Save username to local storage after registration is successful
                     finish(); // finish RegisterActivity

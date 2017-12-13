@@ -7,6 +7,8 @@ import com.cpsc310proj.babib.plantam.Enums.Category;
 import com.cpsc310proj.babib.plantam.Event.Event;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,6 +32,9 @@ import java.util.Map;
 public class FBDatabase {
     private static String
             EVENT_ROOT = "events";    //event root node name in the jason structure
+
+    private static String
+            USERS_ROOT = "users";
     private static FirebaseDatabase
             mFirebaseDatabase = null; //Firebase database reference object
 
@@ -42,6 +47,9 @@ public class FBDatabase {
     private static Map<Category, DatabaseReference>
             EventCategoryDatabaseReferences = null;
             //A map of category to their Firebase database root references
+
+
+    private static FirebaseUser mUserReference = FirebaseAuth.getInstance().getCurrentUser();
 
 
     /**
@@ -67,6 +75,36 @@ public class FBDatabase {
         }
     }
 
+    public static void write(Event event){
+        if(mFirebaseDatabase == null)
+            mFirebaseDatabase = FirebaseDatabase.getInstance();
+
+        Log.d("FBDatabase: ", "" + mFirebaseDatabase.getReference().
+                child(USERS_ROOT).
+                child(mUserReference.getUid()).
+                child(EVENT_ROOT).
+                child(event.getEventUID()).
+                setValue(event).isComplete());
+    }
+
+
+    public static boolean writeUser(String userID){
+        if(mFirebaseDatabase == null)
+            mFirebaseDatabase = FirebaseDatabase.getInstance();
+
+        return mFirebaseDatabase.getReference()
+                .child(USERS_ROOT)
+                .child(userID)
+                .child(EVENT_ROOT)
+                .setValue(true).addOnCompleteListener(
+                new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        //Log.d("UserID: ", task.getException().toString());
+                    }
+                }
+        ).isSuccessful();
+    }
 
     /**
      * Remove an observer

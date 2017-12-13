@@ -6,7 +6,11 @@
     tools:context="com.cpsc310proj.babib.plantam.Layouts.CalendarLayout.EventDetailDialog">
 
     <!-- TODO: Update blank fragment layout -->
-    <include layout="@layout/content_event_form" />
+    <include
+        android:id="@+id/event_dialog_form"
+        layout="@layout/content_event_form"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <Button
         android:id="@+id/event_dialog_delete_event"
@@ -15,17 +19,15 @@
         android:text="Delete"
         tools:layout_editor_absoluteX="280dp"
         tools:layout_editor_absoluteY="442dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/event_dialog_form"
         app:layout_constraintLeft_toRightOf="parent"/>
 
     <Button
         android:id="@+id/event_dialog_edit_event"
-        android:layout_width="wrap_content"
-        android:layout_height="53dp"
+        android:layout_width="114dp"
+        android:layout_height="244dp"
         android:text="Edit"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="442dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/event_dialog_form" />
 
 </android.support.constraint.ConstraintLayout>

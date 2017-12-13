@@ -14,6 +14,7 @@ import android.widget.Spinner;
 
 import com.cpsc310proj.babib.plantam.Enums.Accessibility;
 import com.cpsc310proj.babib.plantam.Event.Event;
+import com.cpsc310proj.babib.plantam.Firebase.FBDatabase;
 import com.cpsc310proj.babib.plantam.R;
 import com.cpsc310proj.babib.plantam.SQLiteDatabase.EventDatabase;
 
@@ -79,6 +80,7 @@ public class AddEventActivity extends AppCompatActivity{
                     EventDatabase eventDatabase = new EventDatabase(AddEventActivity.this);
                     Log.d("Adding: ", new_event.toString());
 
+                    FBDatabase.write(new_event);
                     eventDatabase.addEvent(new_event);
                     finish();
                 } catch (Exception e) {

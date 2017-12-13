@@ -88,7 +88,6 @@ public class Event implements DatabaseEntry {
 
     public Event(){
         event_uid = UUID.randomUUID().toString();
-        Log.d("EventCreation: ", "UUID: " + event_uid);
     }
 
 

@@ -17,6 +17,8 @@ import com.cpsc310proj.babib.plantam.Layouts.AddEventLayout.EventForm;
 import com.cpsc310proj.babib.plantam.R;
 import com.cpsc310proj.babib.plantam.SQLiteDatabase.EventDatabase;
 
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+
 /**
  */
 public class EventDetailDialog extends DialogFragment {
@@ -138,6 +140,9 @@ public class EventDetailDialog extends DialogFragment {
 
         int dialogWidth = width;
         int dialogHeight = height;
+
+        getDialog().getWindow().setLayout(MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
 
     }
 }

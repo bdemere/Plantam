@@ -121,7 +121,9 @@ public class LoginActivity extends AppCompatActivity {
                     Log.d("Plantam", "Problem signing in: " + task.getException());
                     //showDialogSignInError("There was problem sign in your account");
                     showTest("Error signing in");
-                }}});
+                }
+            }
+        });
 
     }
 
