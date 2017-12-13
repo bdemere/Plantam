@@ -1,5 +1,5 @@
 // File: Binh Vo
-// Authors: Bemnet, Binh, Izzi
+// Authors: Bemnet, Binh
 package com.cpsc310proj.babib.plantam.Firebase;
 
 import android.content.DialogInterface;
@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Display;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -120,46 +121,56 @@ public class LoginActivity extends AppCompatActivity {
                 else{
                     Log.d("Plantam", "Problem signing in: " + task.getException());
                     //showDialogSignInError("There was problem sign in your account");
-                    showTest("Error signing in");
-                }
-            }
-        });
+                    showDialogSignInError("Invalid email or password");
+                }}});
 
     }
 
-    // Display error message when user tried to sign in
-    private void showDialogSignInError(String message){
-        new AlertDialog.Builder(this)
-                .setTitle(message)
-                .setPositiveButton(android.R.string.ok, null)
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();
-    }
-
-    private void showTest(String message){
+    /**
+     * Show Dialog error message if the user has failed to authenticate
+     * @param errorMessage: The error message
+     */
+    private void showDialogSignInError(String errorMessage){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Title");
-        builder.setItems(new CharSequence[]{"button 1", "button 2"},
+        builder.setTitle(errorMessage);
+        builder.setItems(new CharSequence[]{"Forgot your password? "},
                 new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // The 'which' argument contains the index position
-                        // of the selected item
-                        switch (which) {
+                    public void onClick(DialogInterface dialog, int index) {
+                        switch (index) {
                             case 0:
-                                Toast.makeText(LoginActivity.this, "clicked 1", 0).show();
-                                break;
-                            case 1:
-                                Toast.makeText(LoginActivity.this, "clicked 2", 0).show();
-                                break;
-                            case 2:
-                                Toast.makeText(LoginActivity.this, "clicked 3", 0).show();
-                                break;
-                            case 3:
-                                Toast.makeText(LoginActivity.this, "clicked 4", 0).show();
+                                getEmailReset();
                                 break;
                         }
                     }
                 });
+        builder.setPositiveButton(android.R.string.ok, null);
+        builder.setIcon(android.R.drawable.ic_dialog_alert);
+        builder.create().show();
+    }
+
+    /**
+     * Password reset for Email
+     */
+    private void getEmailReset() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Enter your email");
+        final EditText inputEmail = new EditText(this);
+        builder.setView(inputEmail);
+
+        builder.setPositiveButton("Send", new DialogInterface.OnClickListener(){
+            public void onClick(DialogInterface dialog, int which) {
+                final String email = inputEmail.getText().toString();
+                mAuth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful())
+                            Log.d("Plantam", "Email Sent");
+                        else
+                            Log.d("Plantam", email);
+
+                    }});
+            }
+        });
         builder.create().show();
     }
 
