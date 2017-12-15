@@ -235,8 +235,16 @@ public class FBDatabase {
         ArrayList<String> toReturn = EventCategoryCache.get(category);
 
         return toReturn != null ? //in case cache is empty, return an empty list
-                toReturn : new ArrayList<String>();
+                toReturn /*if not empty*/: new ArrayList<String>() /*else empty list*/;
     }
+
+
+//    public static void getUserInformation() {
+//        if (mUserReference != null) {
+//            mUserReference.getProviderData().forEach(function (profile) {
+//
+//            });
+//        }
 
 
 
