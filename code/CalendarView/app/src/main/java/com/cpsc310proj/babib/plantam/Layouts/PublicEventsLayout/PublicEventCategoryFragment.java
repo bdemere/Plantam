@@ -3,16 +3,26 @@ package com.cpsc310proj.babib.plantam.Layouts.PublicEventsLayout;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cpsc310proj.babib.plantam.Enums.Category;
+import com.cpsc310proj.babib.plantam.Event.Event;
 import com.cpsc310proj.babib.plantam.Firebase.FBDatabase;
 import com.cpsc310proj.babib.plantam.Firebase.FireBaseDataObserver;
+import com.cpsc310proj.babib.plantam.Layouts.CalendarLayout.EditEventDialog;
 import com.cpsc310proj.babib.plantam.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A fragment representing a list of Items.
@@ -28,9 +38,11 @@ public class PublicEventCategoryFragment extends Fragment implements FireBaseDat
 
     // TODO: Customize parameters
     private Category mCategory;
-    private RecyclerView mRecyclerView;
-    private EventRecyclerViewAdapter mAdapter;
+    //private RecyclerView mRecyclerView;
     private OnListFragmentInteractionListener mListener;
+
+    private ListView mEventsListView;
+    private CustomListAdapter mListAdapter;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -61,30 +73,43 @@ public class PublicEventCategoryFragment extends Fragment implements FireBaseDat
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_item_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_item_list2, container, false);
 
-        // Set the mAdapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            mRecyclerView = (RecyclerView) view;
-            //if (mColumnCount <= 1) {
-            mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
-            //} else {
-            //    recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            //}
+        mEventsListView = (ListView)view.findViewById(R.id.public_events_list_view);
 
-            mAdapter = new EventRecyclerViewAdapter(FBDatabase.getPublicEventsWithCategory(mCategory)
-                      , mListener);
+        mListAdapter = new CustomListAdapter(
+                getActivity(),
+                FBDatabase.getPublicEventsWithCategory(mCategory)
+        );
 
-            mRecyclerView.setAdapter(mAdapter);
-        }
+        mEventsListView.setAdapter(mListAdapter);
+
+        mEventsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                // Create and show the dialog.
+                EditEventDialog newFragment =
+                        EditEventDialog.newInstance(mListAdapter.getList().get(position), new FBDatabase());
+                newFragment.show(ft, "EditEventDialog: " + id);
+
+
+                Log.d("CalendarActivity: ", position + " clicked");
+                Toast.makeText(getActivity(), "TODO: show dialog for "
+                        + mListAdapter.getList().get(position).getTitle(), Toast.LENGTH_LONG);
+            }
+        });
+
+
+
         return view;
     }
 
 
     public void eventDataChanged(){
-        if(mAdapter != null)
-            mAdapter.notifyDataSetChanged();
+        mListAdapter.notifyDataSetChanged();
+        Log.d("PublicEve...gment: ", "eventDataChanged()");
+
     }
 
     @Override
@@ -119,5 +144,73 @@ public class PublicEventCategoryFragment extends Fragment implements FireBaseDat
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
         void onListFragmentInteraction(String item);
+    }
+
+    private class CustomListAdapter extends BaseAdapter {
+        private List<Event> toDisplay;
+        private LayoutInflater inflater;
+
+        public CustomListAdapter(Context context, ArrayList<Event> event_list) {
+            super();
+            Log.d("list: ", "got here");
+            toDisplay = event_list;
+            inflater = LayoutInflater.from(context);
+        }
+
+
+
+        public void setList(List<Event> list){
+            toDisplay = list;
+        }
+        public List<Event> getList(){
+            return toDisplay;
+        }
+
+        @Override
+        public int getCount() {
+            return toDisplay.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return position;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        /********* Create a holder Class to contain inflated xml file elements *********/
+        private class ViewHolder{
+
+            public TextView time;
+            public TextView title;
+            public TextView description;
+
+        }
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            CustomListAdapter.ViewHolder holder = new CustomListAdapter.ViewHolder();
+
+            if (convertView == null) {
+
+                convertView = inflater.inflate(R.layout.calendar_detail_list_view, parent, false);
+
+            }
+
+            holder.title = (TextView)convertView.findViewById(R.id.calendar_detail_list_view_title);
+            holder.time = (TextView)convertView.findViewById(R.id.calendar_detail_list_view_time);
+            //holder.description = (TextView)convertView.findViewById(R.id.calendar_detail_list_view_description);
+
+            if(!toDisplay.isEmpty()){
+                holder.title.setText(toDisplay.get(position).getTitle());
+                holder.time.setText(toDisplay.get(position).getStartTime().toString());
+                //holder.description.setText(toDisplay.get(position).getDescription());
+            }
+
+
+            return convertView;
+        }
     }
 }

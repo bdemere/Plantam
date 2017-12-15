@@ -1,7 +1,8 @@
 package com.cpsc310proj.babib.plantam.Layouts.PublicEventsLayout;
 
 import android.app.ProgressDialog;
-import android.content.res.Resources;
+import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -14,14 +15,22 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
+import com.cpsc310proj.babib.plantam.Enums.Accessibility;
 import com.cpsc310proj.babib.plantam.Enums.Category;
+import com.cpsc310proj.babib.plantam.Event.Event;
+import com.cpsc310proj.babib.plantam.EventDatabase;
 import com.cpsc310proj.babib.plantam.Firebase.FBDatabase;
 import com.cpsc310proj.babib.plantam.Firebase.FireBaseDataObserver;
+import com.cpsc310proj.babib.plantam.Layouts.AddEventLayout.AddEventActivity;
 import com.cpsc310proj.babib.plantam.R;
 
 public class PublicEventsActivity extends AppCompatActivity
         implements PublicEventCategoryFragment.OnListFragmentInteractionListener, FireBaseDataObserver {
+
+    private static int EVENT_REQUEST = 1;
+
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -32,13 +41,35 @@ public class PublicEventsActivity extends AppCompatActivity
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
+    private FloatingActionButton mAddButton;
 
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
     private ViewPager mViewPager;
     private ProgressDialog mProgressDialog;
 
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        //When a new Event object is returned from the activity that adds classes,
+        //this is executed
+        if (requestCode == EVENT_REQUEST) {
+            if(resultCode == AppCompatActivity.RESULT_OK){
+                Event result = (Event)data.getSerializableExtra(AddEventActivity.EVENT_RESULT);
+
+                Log.d("Adding FireBase: ", result.toString());
+
+                //Set the accessibility to public
+                result.setAccessibility(Accessibility.PUBLIC.toString());
+                EventDatabase eventDatabase = new FBDatabase();
+                eventDatabase.addEvent(result);
+                FBDatabase.updateEventsData();
+            }
+            if (resultCode == AppCompatActivity.RESULT_CANCELED) {
+                //if there is no result
+            }
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,10 +102,22 @@ public class PublicEventsActivity extends AppCompatActivity
         mProgressDialog.setMessage("Please wait ...");
         mProgressDialog.show();
 
+        if(!FBDatabase.isEventDataUpdated())
+            mProgressDialog.cancel();
+
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
+        mAddButton = (FloatingActionButton)findViewById(R.id.add_public_event_fab);
+
+        mAddButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PublicEventsActivity.this, AddEventActivity.class);
+                startActivityForResult(intent, EVENT_REQUEST);
+            }
+        });
 
 
 
@@ -85,6 +128,7 @@ public class PublicEventsActivity extends AppCompatActivity
         if(mProgressDialog.isShowing()) mProgressDialog.cancel();
 
     }
+
 
     @Override
     protected void onPause() {
@@ -119,7 +163,7 @@ public class PublicEventsActivity extends AppCompatActivity
             mProgressDialog.setMessage("Please wait...");
             mProgressDialog.show();
 
-            FBDatabase.update();
+            FBDatabase.updateEventsData();
         }
 
         return super.onOptionsItemSelected(item);

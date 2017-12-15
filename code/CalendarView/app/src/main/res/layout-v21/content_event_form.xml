@@ -69,25 +69,15 @@
         app:layout_constraintLeft_toLeftOf="@id/add_event_start_time_picker"
         app:layout_constraintTop_toBottomOf="@id/add_event_start_time_picker" />
 
-    <android.support.v7.widget.SwitchCompat
-        android:id="@+id/add_event_public_or_personal_switch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="36dp"
-        app:layout_constraintLeft_toLeftOf="@id/add_event_start_time_picker"
-        app:layout_constraintTop_toBottomOf="@id/add_event_end_time_picker" android:layout_marginStart="8dp" />
 
     <Spinner
         android:id="@+id/add_event_category_spinner"
-        android:layout_width="104dp"
+        android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_margin="20dp"
         android:layout_marginTop="28dp"
         android:gravity="center"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintLeft_toRightOf="@id/add_event_public_or_personal_switch"
         app:layout_constraintRight_toRightOf="@id/add_event_end_time_picker"
         app:layout_constraintTop_toBottomOf="@id/add_event_end_time_picker" />
 
@@ -98,7 +88,6 @@
 
         android:layout_marginTop="36dp"
         app:layout_constraintHorizontal_bias="0.428"
-        app:layout_constraintLeft_toRightOf="@id/add_event_public_or_personal_switch"
         app:layout_constraintRight_toLeftOf="@id/add_event_category_spinner"
         app:layout_constraintTop_toBottomOf="@id/add_event_end_time_picker" />
 

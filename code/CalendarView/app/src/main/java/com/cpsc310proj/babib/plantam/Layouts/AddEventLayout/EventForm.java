@@ -3,10 +3,6 @@ package com.cpsc310proj.babib.plantam.Layouts.AddEventLayout;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SwitchCompat;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -19,7 +15,6 @@ import com.cpsc310proj.babib.plantam.CurrentDate;
 import com.cpsc310proj.babib.plantam.Enums.Category;
 import com.cpsc310proj.babib.plantam.Event.CustomDate;
 import com.cpsc310proj.babib.plantam.Event.CustomTime;
-import com.cpsc310proj.babib.plantam.R;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -39,7 +34,6 @@ public class EventForm
     public Button mDatePicker; //Button: opens a date picker
     public Button mStartTimePicker; //Button: opens a time picker (start time)
     public Button mEndTimePicker; //Button: opens a time picker (end time)
-    public SwitchCompat mPublicPersonalSwitch; //Switch: determine the accessibility identifier
     public Spinner mCategorySpinner; //Spinner: choose the category of the event
 
     public DatePickerDialog mDatePickerDialog; //Dialog: will be opened to choose date
@@ -56,7 +50,7 @@ public class EventForm
 
 
         //these functions are called to initialize the dialogs and set 'time/date-picked'
-        //listeners to update the fields in the form when times and dates are picked
+        //listeners to updateEventsData the fields in the form when times and dates are picked
         //from the dialogs
         initialize_date_dialog();
         initialize_start_time_dialog();

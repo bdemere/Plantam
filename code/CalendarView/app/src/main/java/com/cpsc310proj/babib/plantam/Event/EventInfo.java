@@ -1,73 +1,89 @@
 package com.cpsc310proj.babib.plantam.Event;
 
+import java.io.Serializable;
+
 /**
  * Created by bemnet on 12/3/17.
  */
 
-public class EventInfo {
-    private String mTitle;
-    private String mDescription;
-    private String mDate;
-    private String mStartTime;
-    private String mEndTime;
-    private String mCategory;
+public class EventInfo implements Serializable{
+    public String mEventUID = ""; //this events unique ID
+    public String mTitle = "";
+    public String mDescription = "";
+    public String mDate = "";
+    public String mStartTime = "";
+    public String mEndTime = "";
+    public String mCategory = "";
+    public String mAccessibility = "";
 
-
-    public EventInfo(String mTitle, String mDescription, String mDate,
-                     String mStartTime, String mEndTime, String mCategory) {
-        this.mTitle = mTitle;
-        this.mDescription = mDescription;
-        this.mDate = mDate;
-        this.mStartTime = mStartTime;
-        this.mEndTime = mEndTime;
-        this.mCategory = mCategory;
+    public void setInfo(EventInfo info){
+        mEventUID = info.mEventUID;
+        mTitle = info.mTitle;
+        mDescription = info.mDescription;
+        mDate = info.mDate;
+        mStartTime = info.mStartTime;
+        mEndTime = info.mEndTime;
+        mCategory = info.mCategory;
+        mAccessibility = info.mAccessibility;
     }
-
-    public String getTitle() {
-        return mTitle;
+    @Override
+    public String toString() {
+        return "EventInfo{" +
+                "mEventUID='" + mEventUID + '\'' +
+                ", mTitle='" + mTitle + '\'' +
+                ", mDescription='" + mDescription + '\'' +
+                ", mDate='" + mDate + '\'' +
+                ", mStartTime='" + mStartTime + '\'' +
+                ", mEndTime='" + mEndTime + '\'' +
+                ", mCategory='" + mCategory + '\'' +
+                ", mAccessibility='" + mAccessibility + '\'' +
+                '}';
     }
+    //    public EventInfo(String mEventUID, String mTitle,
+//                     String mDescription, String mDate,
+//                     String mStartTime, String mEndTime,
+//                     String mCategory, String mAccessibility) {
+//        this.mEventUID = mEventUID;
+//        this.mTitle = mTitle;
+//        this.mDescription = mDescription;
+//        this.mDate = mDate;
+//        this.mStartTime = mStartTime;
+//        this.mEndTime = mEndTime;
+//        this.mCategory = mCategory;
+//        this.mAccessibility = mAccessibility;
+//    }
+//
+//
+//    public String getEventUID() {
+//        return mEventUID;
+//    }
+//
+//    public String getTitle() {
+//        return mTitle;
+//    }
+//
+//    public String getDescription() {
+//        return mDescription;
+//    }
+//
+//    public String getDate() {
+//        return mDate;
+//    }
+//
+//    public String getStartTime() {
+//        return mStartTime;
+//    }
+//
+//    public String getEndTime() {
+//        return mEndTime;
+//    }
+//
+//    public String getCategory() {
+//        return mCategory;
+//    }
+//
+//    public String getAccessibility() {
+//        return mAccessibility;
+//    }
 
-    public void setTitle(String mTitle) {
-        this.mTitle = mTitle;
-    }
-
-    public String getDescription() {
-        return mDescription;
-    }
-
-    public void setDescription(String mDescription) {
-        this.mDescription = mDescription;
-    }
-
-    public String getDate() {
-        return mDate;
-    }
-
-    public void setDate(String mDate) {
-        this.mDate = mDate;
-    }
-
-    public String getStartTime() {
-        return mStartTime;
-    }
-
-    public void setStartTime(String mStartTime) {
-        this.mStartTime = mStartTime;
-    }
-
-    public String getEndTime() {
-        return mEndTime;
-    }
-
-    public void setEndTime(String mEndTime) {
-        this.mEndTime = mEndTime;
-    }
-
-    public String getCategory() {
-        return mCategory;
-    }
-
-    public void setCategory(String mCategory) {
-        this.mCategory = mCategory;
-    }
 }

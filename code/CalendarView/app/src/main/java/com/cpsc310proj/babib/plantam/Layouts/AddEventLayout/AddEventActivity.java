@@ -1,22 +1,19 @@
 package com.cpsc310proj.babib.plantam.Layouts.AddEventLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import com.cpsc310proj.babib.plantam.Enums.Accessibility;
 import com.cpsc310proj.babib.plantam.Event.Event;
-import com.cpsc310proj.babib.plantam.Firebase.FBDatabase;
+import com.cpsc310proj.babib.plantam.Layouts.AddEventTemplate;
+import com.cpsc310proj.babib.plantam.Layouts.PublicEventsLayout.PublicEventsActivity;
 import com.cpsc310proj.babib.plantam.R;
-import com.cpsc310proj.babib.plantam.SQLiteDatabase.EventDatabase;
 
 /**
  * An Activity class that will inquire all the necessary information
@@ -24,6 +21,13 @@ import com.cpsc310proj.babib.plantam.SQLiteDatabase.EventDatabase;
  */
 public class AddEventActivity extends AppCompatActivity{
 
+    public static String EVENT_RESULT = AddEventActivity.class.toString() + ".EVENT_RESULT";
+
+    public static Class[] CALLING_ACTIVITIES = {
+            PublicEventsActivity.class,
+
+
+    };
 
     private EventForm mForm;
 
@@ -45,7 +49,6 @@ public class AddEventActivity extends AppCompatActivity{
         mForm.mDatePicker = (Button)findViewById(R.id.add_event_date_picker);
         mForm.mStartTimePicker = (Button)findViewById(R.id.add_event_start_time_picker);
         mForm.mEndTimePicker = (Button)findViewById(R.id.add_event_end_time_picker);
-        mForm.mPublicPersonalSwitch = (SwitchCompat)findViewById(R.id.add_event_public_or_personal_switch);
         mForm.mCategorySpinner = (Spinner)findViewById(R.id.add_event_category_spinner);
 
         mForm.initializeForm();
@@ -57,36 +60,18 @@ public class AddEventActivity extends AppCompatActivity{
         mFloatingAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try{
-                    sanity_check(mForm);
+                AddEventTemplate addEventTemplate = new AddEventTemplate() {
+                    @Override
+                    protected void ifEventIsValid(Event event) {
+                        Intent toReturn = new Intent();
+                        toReturn.putExtra(EVENT_RESULT, event);
+                        setResult(AppCompatActivity.RESULT_OK, toReturn);
 
-                    //ADD EVENT
-                    Event new_event = new Event();
-                    new_event.setTitle(mForm.mTitleEditText.getText().toString());
-                    new_event.setDate(mForm.mDatePicker.getText().toString());
-                    new_event.setStartTime(mForm.mStartTimePicker.getText().toString());
-                    new_event.setEndTime(mForm.mEndTimePicker.getText().toString());
-                    new_event.setDescription(mForm.mDescriptionEditText.getText().toString());
-                    new_event.setCategory(mForm.mCategorySpinner.getSelectedItem().toString());
-                    new_event.setAccessibility(
-                            mForm.mPublicPersonalSwitch.isChecked() ?
-                                    Accessibility.PUBLIC.toString() :
-                                    Accessibility.PRIVATE.toString()
-                    );
+                        finish();
+                    }
+                };
+                addEventTemplate.validate(view, mForm);
 
-
-
-                    //TODO: ADD to database
-                    EventDatabase eventDatabase = new EventDatabase(AddEventActivity.this);
-                    Log.d("Adding: ", new_event.toString());
-
-                    FBDatabase.write(new_event);
-                    eventDatabase.addEvent(new_event);
-                    finish();
-                } catch (Exception e) {
-                    Snackbar.make(view, e.getMessage().toString(), Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                }
 
             }
         });

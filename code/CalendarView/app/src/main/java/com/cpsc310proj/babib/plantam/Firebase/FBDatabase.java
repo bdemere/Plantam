@@ -4,7 +4,11 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.cpsc310proj.babib.plantam.Enums.Category;
+import com.cpsc310proj.babib.plantam.Event.CustomDate;
+import com.cpsc310proj.babib.plantam.Event.CustomTime;
 import com.cpsc310proj.babib.plantam.Event.Event;
+import com.cpsc310proj.babib.plantam.Event.EventInfo;
+import com.cpsc310proj.babib.plantam.EventDatabase;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -15,8 +19,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -29,7 +35,7 @@ import java.util.Map;
  * methods to fetch the needed data
  */
 
-public class FBDatabase {
+public class FBDatabase implements EventDatabase, Serializable{
     private static String
             EVENT_ROOT = "events";    //event root node name in the jason structure
 
@@ -41,7 +47,7 @@ public class FBDatabase {
     private static DatabaseReference
             mEventsDatabaseReference = null; //Reference for the event node
 
-    private static Map<Category, ArrayList<String>>
+    private static Map<Category, ArrayList<Event>>
             EventCategoryCache = null; //A temporary storage place for database events
 
     private static Map<Category, DatabaseReference>
@@ -79,12 +85,12 @@ public class FBDatabase {
         if(mFirebaseDatabase == null)
             mFirebaseDatabase = FirebaseDatabase.getInstance();
 
-        Log.d("FBDatabase: ", "" + mFirebaseDatabase.getReference().
-                child(USERS_ROOT).
+        Log.d("FBDatabase: ", "" +
+                mFirebaseDatabase.getReference().
+                child(EVENT_ROOT + "_" + event.getCategory().toLowerCase()).
                 child(mUserReference.getUid()).
-                child(EVENT_ROOT).
                 child(event.getEventUID()).
-                setValue(event).isComplete());
+                setValue(event.getEventInfo()).isComplete());
     }
 
 
@@ -136,7 +142,28 @@ public class FBDatabase {
     }
 
 
+    public void addEvent(Event event){
+        if(mFirebaseDatabase == null)
+            mFirebaseDatabase = FirebaseDatabase.getInstance();
+
+        Log.d("FBDatabase: ", "" +
+                mFirebaseDatabase.getReference().
+                        child(EVENT_ROOT + "_" + event.getCategory().toLowerCase()).
+                        child(mUserReference.getUid()).
+                        child(event.getEventUID()).
+                        setValue(event.getEventInfo()).isComplete());
+    }
+
+
+    public void deleteEvent(Event event){
+        //TODO: delete an event from FireBase
+    }
+
+
     private static boolean isEventDataUpdated = false; //boolean value to
+    public static boolean isEventDataUpdated(){
+        return isEventDataUpdated;
+    }
 
 
     /**
@@ -159,16 +186,25 @@ public class FBDatabase {
         if(mEventsDatabaseReference == null)
             mEventsDatabaseReference = mFirebaseDatabase.getReference().child(EVENT_ROOT);
 
+
+        Log.d("Local: ", mFirebaseDatabase.getReference().child(EVENT_ROOT+"_"+Category.SPORT.toString()).toString());
         //If cache is uninitialized
         if(EventCategoryCache == null || EventCategoryDatabaseReferences == null) {
             EventCategoryCache = new HashMap<>();
             EventCategoryDatabaseReferences = new HashMap<>();
             for (Category category : Category.values()) {
-                EventCategoryCache.put(category, new ArrayList<String>());
-                EventCategoryDatabaseReferences.put(category,
-                        mEventsDatabaseReference.child(category.toString()));
+                EventCategoryCache.put(category, new ArrayList<Event>());
+                EventCategoryDatabaseReferences.put(
+                        category, mFirebaseDatabase
+                                .getReference()
+                                .child(EVENT_ROOT + "_" + category.toString())
+                                .child(mUserReference.getUid())
+                );
             }
+
+
         }
+
 
         //if not updated, fill local cache with data from the database
         if(!isEventDataUpdated) {
@@ -186,12 +222,12 @@ public class FBDatabase {
     }
 
     /**
-     * A function to update local data
+     * A function to updateEventsData local data
      */
-    public static void update(){
+    public static void updateEventsData(){
         isEventDataUpdated = false;
         for(Category category : Category.values())
-            EventCategoryCache.put(category, new ArrayList<String>());
+            EventCategoryCache.put(category, new ArrayList<Event>());
         makeEventsDataLocal();
 
     }
@@ -201,20 +237,33 @@ public class FBDatabase {
      * @param dbRef
      * @param toUpdate
      */
-    private static void updateEventsCache(DatabaseReference dbRef, final ArrayList<String> toUpdate){
+    private static void updateEventsCache(DatabaseReference dbRef, final ArrayList<Event> toUpdate){
         dbRef.addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        //Get map of users in datasnapshot
-                        Map<String, Object> map = (Map<String, Object>) dataSnapshot.getValue();
-                        for (Map.Entry<String, Object> entry : map.entrySet()) {
-                            toUpdate.add(entry.getKey());
+                        //Get map of users in data snapshot
+                        //Map<String, Event> map = (Map<String, Event>) dataSnapshot.getValue();
 
+
+                        for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+
+                            EventInfo info = snapshot.getValue(EventInfo.class);
+                            toUpdate.add(new Event(info));
+                            //Log.d("YOO: ", info.toString());
                         }
+
+//                        for (Map.Entry<String, Event> entry : map.entrySet()) {
+//                            toUpdate.add(entry.getValue());
+//
+//                        }
+
+                        /**
+                         * Notify all observers
+                         **/
                         eventDataUpdated();
 
-                        //Log.d("ayyyy::::", "" + toUpdate.toString());
+                        Log.d("ayyyy::::", "" + toUpdate.toString());
                     }
 
                     @Override
@@ -231,11 +280,11 @@ public class FBDatabase {
      * @return
      */
 
-    public static ArrayList<String> getPublicEventsWithCategory(Category category){
-        ArrayList<String> toReturn = EventCategoryCache.get(category);
+    public static ArrayList<Event> getPublicEventsWithCategory(Category category){
+        ArrayList<Event> toReturn = EventCategoryCache.get(category);
 
         return toReturn != null ? //in case cache is empty, return an empty list
-                toReturn : new ArrayList<String>();
+                toReturn : new ArrayList<Event>();
     }
 
 

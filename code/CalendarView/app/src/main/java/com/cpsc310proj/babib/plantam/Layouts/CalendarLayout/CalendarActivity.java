@@ -23,14 +23,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cpsc310proj.babib.plantam.CurrentDate;
+import com.cpsc310proj.babib.plantam.Enums.Accessibility;
 import com.cpsc310proj.babib.plantam.Event.CustomDate;
 import com.cpsc310proj.babib.plantam.Event.Event;
+import com.cpsc310proj.babib.plantam.EventDatabase;
 import com.cpsc310proj.babib.plantam.Firebase.FBDatabase;
 import com.cpsc310proj.babib.plantam.Firebase.LoginActivity;
 import com.cpsc310proj.babib.plantam.Layouts.AddEventLayout.AddEventActivity;
 import com.cpsc310proj.babib.plantam.Layouts.PublicEventsLayout.PublicEventsActivity;
 import com.cpsc310proj.babib.plantam.R;
-import com.cpsc310proj.babib.plantam.SQLiteDatabase.EventDatabase;
+import com.cpsc310proj.babib.plantam.SQLiteDatabase.SQLiteEventDatabase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -48,6 +50,8 @@ public class CalendarActivity extends AppCompatActivity {
 
     private static final String TAG = "CalendarActivity";
 
+    private static int EVENT_REQUEST = 1;
+
 
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
@@ -62,6 +66,28 @@ public class CalendarActivity extends AppCompatActivity {
      **/
     private CustomListAdapter mListAdapter;
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == EVENT_REQUEST) {
+            //When a new Event object is returned from the activity that adds classes,
+            //this is executed
+            if(resultCode == AppCompatActivity.RESULT_OK){
+                //Get the Event object returned
+                Event result = (Event)data.getSerializableExtra(AddEventActivity.EVENT_RESULT);
+                EventDatabase SQLiteEventDatabase = new SQLiteEventDatabase(CalendarActivity.this);
+                Log.d("Adding: ", result.toString());
+
+                //Set the accessibility of the object to private
+                result.setAccessibility(Accessibility.PRIVATE.toString());
+                SQLiteEventDatabase.addEvent(result);
+            }
+            if (resultCode == AppCompatActivity.RESULT_CANCELED) {
+                //if there is no result
+            }
+        }
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -80,7 +106,8 @@ public class CalendarActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(CalendarActivity.this, AddEventActivity.class);
-                startActivity(intent);
+                //intent.putExtra("key", this.getClass());
+                startActivityForResult(intent, EVENT_REQUEST);
             }
         });
 
@@ -96,8 +123,8 @@ public class CalendarActivity extends AppCompatActivity {
         //mDateView.setText(""+ year + ":" + month + ":" + day);
         mCalendarView.setDate(CurrentDate.getDate());
 
-        EventDatabase eventDatabase =  EventDatabase.getEventDatabase(CalendarActivity.this);
-        //new EventDatabase(CalendarActivity.this);
+        final SQLiteEventDatabase eventDatabase =  SQLiteEventDatabase.getEventDatabase(CalendarActivity.this);
+        //new SQLiteEventDatabase(CalendarActivity.this);
 
         mListAdapter = new CustomListAdapter(
                 this,
@@ -111,8 +138,8 @@ public class CalendarActivity extends AppCompatActivity {
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
                 //mDateView.setText("" + year + ":" + month + ":" + dayOfMonth);
                 //Log.d("testing", "" + year + ":" + month + ":" + dayOfMonth);
-                EventDatabase eventDatabase = EventDatabase.getEventDatabase(CalendarActivity.this);
-                ArrayList<Event> events = eventDatabase.getEventsAtDate( //when date is changed
+                SQLiteEventDatabase eventDatabase = SQLiteEventDatabase.getEventDatabase(CalendarActivity.this);
+                List<Event> events = eventDatabase.getEventsAtDate( //when date is changed
                         (new CustomDate()).setYear(year).setMonth(month).setDay(dayOfMonth)
                 );
 
@@ -132,9 +159,9 @@ public class CalendarActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 // Create and show the dialog.
-                EventDetailDialog newFragment =
-                        EventDetailDialog.newInstance(mListAdapter.getList().get(position).getEventUID());
-                newFragment.show(ft, "EventDetailDialog: " + id);
+                EditEventDialog newFragment =
+                        EditEventDialog.newInstance(mListAdapter.getList().get(position), eventDatabase);
+                newFragment.show(ft, "EditEventDialog: " + id);
 
 
                 Log.d("CalendarActivity: ", position + " clicked");
@@ -214,7 +241,7 @@ public class CalendarActivity extends AppCompatActivity {
         private List<Event> toDisplay;
         private LayoutInflater inflater;
 
-        public CustomListAdapter(Context context, ArrayList<Event> event_list) {
+        public CustomListAdapter(Context context, List<Event> event_list) {
             super();
             Log.d("list: ", "got here");
             toDisplay = event_list;

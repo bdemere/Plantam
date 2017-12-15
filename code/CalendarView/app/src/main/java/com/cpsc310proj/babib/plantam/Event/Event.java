@@ -7,6 +7,7 @@ import android.util.Log;
 import com.cpsc310proj.babib.plantam.Enums.Accessibility;
 import com.cpsc310proj.babib.plantam.SQLiteDatabase.DatabaseEntry;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
@@ -14,7 +15,7 @@ import java.util.UUID;
  * Created by anhthuynguyen on 10/27/17.
  */
 
-public class Event implements DatabaseEntry {
+public class Event implements DatabaseEntry, Serializable {
     //Event Table Columns names
     public static final String KEY_ID = "ID";
     public static final String KEY_TITLE = "TITLE";
@@ -38,124 +39,136 @@ public class Event implements DatabaseEntry {
     };
 
 
-    private String event_uid; //this events unique ID
-    private String title;
-    private String description;
-    private String date;
-    private String start_time;
-    private String end_time;
-    private String category;
-    private String accessibility;
+//    private String event_uid; //this events unique ID
+//    private String title;
+//    private String description;
+//    private String date;
+//    private String start_time;
+//    private String end_time;
+//    private String category;
+//    private String accessibility;
+    private EventInfo mEventInfo;
 
-    //Constructors
-    public Event(
-            String title,
-            String date,
-            String start_time,
-            String end_time,
-            String description,
-            String category,
-            String accessibility) {
+//    //Constructors
+//    public Event(
+//            String title,
+//            String date,
+//            String start_time,
+//            String end_time,
+//            String description,
+//            String category,
+//            String accessibility) {
+//
+//        this.event_uid = UUID.randomUUID().toString() + ":" + title;
+//        this.title = title;
+//        this.description = description;
+//        this.date = date;
+//        this.start_time = start_time;
+//        this.end_time = end_time;
+//        this.category = category.toString();
+//        this.accessibility = accessibility;
+//    }
+//
+//    public Event(
+//            String title,
+//            CustomDate date,
+//            CustomTime start_time,
+//            CustomTime end_time,
+//            String description,
+//            String category,
+//            String accessibility) {
+//
+//        this.event_uid = UUID.randomUUID().toString() + ":" + title;
+//        this.title = title;
+//        this.description = description;
+//        this.date = date.toString();
+//        this.start_time = start_time.toString();
+//        this.end_time = end_time.toString();
+//        this.category = category.toString();
+//        this.accessibility = accessibility;
+//    }
 
-        this.event_uid = UUID.randomUUID().toString() + ":" + title;
-        this.title = title;
-        this.description = description;
-        this.date = date;
-        this.start_time = start_time;
-        this.end_time = end_time;
-        this.category = category.toString();
-        this.accessibility = accessibility;
+    public Event(EventInfo info){
+        mEventInfo = new EventInfo();
+        mEventInfo.setInfo(info);
+        //Log.d("EVENT: ", mEventInfo.toString());
     }
 
-    public Event(
-            String title,
-            CustomDate date,
-            CustomTime start_time,
-            CustomTime end_time,
-            String description,
-            String category,
-            String accessibility) {
-
-        this.event_uid = UUID.randomUUID().toString() + ":" + title;
-        this.title = title;
-        this.description = description;
-        this.date = date.toString();
-        this.start_time = start_time.toString();
-        this.end_time = end_time.toString();
-        this.category = category.toString();
-        this.accessibility = accessibility;
-    }
 
     public Event(){
-        event_uid = UUID.randomUUID().toString();
+        mEventInfo = new EventInfo();
+        mEventInfo.mEventUID = UUID.randomUUID().toString();
     }
 
 
+    public EventInfo getEventInfo(){
+        return mEventInfo;
+    }
     //Getters
     public String getTitle() {
-        return this.title;
+        return mEventInfo.mTitle;
     }
 
     public String getDescription() {
-        return this.description;
+        return mEventInfo.mDescription;
     }
 
     public CustomDate getDate() {
-        return new CustomDate(this.date);
+        return new CustomDate(mEventInfo.mDate);
     }
 
     public CustomTime getStartTime() {
-        return new CustomTime(this.start_time);
+        return new CustomTime(mEventInfo.mStartTime);
     }
 
     public CustomTime getEndTime() {
-        return new CustomTime(this.end_time);
+        return new CustomTime(mEventInfo.mEndTime);
     }
 
     public void setAccessibility(String accessibility){
-        this.accessibility = accessibility;
+        mEventInfo.mAccessibility = accessibility;
     }
 
     public String getAccessibility(){
-        return accessibility;
+        return mEventInfo.mAccessibility;
     }
 
 
 
     //Setters
     public void setTitle(String title){
-        this.title = title;
+        mEventInfo.mTitle = title;
     }
 
     public void setDescription(String description){
-        this.description = description;
+        mEventInfo.mDescription = description;
 
     }
 
     public void setDate(String date){
-        this.date = date;
+        mEventInfo.mDate = date;
     }
 
     public void setStartTime(String start_time){
-        this.start_time = start_time;
+        mEventInfo.mStartTime = start_time;
     }
 
     public void setEndTime(String end_time){
-        this.end_time = end_time;
+        mEventInfo.mEndTime = end_time;
     }
     public void setCategory(String category){
-        this.category = category;
+        mEventInfo.mCategory = category;
     }
 
 
-    public void setEventUID(String uid){event_uid = uid;}
+    public void setEventUID(String uid){mEventInfo.mEventUID = uid;}
 
     public String getEventUID(){
-        Log.d("getEventUID(): ", event_uid.toString());
-        return event_uid;
+        Log.d("getEventUID(): ", mEventInfo.mEventUID.toString());
+        return mEventInfo.mEventUID;
     }
     public String getCategory() {
-        return category;
+        return mEventInfo.mCategory;
     }
 
 //
@@ -186,14 +199,14 @@ public class Event implements DatabaseEntry {
     @Override
     public String toString() {
         return "Event{" +
-                "event_uid='" + event_uid + '\'' +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", date='" + date + '\'' +
-                ", start_time='" + start_time + '\'' +
-                ", end_time='" + end_time + '\'' +
-                ", category='" + category + '\'' +
-                ", accessibility='" + accessibility + '\'' +
+                "event_uid='" + mEventInfo.mEventUID + '\'' +
+                ", title='" + mEventInfo.mTitle + '\'' +
+                ", description='" + mEventInfo.mDescription + '\'' +
+                ", date='" + mEventInfo.mDate + '\'' +
+                ", start_time='" + mEventInfo.mStartTime + '\'' +
+                ", end_time='" + mEventInfo.mEndTime + '\'' +
+                ", category='" + mEventInfo.mCategory + '\'' +
+                ", accessibility='" + mEventInfo.mAccessibility + '\'' +
                 '}';
     }
 

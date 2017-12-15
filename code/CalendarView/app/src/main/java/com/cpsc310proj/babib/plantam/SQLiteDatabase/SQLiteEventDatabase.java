@@ -4,38 +4,40 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.Cursor;
-import android.provider.ContactsContract;
 import android.util.Log;
 
 import com.cpsc310proj.babib.plantam.Event.CustomDate;
 import com.cpsc310proj.babib.plantam.Event.Event;
+import com.cpsc310proj.babib.plantam.EventDatabase;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by anhthuynguyen on 11/2/17.
  */
 
-public class EventDatabase {
+public class SQLiteEventDatabase implements EventDatabase, Serializable{
     private static Context mContext;
-    private static EventDatabase theEventDatabase;
+    private static SQLiteEventDatabase theSQLiteEventDatabase;
     private static SQLiteDatabase mDatabase;
 
     /* Constructor */
-    public EventDatabase(Context context) {
+    public SQLiteEventDatabase(Context context) {
         mContext = context.getApplicationContext();
         mDatabase = new DatabaseHelper(mContext).getWritableDatabase();
     }
 
     /* Retrieve an instance from event database */
-    public static EventDatabase getEventDatabase(Context context) {
-        if (theEventDatabase == null) {
-            theEventDatabase = new EventDatabase(context);
+    public static SQLiteEventDatabase getEventDatabase(Context context) {
+        if (theSQLiteEventDatabase == null) {
+            theSQLiteEventDatabase = new SQLiteEventDatabase(context);
         }
-        return theEventDatabase;
+        return theSQLiteEventDatabase;
     }
 
-    /* Do we need a addCommentText()? */
+    /* Do we need a addCommentText() */
 
     /* Add a new event to the database */
     public void addEvent(Event event) {
@@ -58,6 +60,11 @@ public class EventDatabase {
         mDatabase.delete(DatabaseHelper.TABLE_NAME, Event.KEY_ID + " = ?",
                 new String[]{eventID});
     }
+
+    public void deleteEvent(Event event){
+        mDatabase.delete(DatabaseHelper.TABLE_NAME, Event.KEY_ID + " = ?",
+                new String[]{event.getEventUID()});
+    }
 //
 //    public void updateEvent(Event event){
 //        String eventTitle = event.getTitle().toString();
@@ -67,7 +74,7 @@ public class EventDatabase {
 //        values.put(Event.KEY_END, event.getEndTime().toString());
 //        values.put(Event.KEY_DESCRIPTION, event.getDescription().toString());
 //
-//        mDatabase.update(DatabaseHelper.DATABASE_NAME, values, Event.KEY_TITLE + " = ? ", new String[]{eventTitle});
+//        mDatabase.updateEventsData(DatabaseHelper.DATABASE_NAME, values, Event.KEY_TITLE + " = ? ", new String[]{eventTitle});
 //    }
 //
 //    public Event getEvent(String eventTitle){
@@ -113,7 +120,7 @@ public class EventDatabase {
         if(dbCursor.moveToFirst()){
             do{
                 Event event = DatabaseHelper.getEvent(dbCursor);
-                Log.d("EventDatabase: ", event.toString());
+                Log.d("SQLiteEventDatabase: ", event.toString());
                 if(event.getEventUID().equals(UID))
                     return event;
             } while(dbCursor.moveToNext());
@@ -121,7 +128,7 @@ public class EventDatabase {
         return null;
     }
 
-    public ArrayList<Event> getEventsAtDate(CustomDate date){
+    public List<Event> getEventsAtDate(CustomDate date){
         ArrayList<Event> events = new ArrayList<>();
         Cursor dbCursor = mDatabase.query(
                 DatabaseHelper.TABLE_NAME,
