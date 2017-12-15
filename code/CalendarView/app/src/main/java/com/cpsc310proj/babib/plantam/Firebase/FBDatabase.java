@@ -9,6 +9,7 @@ import com.cpsc310proj.babib.plantam.Event.CustomTime;
 import com.cpsc310proj.babib.plantam.Event.Event;
 import com.cpsc310proj.babib.plantam.Event.EventInfo;
 import com.cpsc310proj.babib.plantam.EventDatabase;
+import com.cpsc310proj.babib.plantam.SQLiteDatabase.DatabaseEntry;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -198,7 +199,6 @@ public class FBDatabase implements EventDatabase, Serializable{
                         category, mFirebaseDatabase
                                 .getReference()
                                 .child(EVENT_ROOT + "_" + category.toString())
-                                .child(mUserReference.getUid())
                 );
             }
 
@@ -209,8 +209,10 @@ public class FBDatabase implements EventDatabase, Serializable{
         //if not updated, fill local cache with data from the database
         if(!isEventDataUpdated) {
             for(Category category : Category.values())
-                updateEventsCache(EventCategoryDatabaseReferences.get(category),
-                        EventCategoryCache.get(category));
+                updateEventsCache(
+                        EventCategoryDatabaseReferences.get(category),
+                        EventCategoryCache.get(category)
+                );
             isEventDataUpdated = true;
         }
 
@@ -246,12 +248,14 @@ public class FBDatabase implements EventDatabase, Serializable{
                         //Map<String, Event> map = (Map<String, Event>) dataSnapshot.getValue();
 
 
-                        for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
 
-                            EventInfo info = snapshot.getValue(EventInfo.class);
-                            toUpdate.add(new Event(info));
+                        for (DataSnapshot userID: dataSnapshot.getChildren()) 
+                            for(DataSnapshot eventInfo: userID.getChildren()){
+                                EventInfo info = eventInfo.getValue(EventInfo.class);
+                                toUpdate.add(new Event(info));
+                            }
                             //Log.d("YOO: ", info.toString());
-                        }
+
 
 //                        for (Map.Entry<String, Event> entry : map.entrySet()) {
 //                            toUpdate.add(entry.getValue());
@@ -286,20 +290,5 @@ public class FBDatabase implements EventDatabase, Serializable{
         return toReturn != null ? //in case cache is empty, return an empty list
                 toReturn /*if not empty*/: new ArrayList<Event>() /*else empty list*/;
     }
-
-
-//    public static void getUserInformation() {
-//        if (mUserReference != null) {
-//            mUserReference.getProviderData().forEach(function (profile) {
-//
-//            });
-//        }
-
-
-
-
-
-
-
 
 }
