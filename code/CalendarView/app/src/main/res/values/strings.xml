@@ -33,6 +33,8 @@
     <string name="event_detail_delete">Delete</string>
     <string name="event_detail_edit">Edit</string>
 
+    <string name="prompt_name">Full Name</string>
+    <string name="prompt_classyear">Class Year</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_username">Username</string>
     <string name="prompt_password">Password</string>

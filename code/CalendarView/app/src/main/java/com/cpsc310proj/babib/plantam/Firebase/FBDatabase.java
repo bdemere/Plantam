@@ -284,8 +284,16 @@ public class FBDatabase implements EventDatabase, Serializable{
         ArrayList<Event> toReturn = EventCategoryCache.get(category);
 
         return toReturn != null ? //in case cache is empty, return an empty list
-                toReturn : new ArrayList<Event>();
+                toReturn /*if not empty*/: new ArrayList<Event>() /*else empty list*/;
     }
+
+
+//    public static void getUserInformation() {
+//        if (mUserReference != null) {
+//            mUserReference.getProviderData().forEach(function (profile) {
+//
+//            });
+//        }
 
 
 
