@@ -5,6 +5,7 @@ import android.view.View;
 
 import com.cpsc310proj.babib.plantam.Event.Event;
 import com.cpsc310proj.babib.plantam.Layouts.AddEventLayout.EventForm;
+import com.google.android.gms.maps.model.LatLngBounds;
 
 /**
  * Created by bemnet on 12/14/17.
@@ -45,9 +46,22 @@ public abstract class AddEventTemplate {
         }
     }
 
-    //TODO:write a method to parse such a string
-    // "Hartford, CT 06106, USA%LatLngBounds{southwest=lat/lng: (41.743505105687404,-72.69189968705177), northeast=lat/lng: (41.74681889675219,-72.68803764134645)}"
-    // and extract the four doubles
+    /*  ExtractEventInfo
+     *  @param String : str in format - "Hartford, CT 06106, USA%LatLngBounds{southwest=lat/lng: (41.743505105687404,-72.69189968705177), northeast=lat/lng: (41.74681889675219,-72.68803764134645)}"
+     *  @return String[] - extracted geogrpahic information in String array 
+     */
+
+    public String[] extractEventInfo(String str){
+        String[] locInfo = str.split(":::");
+        String[] s = locInfo[1].split(" ");
+        String val = (s[1].substring(1,19));
+        String val2 = (s[1].substring(20,38));
+        String val3 = (s[3].substring(1,18));
+        String val4 = (s[3].substring(19,37));
+        String[] retVal = {locInfo[0], val, val2, val3, val4};
+        return retVal;
+
+    }
     /**
      * After form is checked and validated, do something to the event
      * @param event
