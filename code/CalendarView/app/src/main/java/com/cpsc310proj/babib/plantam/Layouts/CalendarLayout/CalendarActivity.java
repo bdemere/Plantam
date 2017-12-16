@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cpsc310proj.babib.plantam.CurrentDate;
+import com.cpsc310proj.babib.plantam.DataObserver;
 import com.cpsc310proj.babib.plantam.Enums.Accessibility;
 import com.cpsc310proj.babib.plantam.Event.CustomDate;
 import com.cpsc310proj.babib.plantam.Event.Event;
@@ -37,6 +38,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -46,7 +48,7 @@ import java.util.List;
  * It has a Calendar
  *        List of events on a selected day
  */
-public class CalendarActivity extends AppCompatActivity {
+public class CalendarActivity extends AppCompatActivity implements DataObserver {
 
     private static final String TAG = "CalendarActivity";
 
@@ -96,6 +98,11 @@ public class CalendarActivity extends AppCompatActivity {
 
         mFirebaseAuth = FirebaseAuth.getInstance();
 
+
+        /**
+         * Observe data changes from the local database
+         */
+        SQLiteEventDatabase.addObserver(this);
 
         mCalendarView = (CalendarView)findViewById(R.id.calendar_view);
         mEventsListView = (ListView)findViewById(R.id.calendar_events_list_view);
@@ -158,7 +165,7 @@ public class CalendarActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                // Create and show the dialog.
+                // Create and show the dia
                 EditEventDialog newFragment =
                         EditEventDialog.newInstance(mListAdapter.getList().get(position), eventDatabase);
                 newFragment.show(ft, "EditEventDialog: " + id);
@@ -187,6 +194,33 @@ public class CalendarActivity extends AppCompatActivity {
     }
 
 
+
+    @Override
+    public void eventDataChanged(){
+        SQLiteEventDatabase eventDatabase = SQLiteEventDatabase.getEventDatabase(CalendarActivity.this);
+        int year = CurrentDate.getYear();
+        int month = CurrentDate.getMonth();
+        int dayOfMonth = CurrentDate.getMonth();
+
+        mListAdapter = new CustomListAdapter(
+                this,
+                eventDatabase.getEventsAtDate( //when date is changed
+                        (new CustomDate()).setYear(year).setMonth(month).setDay(dayOfMonth)
+                )
+        );
+
+        mEventsListView.setAdapter(mListAdapter);
+        mListAdapter.notifyDataSetChanged();
+        Log.d("Local: eventDa..ed(): ", mListAdapter.getList().toString());
+
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        SQLiteEventDatabase.removeObserver(this);
+    }
 
     @Override
     protected void onResume() {

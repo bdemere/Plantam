@@ -3,7 +3,10 @@ package com.cpsc310proj.babib.plantam.Layouts.AddEventLayout;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.text.InputType;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -15,9 +18,12 @@ import com.cpsc310proj.babib.plantam.CurrentDate;
 import com.cpsc310proj.babib.plantam.Enums.Category;
 import com.cpsc310proj.babib.plantam.Event.CustomDate;
 import com.cpsc310proj.babib.plantam.Event.CustomTime;
+import com.google.android.gms.maps.model.LatLngBounds;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * An Activity class that will inquire all the necessary information
@@ -35,15 +41,59 @@ public class EventForm
     public Button mStartTimePicker; //Button: opens a time picker (start time)
     public Button mEndTimePicker; //Button: opens a time picker (end time)
     public Spinner mCategorySpinner; //Spinner: choose the category of the event
+    public Button mLocationPicker; //Button: set the location of the event
+
+    public LatLngBounds bounds;
 
     public DatePickerDialog mDatePickerDialog; //Dialog: will be opened to choose date
     public TimePickerDialog mStartTimePickerDialog; //Dialog: will be opened to choose start time
     public TimePickerDialog mEndTimePickerDialog; //Dialog: will be opened to choose end time
 
 
+    public boolean isEditable = true;
+
     public EventForm(Context context){
         mContext = context;
     }
+
+    /**
+     *
+     * @return whether the form is editable or not
+     */
+    public boolean isEditable(){return isEditable;}
+
+    /**
+     * Sets the field identifying whether the forms is editable or not
+     * @param isEditable
+     */
+    public void setMode(boolean isEditable){
+        //If the state of the form needs to change to the required state
+
+        if(!this.isEditable && isEditable || !isEditable && this.isEditable) {
+            if (mTitleEditText != null){
+                //mTitleEditText.setEnabled(isEditable);
+                mTitleEditText.setCursorVisible(isEditable);
+                mTitleEditText.setBackgroundColor(Color.TRANSPARENT);
+                mTitleEditText.setKeyListener(null);
+            }
+            if (mDescriptionEditText != null){
+                mDescriptionEditText.setCursorVisible(isEditable);
+                mDescriptionEditText.setBackgroundColor(Color.TRANSPARENT);
+                mDescriptionEditText.setKeyListener(null);
+            }
+            if (mDatePicker != null)mDatePicker.setClickable(isEditable);
+            if (mStartTimePicker != null) mStartTimePicker.setClickable(isEditable);
+            if (mEndTimePicker != null) mEndTimePicker.setClickable(isEditable);
+            if (mCategorySpinner != null)
+                mCategorySpinner.setVisibility(isEditable ? View.VISIBLE : View.INVISIBLE);
+
+
+            this.isEditable = isEditable;
+        }
+
+
+    }
+
 
     public void initializeForm(){
         initialize_categories(mCategorySpinner); //setting category options
@@ -78,6 +128,8 @@ public class EventForm
                 mEndTimePickerDialog.show();
             }
         });
+
+
 
     }
 

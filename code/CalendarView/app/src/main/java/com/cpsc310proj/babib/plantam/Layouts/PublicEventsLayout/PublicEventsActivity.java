@@ -22,12 +22,13 @@ import com.cpsc310proj.babib.plantam.Enums.Category;
 import com.cpsc310proj.babib.plantam.Event.Event;
 import com.cpsc310proj.babib.plantam.EventDatabase;
 import com.cpsc310proj.babib.plantam.Firebase.FBDatabase;
-import com.cpsc310proj.babib.plantam.Firebase.FireBaseDataObserver;
+import com.cpsc310proj.babib.plantam.DataObserver;
 import com.cpsc310proj.babib.plantam.Layouts.AddEventLayout.AddEventActivity;
 import com.cpsc310proj.babib.plantam.R;
+import com.cpsc310proj.babib.plantam.SQLiteDatabase.SQLiteEventDatabase;
 
 public class PublicEventsActivity extends AppCompatActivity
-        implements PublicEventCategoryFragment.OnListFragmentInteractionListener, FireBaseDataObserver {
+        implements PublicEventCategoryFragment.OnListFragmentInteractionListener, DataObserver {
 
     private static int EVENT_REQUEST = 1;
 
@@ -47,6 +48,13 @@ public class PublicEventsActivity extends AppCompatActivity
     private ProgressDialog mProgressDialog;
 
 
+    /**
+     * This method gets run when this Activity starts another activity waiting for a result from
+     * the started Activity;
+     * @param requestCode The requested result code
+     * @param resultCode  about the result
+     * @param data the result
+     */
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -59,9 +67,16 @@ public class PublicEventsActivity extends AppCompatActivity
 
                 Log.d("Adding FireBase: ", result.toString());
 
-                //Set the accessibility to public
+                //Adding to public database
                 result.setAccessibility(Accessibility.PUBLIC.toString());
                 EventDatabase eventDatabase = new FBDatabase();
+                eventDatabase.addEvent(result);
+
+
+
+                //Adding to private database
+                eventDatabase = new SQLiteEventDatabase(PublicEventsActivity.this);
+                result.setAccessibility(Accessibility.USERPUBLIC.toString());
                 eventDatabase.addEvent(result);
                 FBDatabase.updateEventsData();
             }

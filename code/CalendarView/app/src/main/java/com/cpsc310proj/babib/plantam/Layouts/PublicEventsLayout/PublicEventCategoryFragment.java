@@ -2,6 +2,7 @@ package com.cpsc310proj.babib.plantam.Layouts.PublicEventsLayout;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
@@ -17,8 +18,8 @@ import android.widget.Toast;
 import com.cpsc310proj.babib.plantam.Enums.Category;
 import com.cpsc310proj.babib.plantam.Event.Event;
 import com.cpsc310proj.babib.plantam.Firebase.FBDatabase;
-import com.cpsc310proj.babib.plantam.Firebase.FireBaseDataObserver;
-import com.cpsc310proj.babib.plantam.Layouts.CalendarLayout.EditEventDialog;
+import com.cpsc310proj.babib.plantam.DataObserver;
+import com.cpsc310proj.babib.plantam.Firebase.User;
 import com.cpsc310proj.babib.plantam.R;
 
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ import java.util.List;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class PublicEventCategoryFragment extends Fragment implements FireBaseDataObserver {
+public class PublicEventCategoryFragment extends Fragment implements DataObserver {
 
     // TODO: Customize parameter argument names
     private static final String ARG_CATEGORY_NAME = "com.cpsc310proj.babib.plantam.Layouts." +
@@ -89,9 +90,10 @@ public class PublicEventCategoryFragment extends Fragment implements FireBaseDat
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 // Create and show the dialog.
-                EditEventDialog newFragment =
-                        EditEventDialog.newInstance(mListAdapter.getList().get(position), new FBDatabase());
+                ViewEventDialog newFragment =
+                        ViewEventDialog.newInstance(mListAdapter.getList().get(position), new FBDatabase());
                 newFragment.show(ft, "EditEventDialog: " + id);
+
 
 
                 Log.d("CalendarActivity: ", position + " clicked");
@@ -190,8 +192,8 @@ public class PublicEventCategoryFragment extends Fragment implements FireBaseDat
 
         }
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            CustomListAdapter.ViewHolder holder = new CustomListAdapter.ViewHolder();
+        public View getView(final int position, View convertView, ViewGroup parent) {
+            final CustomListAdapter.ViewHolder holder = new CustomListAdapter.ViewHolder();
 
             if (convertView == null) {
 
@@ -199,13 +201,17 @@ public class PublicEventCategoryFragment extends Fragment implements FireBaseDat
 
             }
 
+
             holder.title = (TextView)convertView.findViewById(R.id.calendar_detail_list_view_title);
             holder.time = (TextView)convertView.findViewById(R.id.calendar_detail_list_view_time);
             //holder.description = (TextView)convertView.findViewById(R.id.calendar_detail_list_view_description);
 
+
+            Event event = toDisplay.get(position);
+
             if(!toDisplay.isEmpty()){
-                holder.title.setText(toDisplay.get(position).getTitle());
-                holder.time.setText(toDisplay.get(position).getStartTime().toString());
+                holder.title.setText(event.getTitle());
+                holder.time.setText(event.getStartTime().toString());
                 //holder.description.setText(toDisplay.get(position).getDescription());
             }
 

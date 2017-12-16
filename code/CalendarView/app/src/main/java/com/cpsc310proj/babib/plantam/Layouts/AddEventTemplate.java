@@ -32,7 +32,9 @@ public abstract class AddEventTemplate {
             new_event.setEndTime(form.mEndTimePicker.getText().toString());
             new_event.setDescription(form.mDescriptionEditText.getText().toString());
             new_event.setCategory(form.mCategorySpinner.getSelectedItem().toString());
+            new_event.setLocation(form.mLocationPicker.getText().toString() + "%"+ form.bounds.toString());
 
+            
             ifEventIsValid(new_event);
         } catch (Exception e) {
             Snackbar.make(view, e.getMessage().toString(), Snackbar.LENGTH_LONG)
@@ -66,5 +68,7 @@ public abstract class AddEventTemplate {
             throw new IllegalArgumentException("Pick start time");
         if(form.mEndTimePicker.getText().toString().equalsIgnoreCase("End time"))
             throw new IllegalArgumentException("Pick end time");
+        if(form.mLocationPicker.getText().toString().equalsIgnoreCase("Location"))
+            throw new IllegalArgumentException("Pick location");
     }
 }

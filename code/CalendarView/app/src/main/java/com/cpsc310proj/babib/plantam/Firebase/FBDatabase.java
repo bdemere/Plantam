@@ -3,13 +3,11 @@ package com.cpsc310proj.babib.plantam.Firebase;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.cpsc310proj.babib.plantam.DataObserver;
 import com.cpsc310proj.babib.plantam.Enums.Category;
-import com.cpsc310proj.babib.plantam.Event.CustomDate;
-import com.cpsc310proj.babib.plantam.Event.CustomTime;
 import com.cpsc310proj.babib.plantam.Event.Event;
 import com.cpsc310proj.babib.plantam.Event.EventInfo;
 import com.cpsc310proj.babib.plantam.EventDatabase;
-import com.cpsc310proj.babib.plantam.SQLiteDatabase.DatabaseEntry;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -59,11 +57,13 @@ public class FBDatabase implements EventDatabase, Serializable{
     private static FirebaseUser mUserReference = FirebaseAuth.getInstance().getCurrentUser();
 
 
+
+
     /**
      * This is a list of Observers that wait on data change on the local cache
      *
      **/
-    private static ArrayList<FireBaseDataObserver>
+    private static ArrayList<DataObserver>
             dataObservers = null;
 
 
@@ -73,13 +73,31 @@ public class FBDatabase implements EventDatabase, Serializable{
      * to the downloaded data
      * @param observer
      */
-    public static void addObserver(FireBaseDataObserver observer){
+    public static void addObserver(DataObserver observer){
         if(dataObservers == null) { //if not initialized
             dataObservers = new ArrayList<>();
             dataObservers.add(observer);
         } else {
             dataObservers.add(observer);
         }
+    }
+
+    /**
+     * Remove an observer
+     * @param observer
+     * @return
+     */
+    public static boolean removeObserver(DataObserver observer){
+        return dataObservers.remove(observer);
+    }
+
+    /**
+     * Notify all observers that a data has changed
+     */
+    public static void eventDataUpdated(){
+        if(dataObservers != null)
+            for(DataObserver dataObserver : dataObservers)
+                dataObserver.eventDataChanged();
     }
 
     public static void write(Event event){
@@ -93,6 +111,10 @@ public class FBDatabase implements EventDatabase, Serializable{
                 child(event.getEventUID()).
                 setValue(event.getEventInfo()).isComplete());
     }
+
+
+
+
 
 
     public static boolean writeUser(String userID){
@@ -112,17 +134,6 @@ public class FBDatabase implements EventDatabase, Serializable{
                 }
         ).isSuccessful();
     }
-
-    /**
-     * Remove an observer
-     * @param observer
-     * @return
-     */
-    public static boolean removeObserver(FireBaseDataObserver observer){
-        return dataObservers.remove(observer);
-    }
-
-
 
     public static void writeEvent(Event e){
         if(mFirebaseDatabase == null)
@@ -153,11 +164,19 @@ public class FBDatabase implements EventDatabase, Serializable{
                         child(mUserReference.getUid()).
                         child(event.getEventUID()).
                         setValue(event.getEventInfo()).isComplete());
+        eventDataUpdated();
     }
 
 
     public void deleteEvent(Event event){
-        //TODO: delete an event from FireBase
+        if(mFirebaseDatabase == null)
+            mFirebaseDatabase = FirebaseDatabase.getInstance();
+
+        Log.d("deleteEvent(Event): ", mFirebaseDatabase.getReference().
+                child(EVENT_ROOT + "_" + event.getCategory().toLowerCase()).
+                child(mUserReference.getUid()).
+                child(event.getEventUID()).removeValue().isSuccessful() + "");
+        eventDataUpdated();
     }
 
 
@@ -167,14 +186,7 @@ public class FBDatabase implements EventDatabase, Serializable{
     }
 
 
-    /**
-     * Notify all observers that a data has changed
-     */
-    public static void eventDataUpdated(){
-        if(dataObservers != null)
-            for(FireBaseDataObserver fireBaseDataObserver: dataObservers)
-                fireBaseDataObserver.eventDataChanged();
-    }
+
 
     /**
      * A function to fetch data under the events root from
@@ -228,6 +240,7 @@ public class FBDatabase implements EventDatabase, Serializable{
      */
     public static void updateEventsData(){
         isEventDataUpdated = false;
+        EventCategoryCache = new HashMap<>();
         for(Category category : Category.values())
             EventCategoryCache.put(category, new ArrayList<Event>());
         makeEventsDataLocal();
@@ -235,11 +248,16 @@ public class FBDatabase implements EventDatabase, Serializable{
     }
 
     /**
-     * A function to pull data from a given root in the events database
+     * A function to pull data from a given event root in the events database
      * @param dbRef
      * @param toUpdate
      */
+
     private static void updateEventsCache(DatabaseReference dbRef, final ArrayList<Event> toUpdate){
+
+
+
+
         dbRef.addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override
@@ -247,27 +265,34 @@ public class FBDatabase implements EventDatabase, Serializable{
                         //Get map of users in data snapshot
                         //Map<String, Event> map = (Map<String, Event>) dataSnapshot.getValue();
 
+                        for (final DataSnapshot userID: dataSnapshot.getChildren()) {
+
+                            /*Initialize the class that fetches a user bio*/
+                            FetchUser fetchUser = new FetchUser(mFirebaseDatabase) {
+                                @Override
+                                public void onFetch(User user) {
+                                    for (DataSnapshot eventID : userID.getChildren()) {
+                                        Log.d("EventID: " + eventID.getKey(), "" + user);
+
+                                        Event toAdd = new Event(eventID.getValue(EventInfo.class));
+                                        toAdd.setUser(user);
+                                        toUpdate.add(toAdd);
+                                    }
+
+                                    /**
+                                     * Notify all observers
+                                     **/
+                                    eventDataUpdated();
+                                }
+                            };
+
+                            /*Do something to the fetched user*/
+                            fetchUser.fetchUser(userID.getKey());
+                        }
 
 
-                        for (DataSnapshot userID: dataSnapshot.getChildren()) 
-                            for(DataSnapshot eventInfo: userID.getChildren()){
-                                EventInfo info = eventInfo.getValue(EventInfo.class);
-                                toUpdate.add(new Event(info));
-                            }
-                            //Log.d("YOO: ", info.toString());
 
-
-//                        for (Map.Entry<String, Event> entry : map.entrySet()) {
-//                            toUpdate.add(entry.getValue());
-//
-//                        }
-
-                        /**
-                         * Notify all observers
-                         **/
-                        eventDataUpdated();
-
-                        Log.d("ayyyy::::", "" + toUpdate.toString());
+                        //Log.d("ayyyy::::", "" + toUpdate.toString());
                     }
 
                     @Override
@@ -277,6 +302,8 @@ public class FBDatabase implements EventDatabase, Serializable{
                     }
                 });
     }
+
+
 
     /**
      * Given an events category, return a list of the events

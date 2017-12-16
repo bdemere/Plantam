@@ -51,4 +51,7 @@
     <string name="error_field_required">This field is required</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email</string>
 
+
+    <string name="PLANTAM_API_KEY">AIzaSyDo0cnv14Bc28A3n7ERljX9lPZj5tihP-I</string>
+
 </resources>

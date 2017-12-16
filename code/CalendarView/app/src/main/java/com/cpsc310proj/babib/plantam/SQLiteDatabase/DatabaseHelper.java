@@ -38,7 +38,8 @@ public class DatabaseHelper extends SQLiteOpenHelper { //change variables to pub
                     KEYS[5] + " TEXT, " +
                     KEYS[6] + " TEXT, " +
                     KEYS[7] + " TEXT, " +
-                    KEYS[8] + " TEXT  " +
+                    KEYS[8] + " TEXT, " +
+                    KEYS[9] + " TEXT  " +
             ");"
         );
     }
@@ -80,6 +81,9 @@ public class DatabaseHelper extends SQLiteOpenHelper { //change variables to pub
                 getKeyIndex(Event.KEY_ID)));
         event.setAccessibility(dbCursor.getString(
                 getKeyIndex(Event.KEY_ACCESSIBILITY)));
+        event.setLocation(dbCursor.getString(
+                getKeyIndex(Event.KEY_LOCATION)
+        ));
 
         return event;
     }

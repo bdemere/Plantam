@@ -16,8 +16,15 @@ public enum Category {
     OTHER("other");
 
     private String type_name;
-    private Category(String type_name){
+    Category(String type_name){
         this.type_name = type_name;
+    }
+
+    public static int getIndex(String category){
+        for(Category c : values())
+            if(c.equals(category)) return c.ordinal();
+
+        return OTHER.ordinal();
     }
     public String toString(){
         return type_name;

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.cpsc310proj.babib.plantam.Enums.Accessibility;
+import com.cpsc310proj.babib.plantam.Enums.Category;
 import com.cpsc310proj.babib.plantam.Event.Event;
 import com.cpsc310proj.babib.plantam.EventDatabase;
 import com.cpsc310proj.babib.plantam.Firebase.FBDatabase;
@@ -26,21 +29,22 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 public class EditEventDialog extends DialogFragment {
     // TODO: Rename parameter arguments, choose names that match
 
-    private static final String ARG_EVENT = "EditEventDialog.ARG_EVENT";
-    private static final String ARG_DATABASE = "EditEventDialog.ARG_DATABASE";
+    protected static final String ARG_EVENT = "EditEventDialog.ARG_EVENT";
+    protected static final String ARG_DATABASE = "EditEventDialog.ARG_DATABASE";
 
     // TODO: Rename and change types of parameters
 
-    private EventForm mForm;
-    private Button mEdit;
-    private Button mDelete;
+    protected EventForm mForm;
+    protected Button mEdit;
+    protected Button mDelete;
 
 
-    private String mEventID;
-    private EventDatabase mDatabase;
-    private Context mContext;
+    protected String mEventID;
+    protected EventDatabase mDatabase;
+    protected Context mContext;
 
-    private Event toEdit;
+    protected Event toEdit;
+
 
 
 
@@ -104,6 +108,7 @@ public class EditEventDialog extends DialogFragment {
         mForm.mStartTimePicker = (Button)view.findViewById(R.id.add_event_start_time_picker);
         mForm.mEndTimePicker = (Button)view.findViewById(R.id.add_event_end_time_picker);
         mForm.mCategorySpinner = (Spinner)view.findViewById(R.id.add_event_category_spinner);
+        mForm.mLocationPicker = (Button)view.findViewById(R.id.add_event_location_picker);
 
         mEdit = (Button)view.findViewById(R.id.event_dialog_edit_event);
         mDelete = (Button)view.findViewById(R.id.event_dialog_delete_event);
@@ -113,9 +118,18 @@ public class EditEventDialog extends DialogFragment {
             @Override
             public void onClick(View v) {
                 mDatabase.deleteEvent(toEdit);
+                FBDatabase fbDatabase = new FBDatabase();
+                Log.d("Accessibility: ", toEdit.getAccessibility().toString());
+                if(toEdit.getAccessibility().equals(Accessibility.USERPUBLIC.toString())) {
+                    fbDatabase.deleteEvent(toEdit);
+                    FBDatabase.updateEventsData();
+                }
+
+                Log.d("Trying: ", toEdit.getAccessibility().toString());
                 dismiss();
             }
         });
+
 
 
         mEdit.setOnClickListener(new View.OnClickListener() {
@@ -124,7 +138,21 @@ public class EditEventDialog extends DialogFragment {
                 AddEventTemplate addEventTemplate = new AddEventTemplate() {
                     @Override
                     protected void ifEventIsValid(Event event) {
+                        //Delete old event from Databases first
+                        mDatabase.deleteEvent(toEdit);
+                        //Add new edited event to databases
                         mDatabase.addEvent(event);
+                        FBDatabase fbDatabase = new FBDatabase();
+
+                        Log.d("Accessibility: ", toEdit.getAccessibility().toString());
+                        if(toEdit.getAccessibility().equals(Accessibility.USERPUBLIC.toString())) {
+                            //Delete old event from Databases first
+                            //then add the new event to the Databases
+                            fbDatabase.deleteEvent(toEdit);
+                            fbDatabase.addEvent(toEdit);
+                            FBDatabase.updateEventsData();
+                        }
+
                         dismiss();
                     }
                 };
@@ -140,8 +168,10 @@ public class EditEventDialog extends DialogFragment {
         mForm.mDatePicker.setText(event.getDate().toString());
         mForm.mStartTimePicker.setText(event.getStartTime().toString());
         mForm.mEndTimePicker.setText(event.getEndTime().toString());
+        mForm.mCategorySpinner.setSelection(Category.getIndex(toEdit.getCategory()));
 
-        //mForm.mPublicPersonalSwitch.setText(event.getAccessibility());
+        mForm.mLocationPicker.setText(event.getLocation());
+
         mForm.initializeForm();
 
 

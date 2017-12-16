@@ -6,7 +6,8 @@ package com.cpsc310proj.babib.plantam.Enums;
 
 public enum Accessibility {
     PUBLIC("PUBLIC"),
-    PRIVATE("PRIVATE");
+    PRIVATE("PRIVATE"),
+    USERPUBLIC("USERPUBLIC");
 
     private String name;
 

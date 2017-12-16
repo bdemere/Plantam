@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.Cursor;
 import android.util.Log;
 
+import com.cpsc310proj.babib.plantam.DataObserver;
 import com.cpsc310proj.babib.plantam.Event.CustomDate;
 import com.cpsc310proj.babib.plantam.Event.Event;
 import com.cpsc310proj.babib.plantam.EventDatabase;
@@ -34,9 +35,56 @@ public class SQLiteEventDatabase implements EventDatabase, Serializable{
         if (theSQLiteEventDatabase == null) {
             theSQLiteEventDatabase = new SQLiteEventDatabase(context);
         }
+        theSQLiteEventDatabase.setContext(context);
         return theSQLiteEventDatabase;
     }
 
+
+    /**
+     * This is a list of Observers that wait on data change on the local cache
+     *
+     **/
+    private static ArrayList<DataObserver>
+            dataObservers = null;
+
+
+    /**
+     * This method is used to add observer objects that
+     * will be notified when there is a change made
+     * to the downloaded data
+     * @param observer
+     */
+    public static void addObserver(DataObserver observer){
+        if(dataObservers == null) { //if not initialized
+            dataObservers = new ArrayList<>();
+            dataObservers.add(observer);
+        } else {
+            dataObservers.add(observer);
+        }
+    }
+
+    /**
+     * Notify all observers that a data has changed
+     */
+    public static void eventDataUpdated(){
+        if(dataObservers != null)
+            for(DataObserver dataObserver : dataObservers)
+                dataObserver.eventDataChanged();
+    }
+
+    /**
+     * Remove an observer
+     * @param observer
+     * @return
+     */
+    public static boolean removeObserver(DataObserver observer){
+        return dataObservers.remove(observer);
+    }
+
+
+    public void setContext(Context context){
+        mContext = context;
+    }
     /* Do we need a addCommentText() */
 
     /* Add a new event to the database */
@@ -52,7 +100,9 @@ public class SQLiteEventDatabase implements EventDatabase, Serializable{
         values.put(Event.KEY_DESCRIPTION, event.getDescription());
         values.put(Event.KEY_CATEGORY, event.getCategory());
         values.put(Event.KEY_ACCESSIBILITY, event.getAccessibility());
+        values.put(Event.KEY_LOCATION, event.getLocation());
 
+        eventDataUpdated();
         mDatabase.insert(DatabaseHelper.TABLE_NAME, null, values);
     }
 
@@ -62,6 +112,7 @@ public class SQLiteEventDatabase implements EventDatabase, Serializable{
     }
 
     public void deleteEvent(Event event){
+        eventDataUpdated();
         mDatabase.delete(DatabaseHelper.TABLE_NAME, Event.KEY_ID + " = ?",
                 new String[]{event.getEventUID()});
     }

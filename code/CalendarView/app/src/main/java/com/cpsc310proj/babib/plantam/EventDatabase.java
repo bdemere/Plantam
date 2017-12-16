@@ -10,6 +10,6 @@ import java.util.List;
  */
 
 public interface EventDatabase {
-    public void addEvent(Event event);
-    public void deleteEvent(Event event);
+    void addEvent(Event event);
+    void deleteEvent(Event event);
 }

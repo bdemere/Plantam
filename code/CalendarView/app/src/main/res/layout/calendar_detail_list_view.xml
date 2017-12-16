@@ -9,8 +9,8 @@
 
     <TextView
         android:id="@+id/calendar_detail_list_view_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="70dp"
+        android:layout_height="50dp"
         android:padding="15dp"
 
         android:gravity="center_vertical"
@@ -21,9 +21,9 @@
 
     <TextView
         android:id="@+id/calendar_detail_list_view_title"
+        android:layout_width="317dp"
+        android:layout_height="50dp"
         android:gravity="center_vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:padding="15dp"
         android:text="TextView"
         app:layout_constraintStart_toEndOf="@+id/calendar_detail_list_view_time"
