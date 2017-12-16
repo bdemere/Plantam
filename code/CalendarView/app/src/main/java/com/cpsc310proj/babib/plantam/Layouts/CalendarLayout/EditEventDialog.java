@@ -22,6 +22,8 @@ import com.cpsc310proj.babib.plantam.Layouts.AddEventTemplate;
 import com.cpsc310proj.babib.plantam.R;
 import com.cpsc310proj.babib.plantam.SQLiteDatabase.SQLiteEventDatabase;
 
+import java.util.Scanner;
+
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 /**
@@ -169,9 +171,7 @@ public class EditEventDialog extends DialogFragment {
         mForm.mStartTimePicker.setText(event.getStartTime().toString());
         mForm.mEndTimePicker.setText(event.getEndTime().toString());
         mForm.mCategorySpinner.setSelection(Category.getIndex(toEdit.getCategory()));
-
         mForm.mLocationPicker.setText(event.getLocation());
-
         mForm.initializeForm();
 
 

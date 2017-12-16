@@ -55,6 +55,7 @@ public class AddEventActivity extends AppCompatActivity{
 
                 String location = String.format("%s", place.getAddress());
 
+
                 mForm.mLocationPicker.setText(location);
             }
         }

@@ -14,6 +14,7 @@ import com.cpsc310proj.babib.plantam.Layouts.AddEventLayout.EventForm;
  */
 
 public abstract class AddEventTemplate {
+    public static String LOCATION_DIVIDER = " ::: ";
     /**
      * Passed the android.View of the calling Activity and a form to validate,
      * throws an Exception if is not filled with the given specifications
@@ -32,9 +33,11 @@ public abstract class AddEventTemplate {
             new_event.setEndTime(form.mEndTimePicker.getText().toString());
             new_event.setDescription(form.mDescriptionEditText.getText().toString());
             new_event.setCategory(form.mCategorySpinner.getSelectedItem().toString());
-            new_event.setLocation(form.mLocationPicker.getText().toString() + "%"+ form.bounds.toString());
+            new_event.setLocation(form.mLocationPicker.getText().toString()
+                    + LOCATION_DIVIDER + form.bounds.toString());
 
-            
+
+
             ifEventIsValid(new_event);
         } catch (Exception e) {
             Snackbar.make(view, e.getMessage().toString(), Snackbar.LENGTH_LONG)
@@ -42,6 +45,9 @@ public abstract class AddEventTemplate {
         }
     }
 
+    //TODO:write a method to parse such a string
+    // "Hartford, CT 06106, USA%LatLngBounds{southwest=lat/lng: (41.743505105687404,-72.69189968705177), northeast=lat/lng: (41.74681889675219,-72.68803764134645)}"
+    // and extract the four doubles
     /**
      * After form is checked and validated, do something to the event
      * @param event
