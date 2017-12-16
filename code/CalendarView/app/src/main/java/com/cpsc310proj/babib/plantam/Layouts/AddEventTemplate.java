@@ -1,10 +1,13 @@
 package com.cpsc310proj.babib.plantam.Layouts;
 
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 
 import com.cpsc310proj.babib.plantam.Event.Event;
 import com.cpsc310proj.babib.plantam.Layouts.AddEventLayout.EventForm;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 
 /**
  * Created by bemnet on 12/14/17.
@@ -15,6 +18,8 @@ import com.cpsc310proj.babib.plantam.Layouts.AddEventLayout.EventForm;
 
 public abstract class AddEventTemplate {
     public static String LOCATION_DIVIDER = " ::: ";
+
+
     /**
      * Passed the android.View of the calling Activity and a form to validate,
      * throws an Exception if is not filled with the given specifications
@@ -46,7 +51,7 @@ public abstract class AddEventTemplate {
     }
 
     //TODO:write a method to parse such a string
-    // "Hartford, CT 06106, USA%LatLngBounds{southwest=lat/lng: (41.743505105687404,-72.69189968705177), northeast=lat/lng: (41.74681889675219,-72.68803764134645)}"
+    // "Hartford, CT 06106, USA ::: LatLngBounds{southwest=lat/lng: (41.743505105687404,-72.69189968705177), northeast=lat/lng: (41.74681889675219,-72.68803764134645)}"
     // and extract the four doubles
     /**
      * After form is checked and validated, do something to the event
