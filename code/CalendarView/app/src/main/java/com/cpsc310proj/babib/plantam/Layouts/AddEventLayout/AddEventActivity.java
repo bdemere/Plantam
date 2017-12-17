@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.cpsc310proj.babib.plantam.Event.Event;
 import com.cpsc310proj.babib.plantam.Layouts.AddEventTemplate;
 import com.cpsc310proj.babib.plantam.Layouts.PublicEventsLayout.PublicEventsActivity;
+import com.cpsc310proj.babib.plantam.NotificationAlarmReceiver;
 import com.cpsc310proj.babib.plantam.R;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
@@ -94,7 +95,7 @@ public class AddEventActivity extends AppCompatActivity{
                         Intent toReturn = new Intent();
                         toReturn.putExtra(EVENT_RESULT, event);
                         setResult(AppCompatActivity.RESULT_OK, toReturn);
-
+                        NotificationAlarmReceiver.scheduleAlarms(getBaseContext(), event);
                         finish();
                     }
                 };

@@ -76,6 +76,8 @@
 
         </activity>
 
+        <receiver android:name=".NotificationAlarmReceiver"/>
+
         <service
             android:name=".MyFirebaseMessagingService">
             <intent-filter>

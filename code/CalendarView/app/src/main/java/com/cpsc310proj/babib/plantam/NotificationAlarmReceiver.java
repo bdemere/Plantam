@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.cpsc310proj.babib.plantam.Event.CustomDate;
@@ -20,6 +21,7 @@ import com.cpsc310proj.babib.plantam.SQLiteDatabase.SQLiteEventDatabase;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
 
@@ -36,6 +38,7 @@ public class NotificationAlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         String eventUID = intent.getStringExtra("eventUID");
+        Log.d("UID", eventUID);
         if(eventUID!=null) {
             SQLiteEventDatabase db = SQLiteEventDatabase.getEventDatabase(context);
             Event e = db.getEvent(eventUID);
@@ -43,7 +46,7 @@ public class NotificationAlarmReceiver extends BroadcastReceiver {
                     new NotificationCompat.Builder(context)
                             .setSmallIcon(R.mipmap.ic_launcher)
                             .setContentTitle(e.getTitle())
-                            .setContentText("Event coming up in 1 hour!");
+                            .setContentText("EVENT STARTING");
 
             Intent resultIntent = new Intent(context, NotificationAlarmReceiver.class);
 
@@ -55,24 +58,24 @@ public class NotificationAlarmReceiver extends BroadcastReceiver {
                             PendingIntent.FLAG_UPDATE_CURRENT
                     );
             mBuilder.setContentIntent(resultPendingIntent);
-            int mNotificationId = Integer.parseInt(eventUID);
+            int mNotificationId = (int)System.currentTimeMillis();
+          //  int mNotificationId = Integer.valueOf(eventUID);
+            Log.d("Alarm", "Alarm is called");
             NotificationManager mNotifyMgr =
                     (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
             mNotifyMgr.notify(mNotificationId, mBuilder.build());
         }
     }
-    public static void scheduleAlarms(Context context) {
-        
-        SQLiteEventDatabase db = SQLiteEventDatabase.getEventDatabase(context);
-        List<Event> events = db.getEventsAtDate(new CustomDate(CurrentDate.getYear(),CurrentDate.getMonth(),CurrentDate.getDay()));
-        for(Event e : events) {
+
+    public static void scheduleAlarms(Context context, Event e) {
+
             CustomDate cd = e.getDate();
             CustomTime ct = e.getStartTime();
             Calendar cal = Calendar.getInstance();
             cal.set(Calendar.YEAR, cd.getYear());
             cal.set(Calendar.MONTH, cd.getMonth()-1);
             cal.set(Calendar.DAY_OF_MONTH, cd.getDay());
-            cal.set(Calendar.HOUR_OF_DAY, ct.getHour()-1);
+            cal.set(Calendar.HOUR_OF_DAY, ct.getHour());
             cal.set(Calendar.MINUTE, ct.getMin());
             long time = cal.getTimeInMillis();
     
@@ -82,9 +85,9 @@ public class NotificationAlarmReceiver extends BroadcastReceiver {
             AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
     
             alarmManager.set(AlarmManager.RTC_WAKEUP, time, PendingIntent.getBroadcast(context, 1, intentAlarm, PendingIntent.FLAG_UPDATE_CURRENT));
-        }
-    }
 
+    }
+/*
     class AlarmSetReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -97,5 +100,5 @@ public class NotificationAlarmReceiver extends BroadcastReceiver {
         public void onReceive(Context context, Intent intent) {
             scheduleAlarms(context);
         }
-    }
+    }*/
 }
