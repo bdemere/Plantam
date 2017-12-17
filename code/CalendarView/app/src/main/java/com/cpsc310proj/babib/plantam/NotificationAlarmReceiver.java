@@ -12,7 +12,9 @@ import android.widget.Toast;
 import com.cpsc310proj.babib.plantam.Event.CustomDate;
 import com.cpsc310proj.babib.plantam.Event.CustomTime;
 import com.cpsc310proj.babib.plantam.Event.Event;
-import com.cpsc310proj.babib.plantam.EventDatabase;
+
+import com.cpsc310proj.babib.plantam.Layouts.CalendarLayout.CalendarActivity;
+
 import com.cpsc310proj.babib.plantam.SQLiteDatabase.SQLiteEventDatabase;
 
 import java.util.Calendar;
@@ -42,7 +44,9 @@ public class NotificationAlarmReceiver extends BroadcastReceiver {
                             .setSmallIcon(R.mipmap.ic_launcher)
                             .setContentTitle(e.getTitle())
                             .setContentText("Event coming up in 1 hour!");
+
             Intent resultIntent = new Intent(context, NotificationAlarmReceiver.class);
+
             PendingIntent resultPendingIntent =
                     PendingIntent.getActivity(
                             context,
