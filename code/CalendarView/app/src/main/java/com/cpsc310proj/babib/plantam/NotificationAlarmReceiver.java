@@ -12,7 +12,8 @@ import android.widget.Toast;
 import com.cpsc310proj.babib.plantam.Event.CustomDate;
 import com.cpsc310proj.babib.plantam.Event.CustomTime;
 import com.cpsc310proj.babib.plantam.Event.Event;
-import com.cpsc310proj.babib.plantam.SQLiteDatabase.EventDatabase;
+import com.cpsc310proj.babib.plantam.EventDatabase;
+import com.cpsc310proj.babib.plantam.SQLiteDatabase.SQLiteEventDatabase;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -34,14 +35,14 @@ public class NotificationAlarmReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         String eventUID = intent.getStringExtra("eventUID");
         if(eventUID!=null) {
-            EventDatabase db = EventDatabase.getEventDatabase(context);
+            SQLiteEventDatabase db = SQLiteEventDatabase.getEventDatabase(context);
             Event e = db.getEvent(eventUID);
             NotificationCompat.Builder mBuilder =
                     new NotificationCompat.Builder(context)
                             .setSmallIcon(R.mipmap.ic_launcher)
                             .setContentTitle(e.getTitle())
                             .setContentText("Event coming up in 1 hour!");
-            Intent resultIntent = new Intent(context, MainActivity.class);
+            Intent resultIntent = new Intent(context, NotificationAlarmReceiver.class);
             PendingIntent resultPendingIntent =
                     PendingIntent.getActivity(
                             context,
@@ -58,7 +59,7 @@ public class NotificationAlarmReceiver extends BroadcastReceiver {
     }
     public static void scheduleAlarms(Context context) {
         
-        EventDatabase db = EventDatabase.getEventDatabase(context);
+        SQLiteEventDatabase db = SQLiteEventDatabase.getEventDatabase(context);
         List<Event> events = db.getEventsAtDate(new CustomDate(CurrentDate.getYear(),CurrentDate.getMonth(),CurrentDate.getDay()));
         for(Event e : events) {
             CustomDate cd = e.getDate();

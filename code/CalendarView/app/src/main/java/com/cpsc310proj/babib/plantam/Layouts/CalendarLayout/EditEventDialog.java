@@ -17,12 +17,14 @@ import com.cpsc310proj.babib.plantam.Enums.Category;
 import com.cpsc310proj.babib.plantam.Event.Event;
 import com.cpsc310proj.babib.plantam.EventDatabase;
 import com.cpsc310proj.babib.plantam.Firebase.FBDatabase;
+import com.cpsc310proj.babib.plantam.Layouts.AddEventLayout.AddEventActivity;
 import com.cpsc310proj.babib.plantam.Layouts.AddEventLayout.EventForm;
 import com.cpsc310proj.babib.plantam.Layouts.AddEventTemplate;
 import com.cpsc310proj.babib.plantam.R;
 import com.cpsc310proj.babib.plantam.SQLiteDatabase.SQLiteEventDatabase;
-
-import java.util.Scanner;
+import com.google.android.gms.location.places.ui.PlacePicker;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
@@ -171,7 +173,36 @@ public class EditEventDialog extends DialogFragment {
         mForm.mStartTimePicker.setText(event.getStartTime().toString());
         mForm.mEndTimePicker.setText(event.getEndTime().toString());
         mForm.mCategorySpinner.setSelection(Category.getIndex(toEdit.getCategory()));
-        mForm.mLocationPicker.setText(event.getLocation());
+
+        String[] location = AddEventTemplate.extractLocationInfo(event.getLocation());
+
+        mForm.mLocationPicker.setText(location[0]);
+        mForm.bounds = new LatLngBounds(
+                new LatLng(Double.parseDouble(location[1]), Double.parseDouble(location[2])),
+                new LatLng(Double.parseDouble(location[3]), Double.parseDouble(location[4]))
+        );
+
+
+        mForm.mLocationPicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+
+                if(!mForm.mLocationPicker.getText().toString().equals("Location"))
+                    builder.setLatLngBounds(
+                            mForm.bounds
+                    );
+
+                try{
+                    startActivityForResult(builder.build(getActivity()),0);
+                } catch (Exception e){
+                    Log.d( "PLACE: ",
+                            e.getMessage().toString());
+                }
+            }
+        });
+
+
         mForm.initializeForm();
 
 

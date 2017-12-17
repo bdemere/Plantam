@@ -53,7 +53,7 @@ public class AddEventActivity extends AppCompatActivity{
                 //Get the latitude and longitude of the location
                 mForm.bounds = PlacePicker.getLatLngBounds(data);
 
-                String location = String.format("%s", place.getAddress());
+                String location = String.format("%s", place.getName());
 
 
                 mForm.mLocationPicker.setText(location);

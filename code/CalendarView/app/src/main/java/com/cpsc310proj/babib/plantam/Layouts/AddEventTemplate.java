@@ -6,10 +6,8 @@ import android.view.View;
 
 import com.cpsc310proj.babib.plantam.Event.Event;
 import com.cpsc310proj.babib.plantam.Layouts.AddEventLayout.EventForm;
-<<<<<<< HEAD
 import com.google.android.gms.maps.model.LatLng;
-=======
->>>>>>> 06d520e0d502d93fde61224a5352df1ead724c84
+
 import com.google.android.gms.maps.model.LatLngBounds;
 
 /**
@@ -53,21 +51,47 @@ public abstract class AddEventTemplate {
         }
     }
 
-    /*  ExtractEventInfo
-     *  @param String : str in format - "Hartford, CT 06106, USA%LatLngBounds{southwest=lat/lng: (41.743505105687404,-72.69189968705177), northeast=lat/lng: (41.74681889675219,-72.68803764134645)}"
+    /**
+     *  ExtractEventInfo
+     *  @param str : str in format -
+     *             "Hartford, CT 06106, USA%LatLngBounds{southwest=lat/lng:
+     *             (41.743505105687404,-72.69189968705177), northeast=lat/lng:
+     *             (41.74681889675219,-72.68803764134645)}"
      *  @return String[] - extracted geogrpahic information in String array 
      */
 
-    public String[] extractEventInfo(String str){
-        String[] locInfo = str.split(":::");
+    public static String[] extractLocationInfo(String str){
+        String[] locInfo = str.split(LOCATION_DIVIDER);
         String[] s = locInfo[1].split(" ");
-        String val = (s[1].substring(1,19));
-        String val2 = (s[1].substring(20,38));
-        String val3 = (s[3].substring(1,18));
-        String val4 = (s[3].substring(19,37));
-        String[] retVal = {locInfo[0], val, val2, val3, val4};
+        Log.d("String: ", s.toString());
+        String[] val2 = (s[1].split(","));
+        String[] val4 = (s[3].split(","));
+        String[] retVal =
+                {
+                        locInfo[0],
+                        removeExtra(val2[0]),
+                        removeExtra(val2[1]),
+                        removeExtra(val4[0]),
+                        removeExtra(val4[1])
+                };
+        Log.d("Oldway: ", retVal.toString());
         return retVal;
 
+    }
+
+    /**
+     * A method to be used in the function extractInfo to remove parenthesis and comma
+     * from a string
+     * @param str
+     * @return a parsable string (to double)
+     */
+    private static String removeExtra(String str){
+        return str
+                .replaceAll(",", "") //remove ','
+                .replaceAll("\\(", "") //remove '('
+                .replaceAll("\\)", "") // remove ')'
+                .replaceAll("\\}", "") //remove '}'
+                .replaceAll("\\{", ""); //remove '{'
     }
 
     /**
