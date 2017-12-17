@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.cpsc310proj.babib.plantam.Event.Event;
 import com.cpsc310proj.babib.plantam.Layouts.AddEventTemplate;
+import com.cpsc310proj.babib.plantam.Layouts.CalendarLayout.ViewLocation;
 import com.cpsc310proj.babib.plantam.Layouts.PublicEventsLayout.PublicEventsActivity;
 import com.cpsc310proj.babib.plantam.R;
 import com.google.android.gms.location.places.Place;
@@ -122,6 +123,12 @@ public class AddEventActivity extends AppCompatActivity{
                 }
             }
         });
+
+    }
+
+    public void locationButtonClicked(View v){
+        Intent intent = new Intent(AddEventActivity.this, ViewLocation.class);
+        startActivity(intent);
     }
 
 }

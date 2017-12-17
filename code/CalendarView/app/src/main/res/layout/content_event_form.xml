@@ -85,17 +85,32 @@
 
     <Button
         android:id="@+id/add_event_location_picker"
+        style="@style/Widget.AppCompat.Button"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_margin="10dp"
-        android:gravity="center"
-        android:text="Location"
         android:backgroundTint="#00FFFFFF"
+        android:gravity="center"
 
+        android:text="Location"
         app:layout_constraintLeft_toLeftOf="@id/add_event_end_time_picker"
         app:layout_constraintTop_toBottomOf="@id/add_event_end_time_picker" />
 
 
+    <Button
+        android:id="@+id/view_location"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:text="View Location in Map"
+        android:layout_margin="10dp"
+        android:backgroundTint="#00FFFFFF"
+        android:textSize="11dp"
+        android:textStyle="italic"
+        android:onClick="locationButtonClicked"
+        app:layout_constraintRight_toRightOf="@id/add_event_location_picker"
+        app:layout_constraintTop_toBottomOf="@id/add_event_location_picker" />
 
     <Spinner
         android:id="@+id/add_event_category_spinner"
@@ -106,8 +121,8 @@
         android:layout_marginTop="24dp"
         android:gravity="center"
         app:layout_constraintHorizontal_bias="0.88"
-        app:layout_constraintRight_toRightOf="@id/add_event_location_picker"
-        app:layout_constraintTop_toBottomOf="@id/add_event_location_picker" />
+        app:layout_constraintRight_toRightOf="@id/view_location"
+        app:layout_constraintTop_toBottomOf="@id/view_location" />
 
 </android.support.constraint.ConstraintLayout>
 

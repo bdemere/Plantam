@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.cpsc310proj.babib.plantam.Layouts.CalendarLayout.ViewLocation"
+    tools:showIn="@layout/activity_view_location">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/button_mather"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:backgroundTint="#00FFFFFF"
+                android:gravity="center"
+                android:onClick="openLocation"
+                android:text="Mather Hall" />
+
+            <Button
+                android:id="@+id/button_mecc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:backgroundTint="#00FFFFFF"
+                android:gravity="center"
+                android:onClick="openLocation"
+                android:text="MECC"
+
+                app:layout_constraintLeft_toLeftOf="@id/button_mather"
+                app:layout_constraintTop_toBottomOf="@id/button_mather" />
+
+            <Button
+                android:id="@+id/button_mccook"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:backgroundTint="#00FFFFFF"
+                android:gravity="center"
+                android:onClick="openLocation"
+                android:text="McCook Hall"
+                app:layout_constraintLeft_toLeftOf="@id/button_mecc"
+                app:layout_constraintTop_toBottomOf="@id/button_mecc" />
+
+            <Button
+                android:id="@+id/button_cinestudio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:backgroundTint="#00FFFFFF"
+                android:gravity="center"
+                android:onClick="openLocation"
+                android:text="Cinestudio"
+                app:layout_constraintLeft_toLeftOf="@id/button_mccook"
+                app:layout_constraintTop_toBottomOf="@id/button_mccook" />
+
+            <Button
+                android:id="@+id/button_lsc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:backgroundTint="#00FFFFFF"
+                android:gravity="center"
+                android:onClick="openLocation"
+                android:text="Life Science Center"
+                app:layout_constraintLeft_toLeftOf="@id/button_cinestudio"
+                app:layout_constraintTop_toBottomOf="@id/button_cinestudio" />
+
+            <Button
+                android:id="@+id/button_austin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:backgroundTint="#00FFFFFF"
+                android:gravity="center"
+                android:onClick="openLocation"
+                android:text="Austin Arts Center"
+                app:layout_constraintLeft_toLeftOf="@id/button_lsc"
+                app:layout_constraintTop_toBottomOf="@id/button_lsc" />
+
+            <Button
+                android:id="@+id/button_library"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:backgroundTint="#00FFFFFF"
+                android:gravity="center"
+                android:onClick="openLocation"
+                android:text="Raether Library"
+                app:layout_constraintLeft_toLeftOf="@id/button_austin"
+                app:layout_constraintTop_toBottomOf="@id/button_austin" />
+
+            <Button
+                android:id="@+id/button_vernon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:backgroundTint="#00FFFFFF"
+                android:gravity="center"
+                android:onClick="openLocation"
+                android:text="Vernon Social"
+                app:layout_constraintLeft_toLeftOf="@id/button_library"
+                app:layout_constraintTop_toBottomOf="@id/button_library" />
+
+            <Button
+                android:id="@+id/button_ferris"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:backgroundTint="#00FFFFFF"
+                android:gravity="center"
+                android:onClick="openLocation"
+                android:text="Ferris Athletic Center"
+                app:layout_constraintLeft_toLeftOf="@id/button_vernon"
+                app:layout_constraintTop_toBottomOf="@id/button_vernon" />
+
+            <Button
+                android:id="@+id/button_koeppel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:backgroundTint="#00FFFFFF"
+                android:gravity="center"
+                android:onClick="openLocation"
+                android:text="Koeppel Rink"
+                app:layout_constraintLeft_toLeftOf="@id/button_ferris"
+                app:layout_constraintTop_toBottomOf="@id/button_ferris" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>

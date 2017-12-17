@@ -53,5 +53,6 @@
 
 
     <string name="PLANTAM_API_KEY">AIzaSyDo0cnv14Bc28A3n7ERljX9lPZj5tihP-I</string>
+    <string name="title_activity_view_location">ViewLocation</string>
 
 </resources>

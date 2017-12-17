@@ -1,6 +1,7 @@
 package com.cpsc310proj.babib.plantam.Layouts.CalendarLayout;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.util.DisplayMetrics;
@@ -92,6 +93,8 @@ public class EditEventDialog extends DialogFragment {
             mDatabase = (EventDatabase)getArguments().getSerializable(ARG_DATABASE);
         }
         mContext = getActivity();
+
+
     }
 
     @Override
@@ -180,6 +183,11 @@ public class EditEventDialog extends DialogFragment {
     }
 
 
+    public void locationButtonClicked(View v){
+        Intent intent = new Intent(getActivity(), ViewLocation.class);
+        getActivity().startActivity(intent);
+    }
+
     @Override
     public void onDetach() {
         super.onDetach();
@@ -204,4 +212,6 @@ public class EditEventDialog extends DialogFragment {
 
 
     }
+
+
 }
