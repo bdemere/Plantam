@@ -38,6 +38,7 @@ public class EventInfo implements Serializable{
                 ", startTime='" + startTime + '\'' +
                 ", endTime='" + endTime + '\'' +
                 ", category='" + category + '\'' +
+                ", location='" + location + '\'' +
                 ", accessibility='" + accessibility + '\'' +
                 '}';
     }

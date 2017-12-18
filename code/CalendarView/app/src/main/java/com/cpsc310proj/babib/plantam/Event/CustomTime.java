@@ -54,6 +54,9 @@ public class CustomTime {
 
     @Override
     public String toString() {
-        return hour + ":" + min;
+        if (min < 10)
+            return hour + ":0" + min;
+        else
+            return hour + ":" + min;
     }
 }

@@ -17,8 +17,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,14 +34,22 @@ import com.cpsc310proj.babib.plantam.EventDatabase;
 import com.cpsc310proj.babib.plantam.Firebase.FBDatabase;
 import com.cpsc310proj.babib.plantam.Firebase.LoginActivity;
 import com.cpsc310proj.babib.plantam.Layouts.AddEventLayout.AddEventActivity;
+import com.cpsc310proj.babib.plantam.Layouts.AddEventLayout.EventForm;
+import com.cpsc310proj.babib.plantam.Layouts.FetchData;
 import com.cpsc310proj.babib.plantam.Layouts.PublicEventsLayout.PublicEventsActivity;
 import com.cpsc310proj.babib.plantam.R;
 import com.cpsc310proj.babib.plantam.SQLiteDatabase.SQLiteEventDatabase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -62,11 +73,21 @@ public class CalendarActivity extends AppCompatActivity implements DataObserver 
     private ListView mEventsListView; //List: show list of events selected in a date selected
     private FloatingActionButton mAddButton;//Floating Button: button to open a form to add events
 
+
     /**
      * A custom Adapter for the list class
      * It enables to define a new design for the items in the list
      **/
     private CustomListAdapter mListAdapter;
+
+
+
+    public static List<String> event_name = new LinkedList<String>();
+    public static List<String> event_time = new LinkedList<String>();
+    public static List<String> event_location = new LinkedList<String>();
+
+    private boolean checkedTrinToday = false;
+
 
 
     @Override
@@ -118,20 +139,20 @@ public class CalendarActivity extends AppCompatActivity implements DataObserver 
             }
         });
 
-
-
-
-
         int day = CurrentDate.getDay();
         int month = CurrentDate.getMonth();
         int year = CurrentDate.getYear();
-
 
         //mDateView.setText(""+ year + ":" + month + ":" + day);
         mCalendarView.setDate(CurrentDate.getDate());
 
         final SQLiteEventDatabase eventDatabase =  SQLiteEventDatabase.getEventDatabase(CalendarActivity.this);
         //new SQLiteEventDatabase(CalendarActivity.this);
+
+        //fetch data from Trinity Today
+        if (!checkedTrinToday)
+            getWebsite(this);
+
 
         mListAdapter = new CustomListAdapter(
                 this,
@@ -200,7 +221,7 @@ public class CalendarActivity extends AppCompatActivity implements DataObserver 
         SQLiteEventDatabase eventDatabase = SQLiteEventDatabase.getEventDatabase(CalendarActivity.this);
         int year = CurrentDate.getYear();
         int month = CurrentDate.getMonth();
-        int dayOfMonth = CurrentDate.getMonth();
+        int dayOfMonth = CurrentDate.getDay();
 
         mListAdapter = new CustomListAdapter(
                 this,
@@ -271,6 +292,8 @@ public class CalendarActivity extends AppCompatActivity implements DataObserver 
         return true;
     }
 
+
+
     private class CustomListAdapter extends BaseAdapter{
         private List<Event> toDisplay;
         private LayoutInflater inflater;
@@ -337,6 +360,93 @@ public class CalendarActivity extends AppCompatActivity implements DataObserver 
 
             return convertView;
         }
+
+    }
+
+    private void getWebsite(Context context) {
+
+        final Context mContext = context;
+
+        final List<Event> event_list = new LinkedList<Event>();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                org.jsoup.nodes.Document document;
+                org.jsoup.select.Elements event_collections, time_collections, location_collections;
+                try {
+                    //Get Document object after parsing the html from given url.
+                    document = Jsoup.connect("http://www.trincoll.edu/TrinityToday/Pages/default.aspx").get();
+                    time_collections = document.select(".TCTT_date-time");
+                    location_collections = document.select(".TCTT_location");
+                    event_collections = document.select(".TCTT_bottom-event");
+
+                    int tomorrow_date = CurrentDate.getDay() + 1;
+                    String tomorrow = CurrentDate.getMonthAsString() + " " + tomorrow_date;
+
+
+                    for (int i=0; i < event_collections.size(); i++) {
+                        if (event_collections.get(i).text().contains(tomorrow))
+                            break;
+                        else {
+                            String time = time_collections.get(i).text();
+                            String event = event_collections.get(i).text();
+                            event = event.substring(0, event.indexOf(time));
+                            event_name.add(event);
+                            event_location.add(location_collections.get(i).text());
+                            //reformat time
+                            if (time.substring(time.length()-2).equals("PM") && !time.substring(0,2).equals("12")) {
+                                int hour = Integer.parseInt(time.substring(0,1))+12;
+                                time = hour + time.substring(1);
+                            }
+                            event_time.add(time.substring(0,time.length()-3));
+
+
+                        }
+                    }
+                    event_name.set(0,event_name.get(0).substring(7));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                Event new_event;
+                for (int i = 0; i < event_name.size(); i++) {
+                    new_event = new Event();
+                    new_event.setTitle(event_name.get(i));
+                    new_event.setDescription("TrinityToday Event");
+                    new_event.setDate(CurrentDate.getDay() + "/" + CurrentDate.getMonth() + "/" + CurrentDate.getYear());
+                    new_event.setStartTime(event_time.get(i));
+                    new_event.setEndTime(event_time.get(i));
+                    String location = "41°44'52.5588" + '"' + "N 72°41'25.206" + '"' + "W ::: LatLngBounds{southwest=lat/lng: (41.743505105687404,-72.69189968705177), northeast=lat/lng: (41.74681889675219,-72.68803764134645)}";
+
+                    new_event.setLocation(location);
+
+                    new_event.setAccessibility("PUBLIC");
+
+                    event_list.add(new_event);
+
+                }
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        SQLiteEventDatabase db = new SQLiteEventDatabase(mContext);
+                        CustomDate today = event_list.get(0).getDate();
+                        boolean addedTrinToday = false;
+                        for (Event e: db.getEventsAtDate(today)) {
+                            if (e.getTitle().equals(event_list.get(0).getTitle())) {
+                                addedTrinToday = true;
+                                break;
+                            }
+                        }
+                        if (!addedTrinToday) {
+                            for (Event e : event_list)
+                                db.addEvent(e);
+                        }
+                    }
+                });
+            }
+        }).start();
     }
 
 }

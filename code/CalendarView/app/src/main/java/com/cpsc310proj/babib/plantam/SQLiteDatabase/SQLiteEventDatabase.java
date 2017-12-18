@@ -104,6 +104,7 @@ public class SQLiteEventDatabase implements EventDatabase, Serializable{
 
         eventDataUpdated();
         mDatabase.insert(DatabaseHelper.TABLE_NAME, null, values);
+        System.out.println("ADDED A NEW EVENT");
     }
 
     public void deleteEvent(String eventID) {

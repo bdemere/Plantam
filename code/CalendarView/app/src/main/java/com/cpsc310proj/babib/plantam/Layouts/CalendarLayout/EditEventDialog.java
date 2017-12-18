@@ -174,7 +174,11 @@ public class EditEventDialog extends DialogFragment {
         mForm.mEndTimePicker.setText(event.getEndTime().toString());
         mForm.mCategorySpinner.setSelection(Category.getIndex(toEdit.getCategory()));
 
+
         String[] location = AddEventTemplate.extractLocationInfo(event.getLocation());
+
+        //sample location
+        //String[] location = {"Trintrin","41.743505105687404","-72.69189968705177","41.74681889675219","-72.68803764134645"};
 
         mForm.mLocationPicker.setText(location[0]);
         mForm.bounds = new LatLngBounds(

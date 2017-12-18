@@ -222,6 +222,7 @@ public class Event implements DatabaseEntry, Serializable {
                 ", start_time='" + eventInfo.startTime + '\'' +
                 ", end_time='" + eventInfo.endTime + '\'' +
                 ", category='" + eventInfo.category + '\'' +
+                ", location='" + eventInfo.location + '\'' +
                 ", accessibility='" + eventInfo.accessibility + '\'' +
                 '}';
     }

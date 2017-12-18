@@ -61,7 +61,9 @@ public abstract class AddEventTemplate {
      */
 
     public static String[] extractLocationInfo(String str){
+
         String[] locInfo = str.split(LOCATION_DIVIDER);
+
         String[] s = locInfo[1].split(" ");
         Log.d("String: ", s.toString());
         String[] val2 = (s[1].split(","));
