@@ -119,7 +119,7 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
                 else{
-                    Log.d("Plantam", "Problem signing in: " + task.getException());
+                    Log.d("plantam", "Problem signing in: " + task.getException());
                     //showDialogSignInError("There was problem sign in your account");
                     showDialogSignInError("Invalid email or password");
                 }}});
@@ -164,9 +164,9 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful())
-                            Log.d("Plantam", "Email Sent");
+                            Log.d("plantam", "Email Sent");
                         else
-                            Log.d("Plantam", email);
+                            Log.d("plantam", email);
 
                     }});
             }

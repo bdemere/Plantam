@@ -5,4 +5,48 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="appbar_padding_top">8dp</dimen>
     <dimen name="text_margin">16dp</dimen>
+
+
+    <!-- Dimensions for content_event_form.xml -->
+    <dimen name="form_margin_top">0.10</dimen>
+    <dimen name="form_margin_bottom">0.90</dimen>
+
+    <dimen name="form_inBetween_space">0.10</dimen>
+
+
+    <dimen name="form_side_left">0.05</dimen>
+    <dimen name="form_side_right">0.95</dimen>
+    <dimen name="form_mid">0.5</dimen>
+
+    <!--calendar_layout dimensions-->
+    <dimen name="calendar_layout_margin">8dp</dimen>
+    <dimen name="calendar_layout_side">0dp</dimen>
+    <dimen name="calendar_layout_padding">3dp</dimen>
+
+    <!--Form field dimensions-->
+    <dimen name="form_field_padding">5dp</dimen>
+    <dimen name="form_field_elevation">10dp</dimen>
+    <dimen name="form_field_margin">8dp</dimen>
+    <dimen name="form_field_side">0dp</dimen>
+
+
+
+
+    <dimen name="form_line0">0.10</dimen> <!-- Increasing by 0.11 -->
+    <dimen name="form_line1">0.22</dimen>
+    <dimen name="form_line2">0.34</dimen>
+    <dimen name="form_line3">0.46</dimen>
+    <dimen name="form_line4">0.58</dimen>
+    <dimen name="form_line5">0.70</dimen>
+    <dimen name="form_line6">0.82</dimen>
+    <dimen name="form_line7">0.94</dimen>
+
+
+    <!-- End of dimensions for content_event_form.xml -->
+
+
+
+
+
+
 </resources>

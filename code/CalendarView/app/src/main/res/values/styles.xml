@@ -2,16 +2,18 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimaryBlue</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <!-- Trinity College Theme. -->
+        <item name="colorPrimary">@color/trinity_blue</item>
+        <item name="colorPrimaryDark">@color/grayish_brown</item>
+        <item name="colorAccent">@color/trinity_yellow</item>
     </style>
+
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 

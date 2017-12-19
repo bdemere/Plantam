@@ -2,6 +2,7 @@ package com.cpsc310proj.babib.plantam.Layouts.CalendarLayout;
 
 import android.content.Context;
 import android.content.Intent;
+import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -36,6 +37,7 @@ import com.cpsc310proj.babib.plantam.R;
 import com.cpsc310proj.babib.plantam.SQLiteDatabase.SQLiteEventDatabase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -94,6 +96,11 @@ public class CalendarActivity extends AppCompatActivity implements DataObserver 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //TODO: this is for testing purpose, modify!!!
+        FirebaseMessaging.getInstance().subscribeToTopic("pushNotifications");
+
+
         setContentView(R.layout.calendar_layout); //attach layout to the activity
 
         mFirebaseAuth = FirebaseAuth.getInstance();
@@ -105,6 +112,8 @@ public class CalendarActivity extends AppCompatActivity implements DataObserver 
         SQLiteEventDatabase.addObserver(this);
 
         mCalendarView = (CalendarView)findViewById(R.id.calendar_view);
+        mCalendarView.setMinDate(java.util.Calendar.getInstance().getTime().getTime());
+
         mEventsListView = (ListView)findViewById(R.id.calendar_events_list_view);
 
         mAddButton = (FloatingActionButton)findViewById(R.id.calendar_event_add);
@@ -232,6 +241,7 @@ public class CalendarActivity extends AppCompatActivity implements DataObserver 
     protected void onPause() {
         super.onPause();
         mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
+
     }
 
     @Override
@@ -339,4 +349,9 @@ public class CalendarActivity extends AppCompatActivity implements DataObserver 
         }
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mCalendarView.setMinDate(java.util.Calendar.getInstance().getTime().getTime());
+    }
 }
