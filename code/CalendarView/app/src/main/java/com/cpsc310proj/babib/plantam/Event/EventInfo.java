@@ -29,6 +29,7 @@ public class EventInfo implements Serializable{
         accessibility = info.accessibility;
         location = info.location;
     }
+
     @Override
     public String toString() {
         return "EventInfo{" +
