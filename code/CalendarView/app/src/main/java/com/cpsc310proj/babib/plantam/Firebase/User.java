@@ -1,7 +1,9 @@
 package com.cpsc310proj.babib.plantam.Firebase;
 
 /**
- * Created by GROUP 4
+ * @author GROUP 4
+ * @version 1.0
+ *
  */
 
 public class User {

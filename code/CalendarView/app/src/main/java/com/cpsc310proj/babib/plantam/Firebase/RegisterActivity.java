@@ -24,8 +24,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 /**
- * File: RegisterActivity
- * Author: Binh Vo
+ * @author GROUP 4
+ * @version 1.0
  */
 
 public class RegisterActivity extends AppCompatActivity {

@@ -26,9 +26,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by GROUP 4
- * An Activity class that will inquire all the necessary information
- * about an event and will add to the database
+ * @author Group 4
+ * @version 1.0
+ * This is a class that encapsulates the information inquiry of an event
+ *
  */
 public class EventForm
         implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener{

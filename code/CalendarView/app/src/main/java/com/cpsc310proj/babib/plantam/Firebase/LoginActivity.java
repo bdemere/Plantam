@@ -25,7 +25,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.*;
 
 /**
- * Created by GROUP 4
+ * @author GROUP 4
+ * @version 1.0
  */
 
 public class LoginActivity extends AppCompatActivity {

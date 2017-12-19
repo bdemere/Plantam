@@ -26,6 +26,12 @@ import com.cpsc310proj.babib.plantam.DataObserver;
 import com.cpsc310proj.babib.plantam.Layouts.AddEventLayout.AddEventActivity;
 import com.cpsc310proj.babib.plantam.R;
 import com.cpsc310proj.babib.plantam.SQLiteDatabase.SQLiteEventDatabase;
+/**
+ * @author GROUP 4
+ * @version 1.0
+ */
+ //TODO
+
 
 public class PublicEventsActivity extends AppCompatActivity
         implements PublicEventCategoryFragment.OnListFragmentInteractionListener, DataObserver {

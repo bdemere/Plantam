@@ -1,8 +1,8 @@
 package com.cpsc310proj.babib.plantam.Enums;
 
 /**
- * Created by GROUP 4 on 11/8/17.
- *
+ * @author GROUP 4
+ * @version 1.w
  * These are predefined constants for
  * the event categories that a user may
  * upload or subscribe to

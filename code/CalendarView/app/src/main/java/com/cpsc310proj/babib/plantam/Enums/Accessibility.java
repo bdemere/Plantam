@@ -1,7 +1,8 @@
 package com.cpsc310proj.babib.plantam.Enums;
 
 /**
- * Created by GROUP 4 on 12/4/17.
+ * @author GROUP 4
+ * @version 1.0
  */
 
 public enum Accessibility {

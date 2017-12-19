@@ -55,8 +55,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by GROUP 4 on 10/21/17.
- *
+ * @author GROUP 4
+ * @version 1.0
  * An Activity class that will show the schedule of the user
  * It has a Calendar
  *        List of events on a selected day

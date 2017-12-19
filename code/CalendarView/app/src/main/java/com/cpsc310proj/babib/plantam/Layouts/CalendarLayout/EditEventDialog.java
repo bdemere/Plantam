@@ -28,7 +28,9 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 /**
- * Created by GROUP 4
+ * @author GROUP 4
+ * @version 1.0
+ *
  */
 
 public class EditEventDialog extends DialogFragment {

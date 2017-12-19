@@ -7,7 +7,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 /**
- * Created by GROUP 4 on 12/16/17.
+ * @author GROUP 4
+ * @version 1.0
  */
 
 public abstract class FetchUser {
