@@ -115,6 +115,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     Intent intent = new Intent(LoginActivity.this, CalendarActivity.class);
                     finish();
+                    intent.putExtra("intVariableName", 1);
                     startActivity(intent);
                 }
                 else{
