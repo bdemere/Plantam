@@ -2,7 +2,6 @@ package com.cpsc310proj.babib.plantam.Layouts.PublicEventsLayout;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
@@ -19,7 +18,6 @@ import com.cpsc310proj.babib.plantam.Enums.Category;
 import com.cpsc310proj.babib.plantam.Event.Event;
 import com.cpsc310proj.babib.plantam.Firebase.FBDatabase;
 import com.cpsc310proj.babib.plantam.DataObserver;
-import com.cpsc310proj.babib.plantam.Firebase.User;
 import com.cpsc310proj.babib.plantam.R;
 
 import java.util.ArrayList;
@@ -74,7 +72,7 @@ public class PublicEventCategoryFragment extends Fragment implements DataObserve
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_item_list2, container, false);
+        View view = inflater.inflate(R.layout.fragment_item_list, container, false);
 
         mEventsListView = (ListView)view.findViewById(R.id.public_events_list_view);
 

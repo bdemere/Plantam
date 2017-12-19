@@ -160,7 +160,7 @@ public class ViewEventDialog extends EditEventDialog {
         });
 
 
-        getDialog().getWindow().setLayout(MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        getDialog().getWindow().setLayout(MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
 
     }

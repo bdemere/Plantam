@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <EditText
+        android:id="@+id/add_event_title_input"
+        android:layout_width="@dimen/form_field_side"
+        android:layout_height="@dimen/form_field_side"
+        android:layout_margin="@dimen/form_field_margin"
+
+        android:background="@color/trinity_smalt_blue2"
+
+
+        android:elevation="@dimen/form_field_elevation"
+        android:hint="@string/form_event_title"
+
+
+        android:padding="@dimen/form_field_padding"
+        android:textColor="@color/black"
+
+        app:layout_constraintBottom_toBottomOf="@id/content_event_layout_guideline1"
+        app:layout_constraintLeft_toLeftOf="@id/content_event_layout_guideline_left"
+
+        app:layout_constraintRight_toRightOf="@id/content_event_layout_guideline_right"
+        app:layout_constraintTop_toTopOf="@id/content_event_layout_guideline0" />
+
+    <EditText
+        android:id="@+id/add_event_description_input"
+        android:layout_width="@dimen/form_field_side"
+        android:layout_height="@dimen/form_field_side"
+        android:layout_margin="@dimen/form_field_margin"
+
+        android:background="@color/trinity_smalt_blue2"
+
+        android:elevation="@dimen/form_field_elevation"
+        android:hint="@string/form_description"
+        android:inputType="textMultiLine"
+        android:lines="7"
+
+        android:padding="@dimen/form_field_padding"
+        android:scrollbars="vertical"
+
+        android:textColor="@color/black"
+
+
+        app:layout_constraintBottom_toBottomOf="@id/content_event_layout_guideline2"
+        app:layout_constraintLeft_toLeftOf="@id/content_event_layout_guideline_left"
+
+        app:layout_constraintRight_toRightOf="@id/content_event_layout_guideline_right"
+        app:layout_constraintTop_toTopOf="@id/content_event_layout_guideline1" />
+
+    <Button
+        android:id="@+id/add_event_date_picker"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="@dimen/form_field_side"
+        android:layout_height="@dimen/form_field_side"
+        android:layout_margin="@dimen/form_field_margin"
+
+        android:elevation="@dimen/form_field_elevation"
+        android:gravity="center"
+        android:text="@string/form_date"
+        android:textAllCaps="false"
+        android:background="@color/field_color_light"
+
+        android:textColor="@color/black"
+
+        app:layout_constraintBottom_toBottomOf="@id/content_event_layout_guideline3"
+        app:layout_constraintLeft_toLeftOf="@id/content_event_layout_guideline_left"
+
+        app:layout_constraintRight_toRightOf="@id/content_event_layout_guideline_right"
+        app:layout_constraintTop_toTopOf="@id/content_event_layout_guideline2" />
+
+    <Button
+        android:id="@+id/add_event_start_time_picker"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="@dimen/form_field_side"
+        android:layout_height="@dimen/form_field_side"
+        android:layout_margin="@dimen/form_field_margin"
+
+        android:elevation="@dimen/form_field_elevation"
+        android:gravity="center"
+        android:text="@string/form_start_time"
+        android:textAllCaps="false"
+        android:background="@color/field_color_light"
+
+        android:textColor="@color/black"
+
+
+        app:layout_constraintBottom_toBottomOf="@id/content_event_layout_guideline4"
+        app:layout_constraintLeft_toLeftOf="@id/content_event_layout_guideline_left"
+
+        app:layout_constraintRight_toRightOf="@id/content_event_layout_guideline_mid"
+        app:layout_constraintTop_toTopOf="@id/content_event_layout_guideline3"
+
+        />
+
+    <Button
+        android:id="@+id/add_event_end_time_picker"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="@dimen/form_field_side"
+        android:layout_height="@dimen/form_field_side"
+        android:layout_margin="@dimen/form_field_margin"
+
+        android:elevation="@dimen/form_field_elevation"
+        android:gravity="center"
+        android:text="@string/form_end_time"
+        android:textAllCaps="false"
+        android:background="@color/field_color_light"
+
+        android:textColor="@color/black"
+
+        app:layout_constraintBottom_toBottomOf="@id/content_event_layout_guideline4"
+        app:layout_constraintLeft_toLeftOf="@id/content_event_layout_guideline_mid"
+
+        app:layout_constraintRight_toRightOf="@id/content_event_layout_guideline_right"
+        app:layout_constraintTop_toTopOf="@id/content_event_layout_guideline3"
+
+        />
+
+    <Button
+        android:id="@+id/add_event_location_picker"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="@dimen/form_field_side"
+        android:layout_height="@dimen/form_field_side"
+        android:layout_margin="@dimen/form_field_margin"
+
+        android:textColor="@color/black"
+
+
+        android:elevation="@dimen/form_field_elevation"
+        android:gravity="center"
+        android:text="Location"
+        android:textAllCaps="false"
+        android:background="@color/field_color_light"
+
+
+
+        app:layout_constraintBottom_toBottomOf="@id/content_event_layout_guideline5"
+        app:layout_constraintLeft_toLeftOf="@id/content_event_layout_guideline_left"
+
+        app:layout_constraintRight_toRightOf="@id/content_event_layout_guideline_right"
+        app:layout_constraintTop_toTopOf="@id/content_event_layout_guideline4"
+
+        />
+
+
+    <Spinner
+        android:id="@+id/add_event_category_spinner"
+        android:layout_width="@dimen/form_field_side"
+        android:layout_height="@dimen/form_field_side"
+        android:layout_margin="@dimen/form_field_margin"
+
+
+        android:elevation="@dimen/form_field_elevation"
+        android:textAllCaps="false"
+        android:background="@color/field_color_light"
+
+        android:textColor="@color/black"
+
+
+        app:layout_constraintBottom_toBottomOf="@id/content_event_layout_guideline6"
+        app:layout_constraintLeft_toLeftOf="@id/content_event_layout_guideline_left"
+
+        app:layout_constraintRight_toRightOf="@id/content_event_layout_guideline_right"
+        app:layout_constraintTop_toTopOf="@id/content_event_layout_guideline5"
+
+        />
+
+
+
+    <!-- START OF LAYOUT CONSTRAINT GUIDELINES -->
+
+
+    <android.support.constraint.Guideline
+        android:id="@+id/content_event_layout_guideline_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="@dimen/form_side_left" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/content_event_layout_guideline_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="@dimen/form_side_right" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/content_event_layout_guideline_mid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="@dimen/form_mid" />
+
+
+    <android.support.constraint.Guideline
+        android:id="@+id/content_event_layout_guideline0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="@dimen/form_line0" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/content_event_layout_guideline1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="@dimen/form_line1" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/content_event_layout_guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="@dimen/form_line2" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/content_event_layout_guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="@dimen/form_line3" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/content_event_layout_guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="@dimen/form_line4" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/content_event_layout_guideline5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="@dimen/form_line5" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/content_event_layout_guideline6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@id/content_event_layout_guideline7"
+        app:layout_constraintGuide_percent="@dimen/form_line6" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/content_event_layout_guideline7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintGuide_percent="@dimen/form_line7" />
+
+
+    <!-- END OF LAYOUT GUIDELINES -->
+
+</android.support.constraint.ConstraintLayout>

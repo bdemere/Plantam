@@ -4,7 +4,7 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Trinity College Theme. -->
         <item name="colorPrimary">@color/trinity_blue</item>
-        <item name="colorPrimaryDark">@color/grayish_brown</item>
+        <item name="colorPrimaryDark">@color/trinity_smalt_blue</item>
         <item name="colorAccent">@color/trinity_yellow</item>
     </style>
 

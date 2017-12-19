@@ -1,13 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/list"
-    android:name="com.cpsc310proj.babib.plantam.Layouts.ItemFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
-    app:layoutManager="LinearLayoutManager"
-    tools:context="com.cpsc310proj.babib.plantam.Layouts.PublicEventsLayout.PublicEventCategoryFragment"
-    tools:listitem="@layout/fragment_public_event_item" />
+    android:background="@color/plantam_background">
+
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/calendar_layout_margin"
+        android:elevation="@dimen/form_field_elevation"
+        android:padding="@dimen/form_field_padding">
+
+        <ListView
+            android:id="@+id/public_events_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:background="@color/yellowish"
+            android:layout_below="@+id/calendar_view"
+            android:layout_weight="1"
+            android:padding="@dimen/form_field_padding"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+
+            />
+    </android.support.v7.widget.CardView>
+
+
+</android.support.constraint.ConstraintLayout>

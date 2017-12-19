@@ -235,7 +235,7 @@ public class EditEventDialog extends DialogFragment {
         int dialogWidth = width;
         int dialogHeight = height;
 
-        getDialog().getWindow().setLayout(MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        getDialog().getWindow().setLayout(MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
 
     }
