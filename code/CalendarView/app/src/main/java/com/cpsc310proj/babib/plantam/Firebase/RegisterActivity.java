@@ -122,7 +122,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private boolean isEmailValid(String email) {
         //add more checking logic here.
-        return email.contains("@");
+        return email.contains("@trincoll.edu");
     }
 
     private boolean isPasswordValid(String password) {
