@@ -11,7 +11,7 @@ import java.io.Serializable;
 import java.util.UUID;
 
 /**
- * Created by anhthuynguyen on 10/27/17.
+ * Created by GROUP 4 on 10/27/17.
  */
 
 public class Event implements DatabaseEntry, Serializable {

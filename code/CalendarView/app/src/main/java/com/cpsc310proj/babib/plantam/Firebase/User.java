@@ -1,7 +1,7 @@
 package com.cpsc310proj.babib.plantam.Firebase;
 
 /**
- * Created by Binh Vo on 12/13/17.
+ * Created by GROUP 4
  */
 
 public class User {

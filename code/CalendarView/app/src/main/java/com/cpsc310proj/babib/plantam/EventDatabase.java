@@ -6,7 +6,7 @@ import com.cpsc310proj.babib.plantam.Event.Event;
 import java.util.List;
 
 /**
- * Created by bemnet on 12/14/17.
+ * Created by GROUP 4 on 12/14/17.
  */
 
 public interface EventDatabase {

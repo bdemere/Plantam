@@ -26,6 +26,7 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import static com.google.android.gms.location.places.ui.PlacePicker.getLatLngBounds;
 
 /**
+ * Created by GROUP 4
  * An Activity class that will inquire all the necessary information
  * about an event and will add to the database
  */

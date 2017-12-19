@@ -4,8 +4,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
 import com.cpsc310proj.babib.plantam.Event.Event;
+
+/**
+ * Created by GROUP 4
+ */
 
 public class DatabaseHelper extends SQLiteOpenHelper { //change variables to public to try adding event to database
     // Database Version
@@ -14,16 +17,13 @@ public class DatabaseHelper extends SQLiteOpenHelper { //change variables to pub
     public static final String DATABASE_NAME = "EVENT_DATABASE";
     // Contacts table name
     public static final String TABLE_NAME = DATABASE_NAME + "_events";
-
-
     public static String[] KEYS = Event.KEYS;
-
-
 
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
+
     @Override
     public void onCreate(SQLiteDatabase db) {
 

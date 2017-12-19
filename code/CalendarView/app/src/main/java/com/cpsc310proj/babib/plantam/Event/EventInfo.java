@@ -3,7 +3,7 @@ package com.cpsc310proj.babib.plantam.Event;
 import java.io.Serializable;
 
 /**
- * Created by bemnet on 12/3/17.
+ * Created by GROUP 4 on 12/3/17.
  */
 
 public class EventInfo implements Serializable{

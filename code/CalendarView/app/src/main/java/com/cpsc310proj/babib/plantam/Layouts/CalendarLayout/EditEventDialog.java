@@ -25,11 +25,12 @@ import com.cpsc310proj.babib.plantam.SQLiteDatabase.SQLiteEventDatabase;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
-
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 /**
+ * Created by GROUP 4
  */
+
 public class EditEventDialog extends DialogFragment {
     // TODO: Rename parameter arguments, choose names that match
 
