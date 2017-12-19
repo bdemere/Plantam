@@ -14,7 +14,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.cpsc310proj.babib.plantam.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -26,6 +25,8 @@ import com.google.firebase.database.FirebaseDatabase;
 /**
  * @author GROUP 4
  * @version 1.0
+ * Register a User securely to the firebase on the provided information
+ * User needs to be a Trinity student in order to register.
  */
 
 public class RegisterActivity extends AppCompatActivity {
@@ -73,9 +74,7 @@ public class RegisterActivity extends AppCompatActivity {
                     return true;
                 }
                 return false;
-            }
-        });
-
+            }});
     }
 
     // Executed when Sign Up button is pressed.

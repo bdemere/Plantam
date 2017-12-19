@@ -2,10 +2,15 @@ package com.cpsc310proj.babib.plantam.Enums;
 
 /**
  * @author GROUP 4
+<<<<<<< HEAD
  * @version 1
  * These are predefined constants for
  * the event categories that a user may
  * upload or subscribe to
+=======
+ * @version 1.w
+ * Enum to define finite possibilities for the potential keys in our database
+>>>>>>> f95354b47e6e7b5d98edd359b5c3a3540641a1c3
  */
 
 public enum DatabaseKey {

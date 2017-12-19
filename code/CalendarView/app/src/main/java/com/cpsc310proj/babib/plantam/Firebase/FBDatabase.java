@@ -17,11 +17,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -55,8 +53,6 @@ public class FBDatabase implements EventDatabase, Serializable{
 
 
     private static FirebaseUser mUserReference = FirebaseAuth.getInstance().getCurrentUser();
-
-
 
 
     /**
@@ -111,11 +107,6 @@ public class FBDatabase implements EventDatabase, Serializable{
                 child(event.getEventUID()).
                 setValue(event.getEventInfo()).isComplete());
     }
-
-
-
-
-
 
     public static boolean writeUser(String userID){
         if(mFirebaseDatabase == null)
@@ -185,9 +176,6 @@ public class FBDatabase implements EventDatabase, Serializable{
         return isEventDataUpdated;
     }
 
-
-
-
     /**
      * A function to fetch data under the events root from
      * the Firebase Database
@@ -213,10 +201,7 @@ public class FBDatabase implements EventDatabase, Serializable{
                                 .child(EVENT_ROOT + "_" + category.toString())
                 );
             }
-
-
         }
-
 
         //if not updated, fill local cache with data from the database
         if(!isEventDataUpdated) {
@@ -227,12 +212,6 @@ public class FBDatabase implements EventDatabase, Serializable{
                 );
             isEventDataUpdated = true;
         }
-
-
-
-
-
-
     }
 
     /**
@@ -254,10 +233,6 @@ public class FBDatabase implements EventDatabase, Serializable{
      */
 
     private static void updateEventsCache(DatabaseReference dbRef, final ArrayList<Event> toUpdate){
-
-
-
-
         dbRef.addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override
@@ -278,23 +253,16 @@ public class FBDatabase implements EventDatabase, Serializable{
                                         toAdd.setUser(user);
                                         toUpdate.add(toAdd);
                                     }
-
                                     /**
                                      * Notify all observers
                                      **/
                                     eventDataUpdated();
                                 }
                             };
-
                             /*Do something to the fetched user*/
                             fetchUser.fetchUser(userID.getKey());
                         }
-
-
-
-                        //Log.d("ayyyy::::", "" + toUpdate.toString());
                     }
-
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
                         //handle databaseError
@@ -302,8 +270,6 @@ public class FBDatabase implements EventDatabase, Serializable{
                     }
                 });
     }
-
-
 
     /**
      * Given an events category, return a list of the events
@@ -313,7 +279,6 @@ public class FBDatabase implements EventDatabase, Serializable{
 
     public static ArrayList<Event> getPublicEventsWithCategory(Category category){
         ArrayList<Event> toReturn = EventCategoryCache.get(category);
-
         return toReturn != null ? //in case cache is empty, return an empty list
                 toReturn /*if not empty*/: new ArrayList<Event>() /*else empty list*/;
     }

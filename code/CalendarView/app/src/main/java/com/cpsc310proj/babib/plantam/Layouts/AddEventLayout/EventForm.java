@@ -4,39 +4,32 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.graphics.Color;
-import android.text.InputType;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TimePicker;
-
 import com.cpsc310proj.babib.plantam.CurrentDate;
 import com.cpsc310proj.babib.plantam.Enums.Category;
 import com.cpsc310proj.babib.plantam.Event.CustomDate;
 import com.cpsc310proj.babib.plantam.Event.CustomTime;
 import com.google.android.gms.maps.model.LatLngBounds;
-
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author Group 4
  * @version 1.0
  * This is a class that encapsulates the information inquiry of an event
- *
  */
+
 public class EventForm
         implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener{
 
 
     private Context mContext;
-
     public EditText mTitleEditText; //Text Field: for the title of an event
     public EditText mDescriptionEditText; //Text Field: for the description of an event
     public Button mDatePicker; //Button: opens a date picker

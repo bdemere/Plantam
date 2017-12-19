@@ -1,4 +1,3 @@
-
 package com.cpsc310proj.babib.plantam.Firebase;
 
 import android.content.DialogInterface;
@@ -8,7 +7,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Display;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -17,7 +15,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.cpsc310proj.babib.plantam.Layouts.CalendarLayout.CalendarActivity;
 import com.cpsc310proj.babib.plantam.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -27,6 +24,8 @@ import com.google.firebase.auth.*;
 /**
  * @author GROUP 4
  * @version 1.0
+ * A login class to check for user authentication in firebase
+ * User can reset their password if they forgot their password.
  */
 
 public class LoginActivity extends AppCompatActivity {
@@ -108,8 +107,6 @@ public class LoginActivity extends AppCompatActivity {
         if (email.equals("") || password.equals(""))
             return; // return nothing
         Toast.makeText(this,"Login in progress...", Toast.LENGTH_SHORT).show();
-
-
         // Check if existing user is on the firebase and
         // return a Task object to see if the user was able to sign in
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {

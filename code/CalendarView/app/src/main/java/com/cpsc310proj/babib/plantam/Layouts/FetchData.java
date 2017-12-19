@@ -1,34 +1,19 @@
 package com.cpsc310proj.babib.plantam.Layouts;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
-
 import com.cpsc310proj.babib.plantam.CurrentDate;
-import com.cpsc310proj.babib.plantam.Event.CustomDate;
 import com.cpsc310proj.babib.plantam.Event.Event;
-import com.cpsc310proj.babib.plantam.Layouts.AddEventLayout.AddEventActivity;
-import com.cpsc310proj.babib.plantam.Layouts.AddEventLayout.EventForm;
 import com.cpsc310proj.babib.plantam.Layouts.CalendarLayout.CalendarActivity;
-import com.cpsc310proj.babib.plantam.NotificationAlarmReceiver;
-import com.cpsc310proj.babib.plantam.R;
 import com.cpsc310proj.babib.plantam.SQLiteDatabase.SQLiteEventDatabase;
-
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.PrintStream;
-import java.lang.Math.*;
 import java.util.LinkedList;
 import java.util.List;
 import org.jsoup.Jsoup;
 
-
 /**
- * Created by GROUP 4
+ * @author GROUP 4
+ * @version 1.0
  * This class is used for HTML parsing from URL using Jsoup.
  */
 public class FetchData extends AsyncTask<Void, Void, Void> {
@@ -85,19 +70,7 @@ public class FetchData extends AsyncTask<Void, Void, Void> {
             e.printStackTrace();
         }
 
-
         Event new_event = new Event();
-        /*
-        for (int i = 0; i < event_name.size(); i++) {
-            new_event.setTitle(event_name.get(i));
-            new_event.setDescription("Trinity Today Event");
-            new_event.setDate((new CustomDate()).setDay(new CurrentDate().getDay()).setMonth((new CurrentDate()).getMonth()).setYear((new CurrentDate().getYear())).toString());
-            new_event.setStartTime(event_time.get(i));
-            new_event.setEndTime(event_time.get(i));
-            new_event.setLocation(event_location.get(i));
-            new_event.setAccessibility("PUBLIC");
-
-            validity_check(new_event); }*/
 
         for (int i = 0; i < event_name.size(); i++) {
             new_event.setTitle(event_name.get(i));
@@ -131,7 +104,6 @@ public class FetchData extends AsyncTask<Void, Void, Void> {
             throw new IllegalArgumentException("Pick end time");
         if(event.getLocation().isEmpty())
             throw new IllegalArgumentException("Pick location");
-
 
     }
 

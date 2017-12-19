@@ -1,12 +1,10 @@
 package com.cpsc310proj.babib.plantam;
 
-import com.cpsc310proj.babib.plantam.Event.CustomDate;
 import com.cpsc310proj.babib.plantam.Event.Event;
 
-import java.util.List;
-
 /**
- * Created by GROUP 4 on 12/14/17.
+ * @author GROUP 4
+ * @version 1.0
  */
 
 public interface EventDatabase {

@@ -4,6 +4,7 @@ import java.util.List;
 
 /**
  * Created by GROUP 4 on 12/3/17.
+ * A class that uses int values to define a time
  */
 
 public class CustomTime {

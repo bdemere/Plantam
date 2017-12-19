@@ -3,7 +3,7 @@ package com.cpsc310proj.babib.plantam.Firebase;
 /**
  * @author GROUP 4
  * @version 1.0
- *
+ * A User class to define and alter the properties of a user
  */
 
 public class User {

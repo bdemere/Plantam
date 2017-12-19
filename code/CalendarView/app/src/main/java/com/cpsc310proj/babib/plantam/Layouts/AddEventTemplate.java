@@ -3,16 +3,11 @@ package com.cpsc310proj.babib.plantam.Layouts;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
-
 import com.cpsc310proj.babib.plantam.Event.Event;
 import com.cpsc310proj.babib.plantam.Layouts.AddEventLayout.EventForm;
-import com.google.android.gms.maps.model.LatLng;
-
-import com.google.android.gms.maps.model.LatLngBounds;
 
 /**
  * Created by Group 4 on 12/14/17.
- *
  * This class is an abstract template class that encapsulates the
  * process of creating an event out a event fill out form.
  */

@@ -1,7 +1,8 @@
 package com.cpsc310proj.babib.plantam.SQLiteDatabase;
 
 /**
- * Created by GROUP 4 on 12/4/17.
+ * @author GROUP 4
+ * @version 1.0
  */
 
 public interface DatabaseEntry {

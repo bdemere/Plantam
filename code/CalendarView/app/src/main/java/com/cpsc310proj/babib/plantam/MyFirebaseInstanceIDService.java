@@ -17,7 +17,6 @@
 package com.cpsc310proj.babib.plantam;
 
 import android.util.Log;
-
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 
