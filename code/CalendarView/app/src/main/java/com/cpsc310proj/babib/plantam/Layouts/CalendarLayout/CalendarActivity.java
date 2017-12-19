@@ -75,7 +75,7 @@ public class CalendarActivity extends AppCompatActivity implements DataObserver 
     public static List<String> event_time = new LinkedList<String>();
     public static List<String> event_location = new LinkedList<String>();
 
-    private boolean checkedTrinToday = false;
+    private int checkedTrinToday = 0;
 
 
 
@@ -146,7 +146,9 @@ public class CalendarActivity extends AppCompatActivity implements DataObserver 
         //new SQLiteEventDatabase(CalendarActivity.this);
 
         //fetch data from Trinity Today
-        if (!checkedTrinToday)
+        Intent mIntent = getIntent();
+        checkedTrinToday = mIntent.getIntExtra("intVariableName", 0);
+        if (checkedTrinToday == 1)
             getWebsite(this);
 
 
