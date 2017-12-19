@@ -11,7 +11,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 
 /**
- * Created by bemnet on 12/14/17.
+ * Created by Group 4 on 12/14/17.
  *
  * This class is an abstract template class that encapsulates the
  * process of creating an event out a event fill out form.

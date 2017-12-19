@@ -1,28 +1,22 @@
 package com.cpsc310proj.babib.plantam;
 
 import android.app.AlarmManager;
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentSender;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-import android.widget.Toast;
-
 import com.cpsc310proj.babib.plantam.Event.CustomDate;
 import com.cpsc310proj.babib.plantam.Event.CustomTime;
 import com.cpsc310proj.babib.plantam.Event.Event;
-
-import com.cpsc310proj.babib.plantam.Layouts.CalendarLayout.CalendarActivity;
-
 import com.cpsc310proj.babib.plantam.SQLiteDatabase.SQLiteEventDatabase;
-
 import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-
 import static android.content.Context.NOTIFICATION_SERVICE;
 
 /*
@@ -46,7 +40,8 @@ public class NotificationAlarmReceiver extends BroadcastReceiver {
                     new NotificationCompat.Builder(context)
                             .setSmallIcon(R.mipmap.ic_launcher)
                             .setContentTitle(e.getTitle())
-                            .setContentText("EVENT STARTING");
+                            .setContentText("EVENT STARTING")
+                            .setAutoCancel(true);
 
             Intent resultIntent = new Intent(context, NotificationAlarmReceiver.class);
 
@@ -61,12 +56,12 @@ public class NotificationAlarmReceiver extends BroadcastReceiver {
             int mNotificationId = (int)System.currentTimeMillis();
           //  int mNotificationId = Integer.valueOf(eventUID);
             Log.d("Alarm", "Alarm is called");
-            NotificationManager mNotifyMgr =
-                    (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
+            NotificationManager mNotifyMgr = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
             mNotifyMgr.notify(mNotificationId, mBuilder.build());
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static void scheduleAlarms(Context context, Event e) {
 
             CustomDate cd = e.getDate();
@@ -77,28 +72,21 @@ public class NotificationAlarmReceiver extends BroadcastReceiver {
             cal.set(Calendar.DAY_OF_MONTH, cd.getDay());
             cal.set(Calendar.HOUR_OF_DAY, ct.getHour());
             cal.set(Calendar.MINUTE, ct.getMin());
-            long time = cal.getTimeInMillis();
-    
+            cal.set(Calendar.AM_PM, Calendar.AM);
+            //long time = cal.getTimeInMillis();
+            Log.d("Alarm", "Month: " + cd.getMonth() + " Day: " + cd.getDay() + " Year: " + cd.getYear() + " Hour: " + ct.getHour()
+            + " Min: " + ct.getMin()
+            );
+
+
             Intent intentAlarm = new Intent(context, NotificationAlarmReceiver.class);
             intentAlarm.putExtra("eventUID", e.getEventUID());
-    
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0,  intentAlarm,0);
+
+            Log.d("ALARMID", e.getEventUID());
             AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-    
-            alarmManager.set(AlarmManager.RTC_WAKEUP, time, PendingIntent.getBroadcast(context, 1, intentAlarm, PendingIntent.FLAG_UPDATE_CURRENT));
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
 
     }
-/*
-    class AlarmSetReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            scheduleAlarms(context);
-        }
-    }
 
-    class BootReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            scheduleAlarms(context);
-        }
-    }*/
 }

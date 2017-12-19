@@ -55,7 +55,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by MyNameIsYou on 10/21/17.
+ * Created by GROUP 4 on 10/21/17.
  *
  * An Activity class that will show the schedule of the user
  * It has a Calendar
@@ -352,11 +352,9 @@ public class CalendarActivity extends AppCompatActivity implements DataObserver 
             ViewHolder holder = new ViewHolder();
 
             if (convertView == null) {
-
                 convertView = inflater.inflate(R.layout.calendar_detail_list_view, parent, false);
 
             }
-
             holder.title = (TextView)convertView.findViewById(R.id.calendar_detail_list_view_title);
             holder.time = (TextView)convertView.findViewById(R.id.calendar_detail_list_view_time);
             //holder.description = (TextView)convertView.findViewById(R.id.calendar_detail_list_view_description);
@@ -366,8 +364,6 @@ public class CalendarActivity extends AppCompatActivity implements DataObserver 
                 holder.time.setText(toDisplay.get(position).getStartTime().toString());
                 //holder.description.setText(toDisplay.get(position).getDescription());
             }
-
-
             return convertView;
         }
 

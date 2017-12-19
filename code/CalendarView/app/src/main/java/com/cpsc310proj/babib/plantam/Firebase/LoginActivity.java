@@ -1,5 +1,4 @@
-// File: Binh Vo
-// Authors: Bemnet, Binh
+
 package com.cpsc310proj.babib.plantam.Firebase;
 
 import android.content.DialogInterface;
@@ -25,7 +24,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.*;
 
-
+/**
+ * Created by GROUP 4
+ */
 
 public class LoginActivity extends AppCompatActivity {
 

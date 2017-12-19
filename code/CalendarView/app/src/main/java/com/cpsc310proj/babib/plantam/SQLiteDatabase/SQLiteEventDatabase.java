@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by anhthuynguyen on 11/2/17.
+ * Created by GROUP 4 on 11/2/17.
  */
 
 public class SQLiteEventDatabase implements EventDatabase, Serializable{

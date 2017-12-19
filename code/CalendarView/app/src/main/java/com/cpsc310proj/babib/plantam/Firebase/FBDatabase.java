@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by bemnet on 11/8/17.
+ * Created by GROUP 4 on 11/8/17.
  *
  * This is a class that encapsulates the actions
  * pertaining to the online database Firebase.
