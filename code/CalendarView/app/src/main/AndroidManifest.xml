@@ -41,7 +41,7 @@
 
         <activity
             android:name=".Firebase.LoginActivity"
-            android:label="@string/app_name"
+            android:label="@string/activity_login"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" >
             <intent-filter>
@@ -57,8 +57,8 @@
 
         <activity
             android:name=".Layouts.PublicEventsLayout.PublicEventsActivity"
-            android:label="@string/title_activity_public_events"
             android:parentActivityName=".Layouts.CalendarLayout.CalendarActivity"
+            android:label="@string/title_activity_public_events"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
