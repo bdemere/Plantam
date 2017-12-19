@@ -5,18 +5,17 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.Cursor;
 import android.util.Log;
-
 import com.cpsc310proj.babib.plantam.DataObserver;
 import com.cpsc310proj.babib.plantam.Event.CustomDate;
 import com.cpsc310proj.babib.plantam.Event.Event;
 import com.cpsc310proj.babib.plantam.EventDatabase;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by GROUP 4 on 11/2/17.
+ * @author GROUP 4
+ * @version 1.0
  */
 
 public class SQLiteEventDatabase implements EventDatabase, Serializable{

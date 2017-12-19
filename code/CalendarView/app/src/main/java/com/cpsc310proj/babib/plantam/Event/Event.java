@@ -1,18 +1,16 @@
 package com.cpsc310proj.babib.plantam.Event;
 
-//import java.time.MonthDay;
 
 import android.util.Log;
-
 import com.cpsc310proj.babib.plantam.Firebase.User;
 import com.cpsc310proj.babib.plantam.SQLiteDatabase.DatabaseEntry;
-
 import java.io.Serializable;
 import java.util.UUID;
 
 /**
  * @author GROUP 4
  * @version 1.0
+ * An event class to define the properties of an event with some basic functionalities.
  */
 
 public class Event implements DatabaseEntry, Serializable {
@@ -41,56 +39,8 @@ public class Event implements DatabaseEntry, Serializable {
             Event.KEY_LOCATION
     };
 
-
-//    private String event_uid; //this events unique ID
-//    private String title;
-//    private String description;
-//    private String date;
-//    private String start_time;
-//    private String end_time;
-//    private String category;
-//    private String accessibility;
     private User user = null;
     private EventInfo eventInfo;
-
-//    //Constructors
-//    public Event(
-//            String title,
-//            String date,
-//            String start_time,
-//            String end_time,
-//            String description,
-//            String category,
-//            String accessibility) {
-//
-//        this.event_uid = UUID.randomUUID().toString() + ":" + title;
-//        this.title = title;
-//        this.description = description;
-//        this.date = date;
-//        this.start_time = start_time;
-//        this.end_time = end_time;
-//        this.category = category.toString();
-//        this.accessibility = accessibility;
-//    }
-//
-//    public Event(
-//            String title,
-//            CustomDate date,
-//            CustomTime start_time,
-//            CustomTime end_time,
-//            String description,
-//            String category,
-//            String accessibility) {
-//
-//        this.event_uid = UUID.randomUUID().toString() + ":" + title;
-//        this.title = title;
-//        this.description = description;
-//        this.date = date.toString();
-//        this.start_time = start_time.toString();
-//        this.end_time = end_time.toString();
-//        this.category = category.toString();
-//        this.accessibility = accessibility;
-//    }
 
     public Event(EventInfo info){
         eventInfo = new EventInfo();
@@ -98,12 +48,10 @@ public class Event implements DatabaseEntry, Serializable {
         //Log.d("EVENT: ", eventInfo.toString());
     }
 
-
     public Event(){
         eventInfo = new EventInfo();
         eventInfo.eventUID = UUID.randomUUID().toString();
     }
-
 
     public EventInfo getEventInfo(){
         return eventInfo;
@@ -188,26 +136,10 @@ public class Event implements DatabaseEntry, Serializable {
         return eventInfo.category;
     }
 
-//
-//    public Event createEvent(String title, String description, String date, float start_time, float end_time) {
-//        return new Event(title,description,date,start_time,end_time);
-//       // Event(title,description,date,start_time,end_time);
-//    }
-
     public boolean publishEvent() {
-
         //wait until Server is done :>
         return true;
     }
-
-
-//    public void editEvent(Event updatedEvent) {
-//        this.setTitle(updatedEvent.getTitle());
-//        this.setDescription(updatedEvent.getDescription());
-//        this.setDate(updatedEvent.getDate());
-//        this.setStartTime(updatedEvent.getStartTime());
-//        this.setEndTime(updatedEvent.getEndTime());
-//    }
 
     public void deleteEvent(Event event) {
         event = null;

@@ -5,6 +5,7 @@ import java.io.Serializable;
 /**
  * @author GROUP 4
  * @version 1.0
+ * A class to store the key attribute of an event.
  */
 
 public class EventInfo implements Serializable{

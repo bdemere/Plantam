@@ -1,7 +1,8 @@
 package PACKAGE_NAME;
 
 /**
- * Created by bemnet on 12/3/17.
+ * @author GROUP 4
+ * @version 1.0
  */
 
 public interface LocalDataObserver {

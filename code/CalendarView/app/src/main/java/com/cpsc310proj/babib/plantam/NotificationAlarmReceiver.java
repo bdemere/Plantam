@@ -1,13 +1,11 @@
 package com.cpsc310proj.babib.plantam;
 
 import android.app.AlarmManager;
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentSender;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
@@ -20,14 +18,11 @@ import java.util.Calendar;
 import static android.content.Context.NOTIFICATION_SERVICE;
 
 /*
-*   Class:      NotificationAlarmReceiver.java
-*   Purpose:    Handles notifications and alarms for events in a user calender 
-*
-*   @author     Brian Cieplicki
-*   @version    1.0
-*   @since      2017-12-10
-*
+* @author GROUP 4
+* @version 1.0
+* Purpose: Handles notifications for events in a user calendar
 */
+
 public class NotificationAlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -63,7 +58,6 @@ public class NotificationAlarmReceiver extends BroadcastReceiver {
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static void scheduleAlarms(Context context, Event e) {
-
             CustomDate cd = e.getDate();
             CustomTime ct = e.getStartTime();
             Calendar cal = Calendar.getInstance();
@@ -77,7 +71,6 @@ public class NotificationAlarmReceiver extends BroadcastReceiver {
             Log.d("Alarm", "Month: " + cd.getMonth() + " Day: " + cd.getDay() + " Year: " + cd.getYear() + " Hour: " + ct.getHour()
             + " Min: " + ct.getMin()
             );
-
 
             Intent intentAlarm = new Intent(context, NotificationAlarmReceiver.class);
             intentAlarm.putExtra("eventUID", e.getEventUID());

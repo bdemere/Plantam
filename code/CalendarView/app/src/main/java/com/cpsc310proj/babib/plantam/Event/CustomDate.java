@@ -5,6 +5,7 @@ import android.util.Log;
 /**
  * @author GROUP 4
  * @version 1.0
+ * A class that uses int values to define a data
  */
 
 public class CustomDate {

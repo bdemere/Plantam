@@ -12,7 +12,8 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 /**
- * Created by GROUP 4 on 12/16/17.
+ * @author GROUP 4
+ * @version 1.0
  */
 
 

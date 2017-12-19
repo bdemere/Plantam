@@ -11,13 +11,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-
 import com.cpsc310proj.babib.plantam.Enums.Accessibility;
 import com.cpsc310proj.babib.plantam.Enums.Category;
 import com.cpsc310proj.babib.plantam.Event.Event;
 import com.cpsc310proj.babib.plantam.EventDatabase;
 import com.cpsc310proj.babib.plantam.Firebase.FBDatabase;
-import com.cpsc310proj.babib.plantam.Layouts.AddEventLayout.AddEventActivity;
 import com.cpsc310proj.babib.plantam.Layouts.AddEventLayout.EventForm;
 import com.cpsc310proj.babib.plantam.Layouts.AddEventTemplate;
 import com.cpsc310proj.babib.plantam.R;
@@ -30,7 +28,8 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 /**
  * @author GROUP 4
  * @version 1.0
- *
+ * Handles all of the components interactions when a user
+ * edits an event.
  */
 
 public class EditEventDialog extends DialogFragment {
@@ -42,14 +41,9 @@ public class EditEventDialog extends DialogFragment {
     protected EventForm mForm;
     protected Button mEdit;
     protected Button mDelete;
-
     protected EventDatabase mDatabase;
     protected Context mContext;
-
     protected Event toEdit;
-
-
-
 
     public EditEventDialog() {}// Required empty public constructor
 
@@ -133,8 +127,6 @@ public class EditEventDialog extends DialogFragment {
             }
         });
 
-
-
         mEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -172,7 +164,6 @@ public class EditEventDialog extends DialogFragment {
         mForm.mStartTimePicker.setText(event.getStartTime().toString());
         mForm.mEndTimePicker.setText(event.getEndTime().toString());
         mForm.mCategorySpinner.setSelection(Category.getIndex(toEdit.getCategory()));
-
 
         String[] location = AddEventTemplate.extractLocationInfo(event.getLocation());
 

@@ -9,6 +9,7 @@ import com.google.firebase.database.ValueEventListener;
 /**
  * @author GROUP 4
  * @version 1.0
+ * Fetch a user data from firebase based on the given key(node)
  */
 
 public abstract class FetchUser {

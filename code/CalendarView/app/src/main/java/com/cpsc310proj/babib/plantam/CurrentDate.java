@@ -1,12 +1,11 @@
 package com.cpsc310proj.babib.plantam;
 
-import com.cpsc310proj.babib.plantam.Event.CustomDate;
-
 import java.util.Calendar;
 import java.util.Date;
 
 /**
- * Created by GROUP 4 on 11/19/17.
+ * @author GROUP 4
+ * @version 1.0
  */
 
 public class CurrentDate {

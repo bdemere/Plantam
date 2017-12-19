@@ -3,6 +3,7 @@ package com.cpsc310proj.babib.plantam.Enums;
 /**
  * @author GROUP 4
  * @version 1.0
+ * Enum to define finite possibilities for the privacy of an event
  */
 
 public enum Accessibility {
