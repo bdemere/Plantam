@@ -52,13 +52,11 @@
     <string name="action_sign_in_short">Sign in</string>
     <string name="action_sign_up">Sign up</string>
     <string name="action_send">Send</string>
-    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_email">Sorry, invalid email address. Make sure it's "@trincoll.edu"</string>
     <string name="error_invalid_password">Password too short or does not match</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email</string>
-
-
     <string name="PLANTAM_API_KEY">AIzaSyDo0cnv14Bc28A3n7ERljX9lPZj5tihP-I</string>
 
 </resources>
