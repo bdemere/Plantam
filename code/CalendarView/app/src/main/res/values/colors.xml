@@ -16,15 +16,15 @@
     <color name="trinity_yellow">#fbc02d</color>
     <color name="trinity_blue">#00457e</color>
     <color name="trinity_blue_light">#e32f7bba</color>
-    <color name="trinity_calendar_color">#a8d4c190</color>
-    <color name="plantam_background">#eae4dddd</color>
-    <color name="trinity_event_list">#778896</color>
+    <color name="trinity_calendar_color">#587B91</color>
+    <color name="plantam_background">#587B91</color>
+    <color name="trinity_event_list">#bcb7a4</color>
     
     <!-- Trinity color palette (experiment) -->
     <color name="trinity_low_saturated_khaki">#BFB48A</color>
     <color name="trinity_material_brown">#fbbcb7a4</color>
 
-    <color name="trinity_yellow_light">#dc916f17</color>
+    <color name="trinity_yellow_light">#916f17</color>
     <color name="trinity_smalt_blue">#587B91</color>
     <color name="trinity_smalt_blue2">#8da4b3</color>
     <color name="yellowish">#6cc1ab73</color>

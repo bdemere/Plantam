@@ -5,7 +5,7 @@
         <!-- Trinity College Theme. -->
         <item name="colorPrimary">@color/trinity_blue</item>
         <item name="colorPrimaryDark">@color/trinity_smalt_blue</item>
-        <item name="colorAccent">@color/trinity_yellow</item>
+        <item name="colorAccent">@color/trinity_low_saturated_khaki</item>
     </style>
 
 

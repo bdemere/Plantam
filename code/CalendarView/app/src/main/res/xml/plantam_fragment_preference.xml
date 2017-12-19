@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="@string/plantam_category_settings">
+
+        <CheckBoxPreference
+            android:key="plantam_category_settings0"
+            android:title="@string/setting_checkbox_sport"
+            android:summary="Choose from the five categories of public Trinity events"
+            />
+
+        <CheckBoxPreference
+            android:key="plantam_category_settings1"
+            android:title="@string/setting_checkbox_club"
+            />
+
+        <CheckBoxPreference
+            android:key="plantam_category_settings2"
+            android:title="@string/setting_checkbox_academic" />
+
+        <CheckBoxPreference
+            android:key="plantam_category_settings3"
+            android:title="@string/setting_checkbox_social"
+            />
+
+        <CheckBoxPreference
+            android:key="plantam_category_settings4"
+            android:title="@string/setting_checkbox_other"
+            />
+
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/plantam_filter_settings"
+        android:summary="Select what to filter">
+
+        <CheckBoxPreference
+            android:key="plantam_filter_settings0"
+            android:title="@string/setting_checkbox_myevents"/>
+
+        <CheckBoxPreference
+            android:key="plantam_filter_settings1"
+            android:title="@string/setting_checkbox_publicevents" />
+
+        <CheckBoxPreference
+            android:key="plantam_filter_settings2"
+            android:title="@string/setting_checkbox_trinitytodayevents" />
+
+    </PreferenceCategory>
+
+
+
+</PreferenceScreen>

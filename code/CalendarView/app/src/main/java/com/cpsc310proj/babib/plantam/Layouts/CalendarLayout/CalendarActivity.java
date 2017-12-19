@@ -33,6 +33,7 @@ import com.cpsc310proj.babib.plantam.Layouts.AddEventLayout.AddEventActivity;
 import com.cpsc310proj.babib.plantam.Layouts.PublicEventsLayout.PublicEventsActivity;
 import com.cpsc310proj.babib.plantam.R;
 import com.cpsc310proj.babib.plantam.SQLiteDatabase.SQLiteEventDatabase;
+import com.cpsc310proj.babib.plantam.Settings.PlantamPreferenceActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -279,11 +280,14 @@ public class CalendarActivity extends AppCompatActivity implements DataObserver 
                 break;
 
             case R.id.action_settings:
-                FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-                Log.d("USERID: ",
-                        "" + FBDatabase.writeUser(FirebaseAuth.getInstance().getCurrentUser().getUid()));
+                Intent settingIntent = new Intent(this,
+                        PlantamPreferenceActivity.class);
+
+                startActivity(settingIntent);
 
                 break;
+
+
         }
 
         return true;

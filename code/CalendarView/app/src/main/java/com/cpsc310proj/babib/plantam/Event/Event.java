@@ -4,6 +4,7 @@ package com.cpsc310proj.babib.plantam.Event;
 import android.util.Log;
 import com.cpsc310proj.babib.plantam.Firebase.User;
 import com.cpsc310proj.babib.plantam.SQLiteDatabase.DatabaseEntry;
+
 import java.io.Serializable;
 import java.util.UUID;
 
@@ -39,10 +40,7 @@ public class Event implements DatabaseEntry, Serializable {
             Event.KEY_LOCATION
     };
 
-<<<<<<< HEAD
 
-=======
->>>>>>> f95354b47e6e7b5d98edd359b5c3a3540641a1c3
     private User user = null;
     private EventInfo eventInfo;
 
@@ -57,13 +55,11 @@ public class Event implements DatabaseEntry, Serializable {
         eventInfo.eventUID = UUID.randomUUID().toString();
     }
 
-<<<<<<< HEAD
     //Getters
 
     public User getUser() { return this.user;}
 
-=======
->>>>>>> f95354b47e6e7b5d98edd359b5c3a3540641a1c3
+
     public EventInfo getEventInfo(){
         return eventInfo;
     }
@@ -146,29 +142,7 @@ public class Event implements DatabaseEntry, Serializable {
         eventInfo.location = location;
     }
 
-<<<<<<< HEAD
-=======
-    public String getLocation(){
-        return eventInfo.location;
-    }
 
-    public String getEventUID(){
-        Log.d("getEventUID(): ", eventInfo.eventUID.toString());
-        return eventInfo.eventUID;
-    }
-    public String getCategory() {
-        return eventInfo.category;
-    }
-
-    public boolean publishEvent() {
-        //wait until Server is done :>
-        return true;
-    }
-
-    public void deleteEvent(Event event) {
-        event = null;
-    }
->>>>>>> f95354b47e6e7b5d98edd359b5c3a3540641a1c3
 
     @Override
     public String toString() {

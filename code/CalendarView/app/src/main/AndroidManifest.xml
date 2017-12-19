@@ -63,6 +63,16 @@
                 android:value="com.cpsc310proj.babib.plantam.Layouts.CalendarLayout.CalendarActivity" />
         </activity>
 
+
+        <activity
+            android:name=".Settings.PlantamPreferenceActivity"
+            android:parentActivityName=".Layouts.CalendarLayout.CalendarActivity"
+            android:label="Settings"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+
+
         <activity
             android:name=".Layouts.AddEventLayout.AddEventActivity"
             android:label="@string/title_activity_add_event"
@@ -76,14 +86,14 @@
         <receiver android:name=".NotificationAlarmReceiver"/>
 
         <service
-            android:name=".MyFirebaseMessagingService">
+            android:name=".PlantamFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
         </service>
 
         <service
-            android:name=".MyFirebaseInstanceIDService">
+            android:name=".PlantamFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
             </intent-filter>

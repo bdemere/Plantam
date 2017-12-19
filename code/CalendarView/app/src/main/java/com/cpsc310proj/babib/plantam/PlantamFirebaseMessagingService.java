@@ -17,9 +17,9 @@ import com.google.firebase.messaging.RemoteMessage;
  */
 
 
-//TODO: this is copies from the web
-    //TODO: modify it!!!
-public class MyFirebaseMessagingService extends FirebaseMessagingService {
+//TODO: this is copied from the web
+//TODO: modify it!!!
+public class PlantamFirebaseMessagingService extends FirebaseMessagingService {
 
     private static final String TAG = "FirebaseMessagingServce";
 
@@ -42,7 +42,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
 
     private void sendNotification(String notificationTitle, String notificationBody) {
-        Intent intent = new Intent(this, MyFirebaseMessagingService.class);
+        Intent intent = new Intent(this, PlantamFirebaseMessagingService.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
                 PendingIntent.FLAG_ONE_SHOT);

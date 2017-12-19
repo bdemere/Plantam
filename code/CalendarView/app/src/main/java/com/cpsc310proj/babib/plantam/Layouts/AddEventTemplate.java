@@ -7,7 +7,9 @@ import com.cpsc310proj.babib.plantam.Event.Event;
 import com.cpsc310proj.babib.plantam.Layouts.AddEventLayout.EventForm;
 
 /**
- * Created by Group 4 on 12/14/17.
+ * @author Group 4
+ * @version 1.0
+ *
  * This class is an abstract template class that encapsulates the
  * process of creating an event out a event fill out form.
  */

@@ -20,6 +20,7 @@ public abstract class FetchUser {
     public FetchUser(FirebaseDatabase reference){
         this.firebaseDatabase = reference;
     }
+
     private ValueEventListener listener = new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {

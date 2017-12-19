@@ -191,6 +191,8 @@ public class PublicEventCategoryFragment extends Fragment implements DataObserve
             public TextView description;
 
         }
+
+
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
             final CustomListAdapter.ViewHolder holder = new CustomListAdapter.ViewHolder();

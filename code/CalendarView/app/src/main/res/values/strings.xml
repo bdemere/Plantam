@@ -39,6 +39,20 @@
     <!-- Event detail dialog-->
     <string name="event_detail_delete">Delete</string>
     <string name="event_detail_edit">Edit</string>
+    <!-- Settings -->
+    <string name="plantam_category_settings">Choose category</string>
+
+    <string name="setting_checkbox_sport">Sport</string>
+    <string name="setting_checkbox_club">Club</string>
+    <string name="setting_checkbox_academic">Academic</string>
+    <string name="setting_checkbox_social">Social</string>
+    <string name="setting_checkbox_other">Other</string>
+
+    <string name="plantam_filter_settings">Filter events</string>
+    <string name="setting_checkbox_myevents">My events</string>
+    <string name="setting_checkbox_publicevents">Public events</string>
+    <string name="setting_checkbox_trinitytodayevents">Trinity Today's events</string>
+
 
     <string name="prompt_name">Full Name</string>
     <string name="prompt_classyear">Class Year</string>
