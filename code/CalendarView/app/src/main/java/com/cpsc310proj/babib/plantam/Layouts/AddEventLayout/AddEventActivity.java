@@ -26,22 +26,28 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import static com.google.android.gms.location.places.ui.PlacePicker.getLatLngBounds;
 
 /**
- * Created by GROUP 4
- * An Activity class that will inquire all the necessary information
- * about an event and will add to the database
+ * @author GROUP 4
+ * @version 1.0
+ *
+ * An Activity class that will provide a user interface to inquire
+ * the details of an event. An instance of this class will implement
+ * the layout that has fields for every information necessary. After
+ * the information is extracted, it is checked for validity and then
+ * an Event object containing all the information entered is sent back
+ * to the Caller. Then the caller of this class will then add the
+ * returned Event information in to one of the databases. Amen!
+ *
+ *
  */
 public class AddEventActivity extends AppCompatActivity{
 
+    //A string to recognize an object returned after the Caller of this class
     public static String EVENT_RESULT = AddEventActivity.class.toString() + ".EVENT_RESULT";
+
+    //A number to recognize the object returned after
     private int PLACE_PICKER_REQUEST = 1;
 
-
-    public static Class[] CALLING_ACTIVITIES = {
-            PublicEventsActivity.class,
-
-
-    };
-
+    //A form object to store the information
     private EventForm mForm;
 
     private FloatingActionButton mFloatingAddButton; //Floating Button: finalize and add buttons
@@ -106,6 +112,8 @@ public class AddEventActivity extends AppCompatActivity{
             }
         });
 
+
+        //Pick location
         mForm.mLocationPicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -3,8 +3,8 @@
           package="com.cpsc310proj.babib.plantam">
 
     <uses-sdk
-        android:minSdkVersion="18"
-        android:targetSdkVersion="20" />
+        android:minSdkVersion="20"
+        android:targetSdkVersion="25" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />

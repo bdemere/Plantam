@@ -33,18 +33,14 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 public class EditEventDialog extends DialogFragment {
     // TODO: Rename parameter arguments, choose names that match
-
     protected static final String ARG_EVENT = "EditEventDialog.ARG_EVENT";
     protected static final String ARG_DATABASE = "EditEventDialog.ARG_DATABASE";
 
-    // TODO: Rename and change types of parameters
 
     protected EventForm mForm;
     protected Button mEdit;
     protected Button mDelete;
 
-
-    protected String mEventID;
     protected EventDatabase mDatabase;
     protected Context mContext;
 
